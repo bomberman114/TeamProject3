@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.cs.mapper.CsMapper">  
+  <!-- 고객센터_자주하는질문_목록 -->
+
+  <select id="getcsList">
+   SELECT 
+   	CUSTOMER_SERVICE_IDX,
+    CUSTOMER_SERVICE_TITLE,
+    CUSTOMER_SERVICE_TYPE,
+    CUSTOMER_SERVICE_REGDATE,
+    CUSTOMER_SERVICE_CONTENT,
+    ADMIN_USER_IDX
+   FROM  CUSTOMER_SERVICE
+   WHERE ADMIN_USER_IDX IS NOT NULL
+  </select>
+
+</mapper>

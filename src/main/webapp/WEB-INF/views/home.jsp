@@ -13,6 +13,7 @@
   <main>
   <h2>HOME</h2>
   <a href="/Cs/Cslist">고객센터</a>
+  <a href="/DeskTopEstimate/DeskTopEstimateForm">PC견적</a>
 	</main>
 </html>
 

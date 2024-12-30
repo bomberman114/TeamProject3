@@ -6,145 +6,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC 견적</title>
-<style type="text/css">
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-}
+        header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        header nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
 
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-}
+        main {
+            display: flex;
+            padding: 20px;
+        }
 
-main {
-    display: flex;
-    padding: 20px;
-}
+        .sidebar {
+            width: 200px;
+            background-color: #fff;
+            padding: 20px;
+            margin-right: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.sidebar {
-    width: 200px;
-    background-color: #fff;
-    padding: 20px;
-    margin-right: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .content {
+            flex-grow: 1;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.content {
-    flex-grow: 1;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .sidebar-right {
+            width: 250px;
+            background-color: #fff;
+            padding: 20px;
+            margin-left: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.sidebar-right {
-    width: 200px;
-    background-color: #fff;
-    padding: 20px;
-    margin-left: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
 
-.search-bar {
-    display: flex;
-    margin-bottom: 20px;
-}
+        .search-bar input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
 
-.search-bar input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-}
+        .search-bar button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-.search-bar button {
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+        .filters {
+            margin-bottom: 20px;
+        }
 
-.filters {
-    margin-bottom: 20px;
-}
+        .filters h3 {
+            margin-bottom: 10px;
+        }
 
-.product-list {
-    margin-bottom: 20px;
-}
+        .filters label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-.product-item {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
+        .product-list {
+            margin-bottom: 20px;
+        }
 
-.product-item button {
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+        .product-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-}
+        .product-item button {
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-.pagination button {
-    margin: 0 5px;
-}
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
 
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
+        .pagination button {
+            margin: 0 5px;
+        }
 
-
-</style>
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+<script type="text/javascript">
+    
+    
+</script>
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <div class="logo">로고</div>
-            <nav>
-                <a href="#">로그인</a>
-                <a href="#">장바구니</a>
-            </nav>
-        </div>
-    </header>
-    
-    <main>
-        <aside class="sidebar">
-            <h2>카테고리</h2>
-            <ul>
-                <li><a href="#">기타</a></li>
-                <li><a href="#">PC 견적</a></li>
-                <li><a href="#">부품</a></li>
-                <li><a href="#">커뮤니티</a></li>
-                <li><a href="#">고객센터</a></li>
-            </ul>
-        </aside>
+    <%@include file="/WEB-INF/include/header.jsp"%>
 
+    <main>
         <section class="content">
             <h1>PC 견적</h1>
             <div class="search-bar">
@@ -154,9 +144,19 @@ footer {
 
             <div class="filters">
                 <h3>CPU</h3>
-                <label><input type="checkbox"> 옵션1</label>
-                <label><input type="checkbox"> 옵션2</label>
-                <label><input type="checkbox"> 옵션3</label>
+                <label><input type="checkbox"> 옵션 1</label>
+                <label><input type="checkbox"> 옵션 2</label>
+                <label><input type="checkbox"> 옵션 3</label>
+
+                <h3>메인보드</h3>
+                <label><input type="checkbox"> 옵션 1</label>
+                <label><input type="checkbox"> 옵션 2</label>
+                <label><input type="checkbox"> 옵션 3</label>
+
+                <h3>메모리</h3>
+                <label><input type="checkbox"> 옵션 1</label>
+                <label><input type="checkbox"> 옵션 2</label>
+                <label><input type="checkbox"> 옵션 3</label>
             </div>
 
             <div class="product-list">
@@ -208,8 +208,6 @@ footer {
         </aside>
     </main>
 
-    <footer>
-        <p>저작권 © 2024</p>
-    </footer>
+    <%@include file="/WEB-INF/include/footer.jsp"%>
 </body>
 </html>

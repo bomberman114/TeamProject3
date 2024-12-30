@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.oauth.mapper.UserMapper">  
+	
+ 	<insert id="saveUser">
+	INSERT INTO USERS (
+	    USER_EMAIL,
+	    USER_NAME,
+	    USER_STATUS,
+	    USER_LOGIN_METHOD,
+	    USER_NICKNAME,
+	    USER_ROLE
+	) VALUES (
+	    #{user_email},
+	    #{user_name},
+	    #{user_status},
+	    #{user_login_method},
+	    #{user_nickname},
+	    #{user_role}
+	)
+ 	 </insert>
+ 	 
+ 	<insert id="saveSocialUser">
+	INSERT INTO SOCIAL_USERS (
+	    USER_IDX,
+	    SOCIAL_USER_SOCIALID,
+	    SOCIAL_USER_NAME,
+	    SOCIAL_USER_PROVIDER,
+	    SOCIAL_USER_EMAIL,
+	    SOCIAL_USER_ROLE,
+	    SOCIAL_USER_NICKNAME
+	) VALUES (
+	    (SELECT MAX(USER_IDX) FROM USERS),
+	    #{social_user_socialid},
+	    #{social_user_name},
+	    #{social_user_provider},
+	    #{social_user_email},
+	    #{social_user_role},
+	    #{social_user_nickname}
+	)
+ 	 </insert>
+ 	 
+ 	 	<update id="updateSocialUser">
+		UPDATE SOCIAL_USERS
+		SET    SOCIAL_USER_NICKNAME = #{user_nickname}
+    WHERE  USER_IDX = #{user_idx}
+	</update>
+ 	 
+	 
+ 	
+ 	<select id="isUserEmailDupCheck">
+ 		SELECT USER_EMAIL
+    FROM   USERS
+    WHERE  USER_STATUS = 1 AND USER_EMAIL = #{arg0}
+ 	</select>
+ 	
+ 	<select id="findUserPasswordByEmail">
+ 		SELECT USER_PASSWORD
+    FROM   USERS
+    WHERE  USER_STATUS = 1 AND USER_EMAIL = #{arg0}
+ 	</select>
+
+		<insert id="saveUserLocal">    
+		INSERT INTO USERS        (
+		    USER_EMAIL,
+		    USER_PASSWORD,
+		    USER_NAME,
+		    USER_NICKNAME,
+		    USER_STATUS,
+		    USER_LOGIN_METHOD,
+		    USER_ROLE    ) 
+	  VALUES                   (
+		    #{user_email},
+		    #{user_password},
+		    #{user_name},
+		    #{user_nickname},
+		    1,
+		    'local',
+		    'ROLE_USER' )
+ 	 </insert>
+
+ 	<select id="findByProviderAndSocialId">
+ 		SELECT *
+        FROM   SOCIAL_USERS
+        WHERE  SOCIAL_USER_SOCIALID = #{arg0} AND SOCIAL_USER_PROVIDER = #{arg1}
+ 	</select>
+ 	
+ 	<select id="findByEmail">
+ 		SELECT *
+        FROM   USERS
+        WHERE  USER_EMAIL = #{arg0}
+ 	</select>
+ 	
+ 	<select id="findUserVoAtEmail">
+ 		SELECT *
+        FROM   USERS
+        WHERE  USER_EMAIL = #{arg0}
+ 	</select>
+ 	
+ 	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

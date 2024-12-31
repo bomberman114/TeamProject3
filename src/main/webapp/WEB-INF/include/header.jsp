@@ -10,16 +10,16 @@
 				src="/images/icon/header-icon/category-btn.png" alt="카테고리 버튼" />
 				카테고리
 				<ul class="header__category-2depth">
-					<li><a href="#">PC</a></li>
-					<li><a href="#">노트북</a></li>
+					<li><a href="/DetailSearch">PC</a></li>
+					<li><a href="/DetailSearch">노트북</a></li>
 					<li>주요부품
 						<ul class="header__category-3depth">
-							<li><a href="#">CPU</a></li>
-							<li><a href="#">메인보드</a></li>
-							<li><a href="#">메모리</a></li>
+							<li><a href="/DetailSearch">CPU</a></li>
+							<li><a href="/DetailSearch">메인보드</a></li>
+							<li><a href="/DetailSearch">메모리</a></li>
 						</ul>
 					</li>
-					<li>주변기기</li>
+					<li><a href="/DetailSearch">주변기기</a></li>
 				</ul></li>
 		</ul>
 		<div class="header__content">
@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<ul class="header__gnb">
-					<li><a href="/QucikFinder">간편검색</a></li>
+					<li><a href="/QuickFinder">간편검색</a></li>
 					<li><a href="#">PC견적</a></li>
 					<li><a href="#">브랜드관</a></li>
 					<li><a href="#">커뮤니티</a></li>

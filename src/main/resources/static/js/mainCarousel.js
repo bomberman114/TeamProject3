@@ -38,6 +38,16 @@ document.addEventListener("click", (e) => {
       nowpage.innerHTML = currentIdx;
     }
   }
+  if(e.target.closest(".dim")){
+    moveSlide(e);
+    if(currentIdx > slides.length){
+      nowpage.innerHTML = 1  
+    }else if(currentIdx < 1){
+      nowpage.innerHTML = slides.length
+    }else{
+      nowpage.innerHTML = currentIdx;
+    }
+  }
 });
 
 /* 슬라이드 실행 */
@@ -52,7 +62,7 @@ function move(D) {
 /* 클릭 버튼 */
 function moveSlide(event) {
   event.preventDefault();
-  if (event.target.closest(".next")) {
+  if (event.target.closest(".next") || event.target.closest(".dim-left")) {
     move(-1);
     if (currentIdx === sliderCloneLis.length - 1)
       setTimeout(() => {
@@ -61,7 +71,7 @@ function moveSlide(event) {
         translate = -liWidth;
         carousel.style.transform = `translateX(${translate}px)`;
       }, speedTime);
-  } else if (event.target.closest(".prev")) {
+  } else if (event.target.closest(".prev") || event.target.closest(".dim-right")) {
     move(1);
     if (currentIdx === 0) {
       setTimeout(() => {

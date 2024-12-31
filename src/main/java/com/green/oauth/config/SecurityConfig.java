@@ -18,13 +18,7 @@ import com.green.userDetails.service.CustomUserDetailsService;
 @Configuration  
 @EnableWebSecurity // 웹 보안을 활성화
 public class SecurityConfig {
-	
-	//"/WEB-INF/views/**" 등록하는게 리다렉션 횟수 많다고 오류 뜨는 거 방지하는 듯
-    private final String[] whiteList = {"/", "/css/**", "/images/**", "/js/**", "/font/**",
-           "/error/**", "/WEB-INF/views/**", "/WEB-INF/include/**","/loginForm", "/login","/registerForm","/register",
-           "/oauth2/**","/IsUserExist","/IsEmailDupCheck","/Cs/**"};
-
-    
+	    
     private final CustomOAuth2UserService customOAuth2UserService;
    
     private CustomUserDetailsService customUserDetailsService;
@@ -55,8 +49,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((auth) -> auth  // 요청에 대한 인가를 설정
             		.requestMatchers("/user/**").hasRole("USER")
             		.requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers(whiteList).permitAll()
-                    .anyRequest().authenticated())
+                    .anyRequest().permitAll())
             .userDetailsService(customUserDetailsService)
             .formLogin((login) -> login
             		.loginPage("/loginForm")

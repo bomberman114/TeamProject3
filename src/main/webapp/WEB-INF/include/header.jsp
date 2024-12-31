@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<ul class="header__gnb">
-					<li><a href="#">간편검색</a></li>
+					<li><a href="/QucikFinder">간편검색</a></li>
 					<li><a href="#">PC견적</a></li>
 					<li><a href="#">브랜드관</a></li>
 					<li><a href="#">커뮤니티</a></li>

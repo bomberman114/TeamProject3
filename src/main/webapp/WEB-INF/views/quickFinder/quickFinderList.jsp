@@ -19,6 +19,7 @@
 .program-filter {
 	display: none;
 	position: fixed;
+	align-items : center;
 	padding : 20px 40px;
 	z-index: 2;
 	width : 100%;
@@ -47,16 +48,24 @@
 	}
 	
 	& .purpose-container{
-		
+		width: 100%;
+		overflow: hidden;
 	}
 	
-	& .purse-btn{
-		flex-shink : 0;
+	& .purpose-btn{
+		flex-shink : 1;
 		width: 40px;
+		height: 40px;
+
+		& img{
+		width : 40px;
+		cursor: pointer;
+		}
 	}
 	
 	& >ul:first-child{
-		width : 200px;
+		width : 300px;
+		white-space : nowrap;
 		
 		
 		& li{
@@ -65,7 +74,7 @@
 			align-items: center;
 			width : 100%;
 			border : solid 1px #ccc;
-			padding : 8px;
+			padding : 12px;
 			border : solid 1px rbg(189,234,20);
 			margin-bottom: 12px;
 			cursor: pointer;
@@ -85,18 +94,18 @@
 .quick-finder-filter-program{
 	display: flex;
 	width: 90%;
-	overflow : hidden;
 	height : 100%;
 	gap : 8px;
+	transition : all 0.4s;
 	
 	& li{
-		width : calc(100%/7);
+		width : calc(100%/5);
+		aspect-ratio : 1.618;
 		flex-shrink : 0;
 		height : 100%;
 		background: #ccc;
 		cursor: pointer;
 	}
-	
 }
 
 
@@ -110,9 +119,9 @@
 			<li class="li-purpose-idx" data-purposeIdx=2>게임용</li>
 		</ul>
 		<div>
-			<div class="purpose-btn purpose-btn-prev"><img src="" alt="prev"></div>
+			<div class="purpose-btn purpose-btn-prev"><img src="/images/icon/common-icon/prev-btn-fff-48.png" alt="prev"></div>
 			<div class="purpose-container"><ul class="quick-finder-filter-program"></ul></div>
-			<div class="purpose-btn purpose-btn-next"><img src="" alt="next"></div>		
+			<div class="purpose-btn purpose-btn-next"><img src="/images/icon/common-icon/next-btn-fff-48.png" alt="next"></div>		
 		</div>
 	</div>
 	<%@include file="/WEB-INF/include/header.jsp"%>
@@ -318,9 +327,9 @@
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	<script>
     
-    let chartInstances = [];
+      let chartInstances = [];
     
-    
+      // 가격 입력 정규식 이벤트
 	    document.addEventListener('keyup', function(e) {
 	       let value = e.target.value;
 	    	if(e.target.closest(".quick-finder-filter-price input")){
@@ -344,12 +353,13 @@
 	    	}
 	    });
       
-      // Chart.js
+      
       //JSON.parse(document.querySelector("canvas").dataset.bench)["cpu"]
       let { pcpu, pvga, pram } = { pcpu: 16000, pvga: 8000, pram: 16 };
 
       renderCanvas();
 
+      // 화면에 있는 canavs들 dataset으로 계산해서 그래프 그리기
       function renderCanvas() {
     	  destroyCharts();
     	  const $canvasList = document.querySelectorAll("canvas");
@@ -366,6 +376,7 @@
     	}
 
 
+  		// Chart.js 그래프 설정
       function createGraph(canvas, data, i) {
     	  if (chartInstances[i]) {
     		    chartInstances[i].destroy();
@@ -462,10 +473,10 @@
             },
           },
         });
-
         chartInstances[i] = mixedChart;
       }
       
+  		// 그래프 삭제하는 함수
       function destroyCharts() {
     	  chartInstances.forEach(chart => {
     	    if (chart) {
@@ -477,6 +488,7 @@
       
       getPurposeList();
       
+      // 사용용도 가져오는 fetch 함수
       async function getPurposeList(purposeIdx){
   	    const res = await fetch("/QuickFinder/getPurposeList", {
 	        method: "POST",
@@ -502,9 +514,14 @@
 	    return result.purposeList;
 			}
      
+      let purposeCurrentIdx = 0;
+      
+      // 사용용도 렌더링하는 함수
       function renderPurposeList(purposeList){
     	  const $purposeContainer = document.querySelector(".quick-finder-program");
     	  const $purposeFilterContainer = document.querySelector(".quick-finder-filter-program");
+    	  $purposeFilterContainer.style.transform = "translateX(0)";
+    	  purposeCurrentIdx = 0;
     	  $purposeContainer.innerHTML = "";
     	  $purposeFilterContainer.innerHTML = "";
     	  let html = "";
@@ -530,20 +547,7 @@
     	  })
       }
       
-      function createPurposeElement(purpose) {
-    	  const li = document.createElement('li');
-    	  li.textContent = purpose.PURPOSE_CONTENT_NAME;
-    	  li.classList.add("purpose");
-    	  li.dataset.bench = JSON.stringify({
-    	    cpu: purpose.CPU_BENCH,
-    	    vga: purpose.GPU_BENCH,
-    	    ram: purpose.RAM_BENCH
-    	  });
-    	  return li;
-    	}
-      
-      let purposeCurrentIdx = 0;
-      
+      // 클릭 이벤트리스너 
       document.addEventListener("click",(e)=>{
     	  const clicked = e.target
     	  if(clicked.matches(".li-purpose-idx")){
@@ -565,12 +569,26 @@
     		  purposeCurrentIdx++;
     		  purposeSlideMove(purposeCurrentIdx)
     	  }
+    	  if(clicked.matches(".purpose-btn-prev img")){
+    		  purposeCurrentIdx--;
+    		  purposeSlideMove(purposeCurrentIdx)
+    	  }
       })
       
       function purposeSlideMove(idx){
     	  const $purposeSlideContainer = document.querySelector(".quick-finder-filter-program")
     	  const $purposeSlide = $purposeSlideContainer.querySelector("li");
-    	  $purposeSlideContainer.style.transform = "translateX(" + -idx * $purposeSlide.clientWidth + "px)"
+    	  const $prevBtn      = document.querySelector(".purpose-btn-prev img")
+    	  const $nextBtn      = document.querySelector(".purpose-btn-next img")
+    	  $purposeSlideContainer.style.transform = "translateX(" + -idx * ($purposeSlide.clientWidth+8) + "px)"
+    	  if(idx > $purposeSlideContainer.querySelectorAll("li").length - 6){
+    		  $nextBtn.style.display = 'none' 
+    	  }else if(idx == 0){
+    		  $prevBtn.style.display = 'none'
+    	  }else{
+    		  $prevBtn.style.display = 'block'
+    			  $nextBtn.style.display = 'block' 
+    	  }
       }
       
       

@@ -48,7 +48,7 @@
 					<li><a href="#">PC견적</a></li>
 					<li><a href="#">브랜드관</a></li>
 					<li><a href="#">커뮤니티</a></li>
-					<li><a href="#">고객센터</a></li>
+					<li><a href="/Cs/Cslist"">고객센터</a></li>
 				</ul>
 			</div>
 			<c:choose>

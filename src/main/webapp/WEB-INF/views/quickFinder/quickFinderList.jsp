@@ -47,13 +47,12 @@
 	}
 	
 	& .purpose-container{
-		overflow: hidden;
-		width: 100%;
+		
 	}
 	
 	& .purse-btn{
+		flex-shink : 0;
 		width: 40px;
-		height: 40px
 	}
 	
 	& >ul:first-child{
@@ -81,23 +80,25 @@
 		border : solid 1px #37D0FD;
 		}
 	}
-	
-	& .quick-finder-filter-program{
+}
+
+.quick-finder-filter-program{
 	display: flex;
+	width: 90%;
 	overflow : hidden;
 	height : 100%;
 	gap : 8px;
-	transition : all .4s;
 	
 	& li{
-		width : 200px;
+		width : calc(100%/7);
 		flex-shrink : 0;
 		height : 100%;
 		background: #ccc;
 		cursor: pointer;
 	}
-	}
+	
 }
+
 
 </style>
 </head>
@@ -569,7 +570,7 @@
       function purposeSlideMove(idx){
     	  const $purposeSlideContainer = document.querySelector(".quick-finder-filter-program")
     	  const $purposeSlide = $purposeSlideContainer.querySelector("li");
-    	  $purposeSlideContainer.style.transform = "translateX(" + -idx * ($purposeSlide.offsetWidth+8) + "px)"
+    	  $purposeSlideContainer.style.transform = "translateX(" + -idx * $purposeSlide.clientWidth + "px)"
       }
       
       

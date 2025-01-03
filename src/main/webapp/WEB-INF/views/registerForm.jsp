@@ -75,6 +75,7 @@
       let isNameVali     = false;
       let isNickNameVali = false;
       
+      // 입력값 유효성 확인 -> 유효하면 submit
       $form.addEventListener("submit", (e) => {
         e.preventDefault();
         
@@ -95,10 +96,12 @@
         }
       });
       
+      // 비밀번호 확인
       function strongPassword (str) {
     	  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(str);
     	}
       
+      // 입력시 유효성 확인
       document.addEventListener("keyup", (e) => {
     	  // 이메일 유효성 확인
     	  if (e.target.matches("input[type='email']")) {
@@ -156,6 +159,8 @@
     	  }
     	});
 
+      
+      // 입력 비밀번호 확인
       let isHidden    = true;
       let isDupHidden = true;
       document.addEventListener("click", (e) => {
@@ -169,6 +174,7 @@
         }
       });
 
+      // 입력 비밀번호 확인 함수
       function hiddenBtnClick(boolVal, target){
         if (boolVal) {
           target.src = "/images/icon/common-icon/hidden-disable-btn.png";
@@ -179,6 +185,7 @@
         }
       }
 
+      // 중복 이메일 확인
       $form[0].addEventListener("blur", async (e) => {
       	if(isEmailVali){
       		const emailDupCheck = await isEmailDupCheck($form[0].value);
@@ -195,7 +202,7 @@
       })
       
       
-      
+			// 중복 이메일 확인 ajax
 	  	async function isEmailDupCheck(userEmail) {
 		    const res = await fetch("/IsEmailDupCheck", {
 		        method: "POST",
@@ -211,8 +218,6 @@
 		    return await res.json();
 		}
 
-      
-      
     </script>
 </body>
 </html>

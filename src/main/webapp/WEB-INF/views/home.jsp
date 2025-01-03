@@ -19,6 +19,7 @@
 		</script>
 	</c:if>
 	<main class="home">
+		<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 		<div class="inner">
 			<div class="home__main-carousel">
 				<div class="dim-left dim"></div>
@@ -376,11 +377,11 @@
     let brandCarouselIdx = 0;
 
     const $brandCarouselContainer = document.querySelector(".brand-carousel-container");
-    const $brandCarouselSlide =
-      $brandCarouselContainer.querySelectorAll("li");
-    const $brandPrevBtn = document.querySelector(".brand-prev-btn img");
-    const $brandNextBtn = document.querySelector(".brand-next-btn img");
+    const $brandCarouselSlide     = $brandCarouselContainer.querySelectorAll("li");
+    const $brandPrevBtn           = document.querySelector(".brand-prev-btn img");
+    const $brandNextBtn           = document.querySelector(".brand-next-btn img");
 
+    // 브랜드 캐러셀 이전 클릭 이벤트
     $brandPrevBtn.addEventListener("click", () => {
       if (brandCarouselIdx >= 1) {
         $brandPrevBtn.src =
@@ -394,7 +395,9 @@
         $brandNextBtn.src = "/images/icon/home-icon/brand-carousel-right-active.png";
       }
     });
-
+    
+    
+    // 브랜드 캐러셀 다음 클릭 이벤트
     $brandNextBtn.addEventListener("click", () => {
       if (brandCarouselIdx < $brandCarouselSlide.length - 8) {
         brandCarouselBtnClick(1);
@@ -409,14 +412,19 @@
       }
     });
 
+    // 브랜드 캐러셀 클릭 함수
     function brandCarouselBtnClick(direct) {
         brandCarouselIdx += direct;
         $brandCarouselContainer.style.transform = "translateX(-" + $brandCarouselSlide[0].clientWidth * brandCarouselIdx + "px)";
     }
 
+    
     const $bestItemList = document.querySelector('.box-best-container');
+    
+ 		// 스크롤 이벤트
     window.addEventListener("scroll", checkslide);
 
+ 		// 스크롤 시 실행함수
     function checkslide(){
       const $bestItemBtnList = document.querySelector(".box-best-btn-container")
       if( $bestItemList.getBoundingClientRect().top < 0){
@@ -426,6 +434,7 @@
       }
     }
 
+ 		// 해당 카테고리 위치로 이동 함수
     const $bestConatinerItem = $bestItemList.querySelectorAll(".box-best-container-item")
     document.addEventListener("click",(e)=>{
       const clicked = e.target
@@ -437,7 +446,22 @@
         });
       }
     })
+
     
+   const $scrollTopBtn = document.querySelector(".scroll-top-btn");
+    window.addEventListener("scroll", (e)=>{
+    	if(window.scrollY > 0){
+    		$scrollTopBtn.style.opacity = "1"
+    		$scrollTopBtn.style.pointerEvents = "auto";
+    	}else{
+    		$scrollTopBtn.style.opacity = "0"
+        $scrollTopBtn.style.pointerEvents = "none";
+    	}
+    });
+ 		
+    $scrollTopBtn.addEventListener("click",()=>{
+    	window.scroll({  top: 0 , behavior: "smooth"})
+    })
 
     </script>
 </html>

@@ -7,6 +7,4 @@ public interface QuickFinderService {
 
 	List<HashMap<String, Object>> findPurposeList(String purposeIdx);
 
-
-
 }

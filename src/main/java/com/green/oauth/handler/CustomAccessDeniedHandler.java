@@ -17,6 +17,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException, ServletException {
         
+    	// 403 접근시에 예외메시지 세션에 담으면서 "/"로 리다이렉트
         request.getSession().setAttribute("errorMessage", "접근 권한이 없습니다.");
         response.sendRedirect("/");
     }

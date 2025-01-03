@@ -319,8 +319,8 @@
 				<li><a href="#">3</a></li>
 				<li><a href="#">4</a></li>
 				<li><a href="#">5</a></li>
-				<li><img src="/images/icon/common-icon/paging-next-btn.png"
-					alt=""></li>
+				<li><a href="#"><img src="/images/icon/common-icon/paging-next-btn.png"
+					alt=""></a></li>
 			</ul>
 		</div>
 	</main>
@@ -516,7 +516,7 @@
      
       let purposeCurrentIdx = 0;
       
-      // 사용용도 렌더링하는 함수
+      // 사용용도 프로그램 렌더링하는 함수
       function renderPurposeList(purposeList){
     	  const $purposeContainer = document.querySelector(".quick-finder-program");
     	  const $purposeFilterContainer = document.querySelector(".quick-finder-filter-program");
@@ -547,7 +547,7 @@
     	  })
       }
       
-      // 클릭 이벤트리스너 
+      // 프로그램 선택시 그래프 다시 그리거나 캐러셀 이벤트
       document.addEventListener("click",(e)=>{
     	  const clicked = e.target
     	  if(clicked.matches(".li-purpose-idx")){
@@ -575,6 +575,7 @@
     	  }
       })
       
+      // 사용용도 프로그램 캐러셀 함수
       function purposeSlideMove(idx){
     	  const $purposeSlideContainer = document.querySelector(".quick-finder-filter-program")
     	  const $purposeSlide = $purposeSlideContainer.querySelector("li");
@@ -591,7 +592,7 @@
     	  }
       }
       
-      
+      // 스크롤 위치 따라 사용용도 프로그램 fixed 하는 이벤트
       window.addEventListener("scroll",checkslide)
       
       function checkslide(){
@@ -603,8 +604,7 @@
     	  $programFilter.classList.remove("scroll-active")
       }
     }
-      
-      
+            
     </script>
 </body>
 </html>

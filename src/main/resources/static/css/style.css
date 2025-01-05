@@ -902,6 +902,10 @@ footer {
         font-weight: 500;
         margin-bottom: 12px;
       }
+      & div>div{
+      	word-break : keep-all;
+      	padding-right: 40px;
+      }
     }
   }
 
@@ -912,6 +916,7 @@ footer {
     & p {
       font-weight: 500;
       font-size: 20px;
+      white-space: nowrap;
     }
   }
 }

@@ -1,8 +1,10 @@
 package com.green.common.service.impl;
 
+import java.sql.Clob;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.green.common.service.QuickFinderService;
 import com.green.paging.vo.Pagination;
 import com.green.paging.vo.PagingResponse;
 import com.green.paging.vo.SearchVo;
+import com.green.util.ClobUtils;
 
 @Service
 public class QuickFinderServiceImpl implements QuickFinderService{
@@ -58,8 +61,27 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	    int 	offset		= searchVo.getOffset();
 	    int		recordSize	= searchVo.getRecordSize();
 
-    	List<HashMap<String, Object>> list = quickFinderMapper.getProductPagingList(offset,recordSize,requestBody);;
+    	List<HashMap<String, Object>> list = quickFinderMapper.getProductPagingList(offset,recordSize,requestBody);
+    	
+    	String clobKey = "PRODUCT_DESCRIPTION";
+
+    	list = list.stream().map(item -> {
+    	    Object value = item.get(clobKey);
+    	    if (value instanceof Clob) {
+    	        try {
+    	            String clobString = ClobUtils.clobToString((Clob) value);
+    	            item.put(clobKey, clobString);
+    	        } catch (Exception e) {
+    	            // 예외 처리
+    	            e.printStackTrace(); // 또는 로깅
+    	        }
+    	    }
+    	    return item;
+    	}).collect(Collectors.toList());
+
+    	
 	    response = new PagingResponse<>(list, pagination);
+	    
 	    
 		res.put("response", response);
 		res.put("nowpage", nowpage);

@@ -637,7 +637,7 @@
      
      function createProductList(list) {
     	  const $itemList = document.querySelector(".quick-finder-search-list");
-
+		  if(list){
     	  list.forEach(item => {
     	    const itemDiv = document.createElement("div");
     	    itemDiv.className = "quick-finder-search-item";
@@ -658,7 +658,7 @@
     	    const productTitleP = document.createElement("p");
     	    const productSpectDiv = document.createElement("div");
     	    productTitleP.textContent = item.PRODUCT_NAME;
-    	    productSpectDiv.textContent = item.PRODUCT_NAME;
+    	    productSpectDiv.textContent = item.PRODUCT_DESCRIPTION;
     	    productTitleDiv.append(productTitleP);
     	    productTitleDiv.append(productSpectDiv);
     	    itemLeftInfoDiv.append(productTitleDiv);
@@ -686,13 +686,13 @@
     	    itemRightCanvas.dataset.bench = '{"cpu" : 11000, "vga" : 5000, "ram" : 8}';
     	    itemRightP.textContent = formatNumberWithCommasAndWon(item.PRICE);
     	    itemRightDiv.append(itemRightCanvas);
-    	    itemRightDiv.append(itemRightP); // 이 줄 추가
-
+    	    itemRightDiv.append(itemRightP)
     	    itemDiv.append(itemLeftDiv);
     	    itemDiv.append(itemRightDiv);
 
     	    $itemList.append(itemDiv);
     	  });
+		  }
     	}
 
      function createPagingList(result) {
@@ -726,7 +726,7 @@
     	  
     	  const $pagingContainer = document.querySelector(".paging-container");
     	  $pagingContainer.append(ul);
-    	}
+    	 }
  
     </script>
 </body>

@@ -10,11 +10,10 @@ public interface QuickFinderMapper {
 
 	List<HashMap<String, Object>> findPurposeList(String purposeIdx);
 
-	int getProductList(int nowpage);
+	int getProductCount(HashMap<String, Object> requestBody);
+	
+	List<HashMap<String, Object>> getProductPagingList(int offset, int recordSize, HashMap<String, Object> requestBody);
 
-	List<HashMap<String, Object>> getProductPagingList(int offset, int recordSize);
-
-	int getProductCount();
 
 
 }

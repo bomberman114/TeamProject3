@@ -1,5 +1,7 @@
 const prevBtn = document.querySelector(".carousel-button.prev");
 const nextBtn = document.querySelector(".carousel-button.next");
+const dimPrevBtn = document.querySelector(".home__main-carousel .dim-prev");
+const dimNextBtn = document.querySelector(".home__main-carousel .dim-next");
 const carousel = document.querySelector(".carousel-container");
 const slides = carousel.querySelectorAll(".carousel-slide");
 const size = slides[0].clientWidth;
@@ -28,6 +30,8 @@ function init() {
  // autoSlide = setInterval(nextSlide, 2000);
   prevBtn.addEventListener("click", prevSlide);
   nextBtn.addEventListener("click", nextSlide);
+  dimPrevBtn.addEventListener("click", prevSlide);
+  dimNextBtn.addEventListener("click", nextSlide);
   carousel.addEventListener("transitionend", resetSlide);
   //carousel.addEventListener("mouseover", handleMouseOver);
   //carousel.addEventListener("mouseleave", handleMouseLeave);

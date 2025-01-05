@@ -11,6 +11,26 @@
     </if>
 </select>
 
+<select id="getProductCount">
+    SELECT COUNT(*)
+    FROM   PRODUCT
+    WHERE  1 = 1
+    <if test="purposeIdx != null and purposeIdx != ''">
+        AND PURPOSE_IDX = #{purposeIdx}
+    </if>
+</select>
+
+<select id="getProductPagingList">
+	SELECT PRODUCT_IDX,
+		   PRODUCT_NAME,
+		   PRODUCT_DESCRIPTION,
+		   PRICE,
+		   CATEGORY_IDX,
+		   TO_CHAR(CREATED_AT,'YYYY.MM') CREATED_AT
+	FROM   PRODUCT
+	WHERE  1 = 1
+</select>
+
 </mapper>
 
 

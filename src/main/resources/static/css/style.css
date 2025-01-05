@@ -283,7 +283,7 @@ footer {
     top: 0;
   }
 
-  & .dim-left {
+  & .dim-next {
     left: 0;
     transform: translateX(100%);
   }

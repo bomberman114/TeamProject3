@@ -22,8 +22,8 @@
 		<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 		<div class="inner">
 			<div class="home__main-carousel">
-				<div class="dim-left dim"></div>
-				<div class="dim-right dim"></div>
+				<div class="dim-prev dim"></div>
+				<div class="dim-next dim"></div>
 				<div class="carousel-container">
 					<div class="carousel-slide">
 						<div>aa</div>

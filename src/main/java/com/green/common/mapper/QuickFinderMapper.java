@@ -11,7 +11,7 @@ public interface QuickFinderMapper {
 
 	List<HashMap<String, Object>> findPurposeList(String purposeIdx);
 
-	int getProductCount(HashMap<String, Object> requestBody);
+	int getProductCount(@Param("requestBody") HashMap<String, Object> requestBody);
 	
     List<HashMap<String, Object>> getProductPagingList(@Param("offset") int offset, 
             @Param("recordSize") int recordSize, 

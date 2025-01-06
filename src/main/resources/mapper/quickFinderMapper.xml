@@ -15,6 +15,15 @@
     SELECT COUNT(*)
     FROM   PRODUCT
     WHERE  1 = 1
+	    <if test="requestBody.computerType == null or requestBody.computerType == ''">
+	        AND CATEGORY_IDX IN (2, 3)
+	    </if>
+	    <if test="requestBody.computerType != null and requestBody.computerType != ''">
+	        AND CATEGORY_IDX = #{requestBody.computerType}
+	    </if>
+	    <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+	        AND PRODUCT_NAME LIKE '%'||#{requestBody.listSearch}||'%'
+	    </if> 
 </select>
 
 <select id="getProductPagingList">
@@ -28,7 +37,7 @@
     FROM   PRODUCT P 
     LEFT JOIN PRODUCT_IMAGE PI ON P.PRODUCT_IDX = PI.PRODUCT_IDX
     <where>
-        <if test="requestBody.computerType == null and requestBody.computerType == ''">
+        <if test="requestBody.computerType == null or requestBody.computerType == ''">
             AND P.CATEGORY_IDX IN (2, 3)
         </if>
         <if test="requestBody.computerType != null and requestBody.computerType != ''">
@@ -37,17 +46,19 @@
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
             AND P.PRODUCT_NAME LIKE '%'||#{requestBody.listSearch}||'%'
         </if>
+        <if test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != '' ">
+            AND P.PRICE BETWEEN #{requestBody.lowestPrice} AND #{requestBody.highestPrice}
+        </if>
     </where>
     <if test="requestBody.sortType == 'highestPrice'">
-    	OREDER BY PRICE DESC
+    	ORDER BY PRICE DESC
     </if>        
-    <if test="requestBody.sortType == 'listSearch'">
-    	OREDER BY PRICE ASC
+    <if test="requestBody.sortType == 'lowestPrice'">
+    	ORDER BY PRICE ASC
     </if>        
     <if test="requestBody.sortType == 'recent'">
     	ORDER BY CREATED_AT DESC
     </if>        
-   
     OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
 </select>
 

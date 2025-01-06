@@ -1,12 +1,15 @@
 package com.green.paging.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SearchVo {
 
     private int 	page;             // 현재 페이지 번호
@@ -17,13 +20,6 @@ public class SearchVo {
     
     private Pagination pagination;    // 페이지네이션 정보(paging.jsp에서 사용할 
                                       // 변수 모음
-
-    // 생성자 : 초기값 설정 SearchVo searchVo = new SearchVo();
-    public SearchVo() {
-        this.page = 1; 
-        this.recordSize = 10;
-        this.pageSize = 10;
-    }
 
     public int getOffset() {
         return (page - 1) * recordSize;

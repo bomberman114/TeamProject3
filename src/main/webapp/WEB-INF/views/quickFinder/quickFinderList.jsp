@@ -169,7 +169,7 @@
 								<input type="text" maxlength="11"  name="lowestPrice"/>~
 								<input type="text" maxlength="11" name="highestPrice"/>
 							</div>
-							<button>조회</button></li>
+							<button class="quick-finder-filter-btn">조회</button></li>
 					</ul>
 				</div>
 			</div>
@@ -179,15 +179,15 @@
 				</h3>
 				<p>
 					<input class="list-search" type="text" placeholder="리스트 내 검색" />
-					<button>검색</button>
+					<button class="list-search-btn">검색</button>
 				</p>
 			</div>
 			<div class="quick-finder-search-container">
 				<ul>
-					<li class="list-filter-active">인기상품순</li>
-					<li>낮은가격순</li>
-					<li>높은가격순</li>
-					<li>신상품순</li>
+					<li class="list-filter-active" data-sortType="">인기상품순</li>
+					<li data-sortType="lowestPrice">낮은가격순</li>
+					<li data-sortType="highestPrice">높은가격순</li>
+					<li data-sortType="recent">신상품순</li>
 				</ul>
 				<div class="quick-finder-search-list"></div>
 			</div>
@@ -233,20 +233,30 @@
       let { pcpu, pvga, pram } = { pcpu: 16000, pvga: 8000, pram: 16 };
 
       // 화면에 있는 canavs들 dataset으로 계산해서 그래프 그리기
-      function renderCanvas() {
-    	  destroyCharts();
-    	  const $canvasList = document.querySelectorAll("canvas");
+		function renderCanvas() {
+		  const $canvasList = document.querySelectorAll("canvas");
+		  $canvasList.forEach((canvas, i) => {
+		    const ctx = canvas.getContext('2d');
+		    const currentData = JSON.parse(canvas.dataset.bench);
+		    const newData = [
+		      Math.floor((currentData.cpu / pcpu) * 100),
+		      Math.floor((currentData.vga / pvga) * 100),
+		      Math.floor((currentData.ram / pram) * 100),
+		    ];
+		
+		    if (!chartInstances[i]) {
+		      createGraph(canvas, newData, i);
+		    } else {
+		      updateGraph(chartInstances[i], newData);
+		    }
+		  });
+		}
+		
+		function updateGraph(chart, newData) {
+		  chart.data.datasets[0].data = newData;
+		  chart.update();
+		}
 
-    	  $canvasList.forEach((canvas, i) => {
-    	    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-    	    let data = [
-    	      Math.floor((JSON.parse(canvas.dataset.bench)["cpu"] / pcpu) * 100),
-    	      Math.floor((JSON.parse(canvas.dataset.bench)["vga"] / pvga) * 100),
-    	      Math.floor((JSON.parse(canvas.dataset.bench)["ram"] / pram) * 100),
-    	    ];
-    	    createGraph(canvas, data, i);
-    	  });
-    	}
 
 
   		// Chart.js 그래프 설정
@@ -449,6 +459,24 @@
     	  if(clicked.matches(".paging-container li")){
     		  nowpage = clicked.textContent;
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    		  window.scrollTo(0, 700)
+    	  }
+    	  if(clicked.matches(".quick-finder-search-container li")){
+    		  sortType = clicked.dataset.sorttype;
+    		  document.querySelectorAll(".quick-finder-search-container li").forEach(li=>li.className = "")
+    		  clicked.className = "list-filter-active"
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+    	  }
+    	  if(clicked.matches(".quick-finder-filter-btn")){
+    		  computerType = document.querySelector("select[name='computerType']").value
+    		  manufacture = document.querySelector("select[name='manufacture']").value
+    		  lowestPrice = document.querySelector("input[name='lowestPrice']").value.replaceAll(",","")
+    		  highestPrice = document.querySelector("input[name='highestPrice']").value.replaceAll(",","")
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+    	  }
+    	  if(clicked.matches(".list-search-btn")){
+    		  listSearch = document.querySelector(".list-search").value
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
     	  }
       })
       
@@ -475,7 +503,7 @@
       function checkslide(){
       const $quickFinder = document.querySelector(".quick-finder")
       const $programFilter = document.querySelector(".program-filter")
-      if( $quickFinder.getBoundingClientRect().bottom < 150){
+      if( $quickFinder.getBoundingClientRect().bottom < 200){
     	  $programFilter.classList.add("scroll-active")
       }else{
     	  $programFilter.classList.remove("scroll-active")
@@ -508,7 +536,8 @@
       }
 
       const result = await res.json();
-      console.log(result.response.list)
+      document.querySelector(".quick-finder-search-title span").textContent = result.searchedCount
+      console.log(result)
       createProductList(result.response.list)
       createPagingList(result)
       renderCanvas();
@@ -592,7 +621,7 @@
     	  document.querySelector(".paging-container").innerHTML = "";
     	  const ul = document.createElement("ul");
     	  
-    	  if (result.nowpage != 1) {
+    	  if (result.nowpage > result.searchVo.pageSize) {
     	    const li = document.createElement("li");
     	    const img = document.createElement("img");
     	    img.src = "/images/icon/common-icon/paging-prev-btn.png";
@@ -613,7 +642,7 @@
     	    ul.append(li);
     	  }
     	  
-    	  if (result.nowpage < result.response.pagination.totalPageCount) {
+    	  if (result.nowpage < result.response.pagination.totalPageCount && result.nowpage > result.searchVo.pageSize  ) {
     	    const li = document.createElement("li");
     	    const img = document.createElement("img");
     	    img.src = "/images/icon/common-icon/paging-next-btn.png";

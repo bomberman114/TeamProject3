@@ -50,6 +50,7 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	            // 기본값 1을 유지
 	        }
 	    }
+	    
 
 	    // 페이징을 위한 초기 설정
 	    SearchVo searchVo = new SearchVo();
@@ -86,6 +87,7 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	    response = new PagingResponse<>(list, pagination);
 	
 		res.put("response", response);
+		res.put("searchedCount", productCount);
 		res.put("nowpage", nowpage);
 		res.put("searchVo", searchVo);
 		return res;

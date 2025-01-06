@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface QuickFinderMapper {
@@ -12,8 +13,8 @@ public interface QuickFinderMapper {
 
 	int getProductCount(HashMap<String, Object> requestBody);
 	
-	List<HashMap<String, Object>> getProductPagingList(int offset, int recordSize, HashMap<String, Object> requestBody);
-
-
+    List<HashMap<String, Object>> getProductPagingList(@Param("offset") int offset, 
+            @Param("recordSize") int recordSize, 
+            @Param("requestBody") HashMap<String, Object> requestBody);
 
 }

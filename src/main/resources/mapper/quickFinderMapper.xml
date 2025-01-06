@@ -15,21 +15,42 @@
     SELECT COUNT(*)
     FROM   PRODUCT
     WHERE  1 = 1
-    <if test="purposeIdx != null and purposeIdx != ''">
-        AND PURPOSE_IDX = #{purposeIdx}
-    </if>
 </select>
 
 <select id="getProductPagingList">
-	SELECT PRODUCT_IDX,
-		   PRODUCT_NAME,
-		   PRODUCT_DESCRIPTION,
-		   PRICE,
-		   CATEGORY_IDX,
-		   TO_CHAR(CREATED_AT,'YYYY.MM') CREATED_AT
-	FROM   PRODUCT
-	WHERE  1 = 1
+    SELECT P.PRODUCT_IDX,
+           P.PRODUCT_NAME,
+           P.PRODUCT_DESCRIPTION,
+           P.PRICE,
+           P.CATEGORY_IDX,
+           TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
+           PI.PRODUCT_SFILE_NAME
+    FROM   PRODUCT P 
+    LEFT JOIN PRODUCT_IMAGE PI ON P.PRODUCT_IDX = PI.PRODUCT_IDX
+    <where>
+        <if test="requestBody.computerType == null and requestBody.computerType == ''">
+            AND P.CATEGORY_IDX IN (2, 3)
+        </if>
+        <if test="requestBody.computerType != null and requestBody.computerType != ''">
+            AND P.CATEGORY_IDX = #{requestBody.computerType}
+        </if>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+            AND P.PRODUCT_NAME LIKE '%'||#{requestBody.listSearch}||'%'
+        </if>
+    </where>
+    <if test="requestBody.sortType == 'highestPrice'">
+    	OREDER BY PRICE DESC
+    </if>        
+    <if test="requestBody.sortType == 'listSearch'">
+    	OREDER BY PRICE ASC
+    </if>        
+    <if test="requestBody.sortType == 'recent'">
+    	ORDER BY CREATED_AT DESC
+    </if>        
+   
+    OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
 </select>
+
 
 </mapper>
 

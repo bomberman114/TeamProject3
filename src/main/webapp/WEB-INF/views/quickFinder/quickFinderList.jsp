@@ -189,138 +189,22 @@
 					<li>높은가격순</li>
 					<li>신상품순</li>
 				</ul>
-				<div class="quick-finder-search-list">
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 11000, "vga" : 5000, "ram" : 8}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-				</div>
+				<div class="quick-finder-search-list"></div>
 			</div>
-
-			<div class="paging-container">
-			
-			</div>
+			<div class="paging-container"></div>
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	<script>
     
       let chartInstances = [];
+      let computerType = null; 
+      let manufacture = null; 
+      let manufactureBrand = null;
+      let lowestPrice = null;
+      let highestPrice = null; 
+      let listSearch = null; 
+      let sortType = null; 
+      let nowpage = null;
     
       // 가격 입력 정규식 이벤트
 	    document.addEventListener('keyup', function(e) {
@@ -346,11 +230,7 @@
 	    	}
 	    });
       
-      
-      //JSON.parse(document.querySelector("canvas").dataset.bench)["cpu"]
       let { pcpu, pvga, pram } = { pcpu: 16000, pvga: 8000, pram: 16 };
-
-      renderCanvas();
 
       // 화면에 있는 canavs들 dataset으로 계산해서 그래프 그리기
       function renderCanvas() {
@@ -479,7 +359,7 @@
     	  chartInstances = [];
     	}
       
-      //getPurposeList();
+      getPurposeList();
       
       // 사용용도 가져오는 fetch 함수
       async function getPurposeList(purposeIdx){
@@ -566,6 +446,10 @@
     		  purposeCurrentIdx--;
     		  purposeSlideMove(purposeCurrentIdx)
     	  }
+    	  if(clicked.matches(".paging-container li")){
+    		  nowpage = clicked.textContent;
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    	  }
       })
       
       // 사용용도 프로그램 캐러셀 함수
@@ -591,7 +475,7 @@
       function checkslide(){
       const $quickFinder = document.querySelector(".quick-finder")
       const $programFilter = document.querySelector(".program-filter")
-      if( $quickFinder.getBoundingClientRect().bottom < 0){
+      if( $quickFinder.getBoundingClientRect().bottom < 150){
     	  $programFilter.classList.add("scroll-active")
       }else{
     	  $programFilter.classList.remove("scroll-active")
@@ -599,11 +483,11 @@
     }
      
       
-      getProductPagingFilterList();
+      getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
       
      // 상품 가져오는 fetch 함수
      async function getProductPagingFilterList(
-    		 computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType
+    		 computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage
     		 ){
  	    const res = await fetch("/QuickFinder/getProductPagingFilterList", {
         method: "POST",
@@ -615,7 +499,8 @@
         	lowestPrice      : lowestPrice,
         	highestPrice     : highestPrice,
         	listSearch       : listSearch,
-        	sortType         : sortType})
+        	sortType         : sortType,
+        	nowpage          : nowpage})
 	    });
 
       if (!res.ok) {
@@ -626,6 +511,7 @@
       console.log(result.response.list)
       createProductList(result.response.list)
       createPagingList(result)
+      renderCanvas();
     
     return result.purposeList;
 	}
@@ -636,35 +522,36 @@
      
      
      function createProductList(list) {
-    	  const $itemList = document.querySelector(".quick-finder-search-list");
+    	 const $itemList = document.querySelector(".quick-finder-search-list");
+    	 $itemList.innerHTML = "";
 		  if(list){
     	  list.forEach(item => {
-    	    const itemDiv = document.createElement("div");
-    	    itemDiv.className = "quick-finder-search-item";
-    	    const itemLeftDiv = document.createElement("div");
-    	    itemLeftDiv.className = "quick-searched-item-left";
-    	    const itemLeftImgDiv = document.createElement("div");
-    	    itemLeftImgDiv.className = "quick-searched-item-img";
-    	    const itemLeftInfoDiv = document.createElement("div");
+    	    const itemDiv             = document.createElement("div");
+    	    itemDiv.className         = "quick-finder-search-item";
+    	    const itemLeftDiv         = document.createElement("div");
+    	    itemLeftDiv.className     = "quick-searched-item-left";
+    	    const itemLeftImgDiv      = document.createElement("div");
+    	    itemLeftImgDiv.className  = "quick-searched-item-img";
+    	    const itemLeftInfoDiv     = document.createElement("div");
     	    itemLeftInfoDiv.className = "quick-searched-item-info";
-    	    const itemLeftUtilUl = document.createElement("ul");
-    	    itemLeftUtilUl.className = "quick-searched-item-util";
-    	    const itemLeftUtilbookmarkDiv = document.createElement("div");
+    	    const itemLeftUtilUl      = document.createElement("ul");
+    	    itemLeftUtilUl.className  = "quick-searched-item-util";
+    	    const itemLeftUtilbookmarkDiv     = document.createElement("div");
     	    itemLeftUtilbookmarkDiv.className = "product-bookmark";
-    	    const itemRightDiv = document.createElement("div");
-    	    itemRightDiv.className = "quick-searched-item-right";
+    	    const itemRightDiv                = document.createElement("div");
+    	    itemRightDiv.className            = "quick-searched-item-right";
 
-    	    const productTitleDiv = document.createElement("div");
-    	    const productTitleP = document.createElement("p");
-    	    const productSpectDiv = document.createElement("div");
-    	    productTitleP.textContent = item.PRODUCT_NAME;
+    	    const productTitleDiv       = document.createElement("div");
+    	    const productTitleP         = document.createElement("p");
+    	    const productSpectDiv       = document.createElement("div");
+    	    productTitleP.textContent   = item.PRODUCT_NAME;
     	    productSpectDiv.textContent = item.PRODUCT_DESCRIPTION;
     	    productTitleDiv.append(productTitleP);
     	    productTitleDiv.append(productSpectDiv);
     	    itemLeftInfoDiv.append(productTitleDiv);
 
-    	    const createAtLi = document.createElement("li");
-    	    const bookMarkLi = document.createElement("li");
+    	    const createAtLi    = document.createElement("li");
+    	    const bookMarkLi    = document.createElement("li");
     	    const bookMarkLiImg = document.createElement("div");
 
     	    createAtLi.textContent = item.CREATED_AT;
@@ -677,6 +564,12 @@
 
     	    itemLeftInfoDiv.append(itemLeftUtilUl);
 
+    	    
+    	    const itemImg = document.createElement("img");
+    	    itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
+    	    
+    	    itemLeftImgDiv.append(itemImg);
+    	    
     	    itemLeftDiv.append(itemLeftImgDiv);
     	    itemLeftDiv.append(itemLeftInfoDiv);
 
@@ -696,6 +589,7 @@
     	}
 
      function createPagingList(result) {
+    	  document.querySelector(".paging-container").innerHTML = "";
     	  const ul = document.createElement("ul");
     	  
     	  if (result.nowpage != 1) {
@@ -712,6 +606,9 @@
     	    i++
     	  ) {
     	    const li = document.createElement("li");
+    		  if(result.nowpage == i){
+    			  li.className = "paging-nowpage"
+    		  }
     	    li.textContent = i;
     	    ul.append(li);
     	  }
@@ -727,6 +624,8 @@
     	  const $pagingContainer = document.querySelector(".paging-container");
     	  $pagingContainer.append(ul);
     	 }
+     
+     
  
     </script>
 </body>

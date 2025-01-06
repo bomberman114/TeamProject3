@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.common.mapper.QuickFinderMapper;
 import com.green.common.service.QuickFinderService;
@@ -29,7 +30,7 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	}
 
 	@Override
-	public HashMap<String, Object> getProductPagingList(HashMap<String, Object> requestBody) {
+	public HashMap<String, Object> getProductPagingList(@RequestParam HashMap<String, Object> requestBody) {
 		
 		HashMap<String, Object> res = new HashMap<>();
 		
@@ -53,14 +54,16 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	    // 페이징을 위한 초기 설정
 	    SearchVo searchVo = new SearchVo();
 	    searchVo.setPage(nowpage);      // 현재 페이지 정보
-	    searchVo.setRecordSize(5);      // 페이지당 5개
+	    searchVo.setRecordSize(20);      // 페이지당 5개
 	    searchVo.setPageSize(5);        // paging.jsp에 출력할 페이지번호수
 	    
 	    // Pagination 설정
 	    Pagination pagination = new Pagination(productCount, searchVo);
 	    int 	offset		= searchVo.getOffset();
 	    int		recordSize	= searchVo.getRecordSize();
-
+	    System.out.println(offset);
+	    System.out.println(recordSize);
+	    System.out.println(requestBody);
     	List<HashMap<String, Object>> list = quickFinderMapper.getProductPagingList(offset,recordSize,requestBody);
     	
     	String clobKey = "PRODUCT_DESCRIPTION";
@@ -81,8 +84,7 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 
     	
 	    response = new PagingResponse<>(list, pagination);
-	    
-	    
+	
 		res.put("response", response);
 		res.put("nowpage", nowpage);
 		res.put("searchVo", searchVo);

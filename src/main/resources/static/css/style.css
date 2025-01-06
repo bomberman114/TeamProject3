@@ -886,6 +886,7 @@ footer {
     & .quick-searched-item-img {
       width: 103px;
       height: 103px;
+      margin-right : 12px;
       line-height: 103px;
       text-align: center;
       background: #ccc;
@@ -911,13 +912,15 @@ footer {
 
   .quick-searched-item-right {
     display: flex;
-    gap: 100px;
+    gap: 60px;
+    justify-content : end;
     align-items: center;
     & p {
       font-weight: 500;
       font-size: 20px;
+      width : 120px;
       white-space: nowrap;
-    }
+    };
   }
 }
 
@@ -941,7 +944,7 @@ footer {
   }
 }
 
-.paging-container {
+.paging-container ul {
   margin: 30px auto 0 auto;
   display: flex;
   justify-content: center;
@@ -955,6 +958,7 @@ footer {
     justify-content: center;
     align-items: center;
     color: #767676;
+    cursor: pointer;
   }
 
   & li.paging-nowpage {

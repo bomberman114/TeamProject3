@@ -1,5 +1,6 @@
 package com.green.cs.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -33,6 +34,8 @@ public interface CsMapper {
 	CsVo getfaqList(int customer_service_idx);
 
 	CsVo getminfo(int user_idx);
+
+	void insertcsImage(HashMap<String, Object> map);
 
 
 }

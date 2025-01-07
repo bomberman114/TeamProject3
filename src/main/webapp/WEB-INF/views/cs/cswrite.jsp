@@ -70,11 +70,6 @@ tr {
     margin-top: 15px;
     margin-bottom: 15px;
 }
-.button {
-	display: flex;
-	justify-content: center; 
-	margin-top: 40px;
-}
 .btn-light-gray {
     background-color: #ccc;
     border: none;

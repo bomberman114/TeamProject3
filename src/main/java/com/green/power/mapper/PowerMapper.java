@@ -1,0 +1,15 @@
+package com.green.power.mapper;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface PowerMapper {
+
+	List<HashMap<String, Object>> getdeskTopEstimatePowerFilterList();
+
+	List<HashMap<String, Object>> getPowerResultList();
+
+}

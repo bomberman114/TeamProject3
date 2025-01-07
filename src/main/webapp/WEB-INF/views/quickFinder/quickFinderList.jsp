@@ -475,8 +475,19 @@
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
     	  }
     	  if(clicked.matches(".list-search-btn")){
-    		  listSearch = document.querySelector(".list-search").value
+    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+    	  }
+    	  if(clicked.closest(".paging-next-btn")){
+    		  nowpage = document.querySelector(".paging-next-btn").dataset.nowpage;
+
+    		  console.log(nowpage)
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    	  }
+    	  if(clicked.closest(".paging-prev-btn")){
+    		  nowpage = document.querySelector(".paging-prev-btn").dataset.nowpage;
+    		  console.log("다음" + nowpage)
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
     	  }
       })
       
@@ -510,7 +521,7 @@
       }
     }
      
-      
+   
       getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
       
      // 상품 가져오는 fetch 함수
@@ -536,14 +547,15 @@
       }
 
       const result = await res.json();
-      document.querySelector(".quick-finder-search-title span").textContent = result.searchedCount
+      document.querySelector(".quick-finder-search-title span").textContent = result.response.pagination.totalRecordCount
       console.log(result)
-      createProductList(result.response.list)
       createPagingList(result)
+      createProductList(result.response.list)
+      destroyCharts()
       renderCanvas();
     
-    return result.purposeList;
-	}
+    	return result.purposeList;
+		}
 
      function formatNumberWithCommasAndWon(number) {
     	  return number.toLocaleString('ko-KR') + '원';
@@ -602,10 +614,14 @@
     	    itemLeftDiv.append(itemLeftImgDiv);
     	    itemLeftDiv.append(itemLeftInfoDiv);
 
-    	    const itemRightCanvas = document.createElement("canvas");
     	    const itemRightP = document.createElement("p");
-    	    itemRightCanvas.className = "bench-graph";
-    	    itemRightCanvas.dataset.bench = '{"cpu" : 11000, "vga" : 5000, "ram" : 8}';
+   	      const itemRightCanvas = document.createElement("canvas");
+   	      itemRightCanvas.className = "bench-graph";
+   	      itemRightCanvas.dataset.bench = JSON.stringify({
+   	        cpu: item.CPU_BENCH,
+   	        vga: item.GPU_BENCH,
+   	        ram: item.RAM_BENCH
+   	      });
     	    itemRightP.textContent = formatNumberWithCommasAndWon(item.PRICE);
     	    itemRightDiv.append(itemRightCanvas);
     	    itemRightDiv.append(itemRightP)
@@ -621,10 +637,12 @@
     	  document.querySelector(".paging-container").innerHTML = "";
     	  const ul = document.createElement("ul");
     	  
-    	  if (result.nowpage > result.searchVo.pageSize) {
+    	  if (result.response.pagination.existPrevPage) {
     	    const li = document.createElement("li");
     	    const img = document.createElement("img");
     	    img.src = "/images/icon/common-icon/paging-prev-btn.png";
+    	    li.className = "paging-prev-btn";
+    	    li.dataset.nowpage = result.response.pagination.startPage - result.searchVo.pageSize ;
     	    li.append(img);
     	    ul.append(li);
     	  }
@@ -642,10 +660,12 @@
     	    ul.append(li);
     	  }
     	  
-    	  if (result.nowpage < result.response.pagination.totalPageCount && result.nowpage > result.searchVo.pageSize  ) {
+    	  if (result.response.pagination.existNextPage) {
     	    const li = document.createElement("li");
     	    const img = document.createElement("img");
     	    img.src = "/images/icon/common-icon/paging-next-btn.png";
+    	    li.className = "paging-next-btn";
+    	    li.dataset.nowpage = result.response.pagination.endPage + 1;
     	    li.append(img);
     	    ul.append(li);
     	  }
@@ -654,8 +674,14 @@
     	  $pagingContainer.append(ul);
     	 }
      
+ 		   document.querySelector(".list-search").addEventListener("keyup",(e)=>{
+ 			   if(e.keyCode == 13 ){
+ 	    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
+ 	    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+ 			   }
+ 		   })
      
- 
+     
     </script>
 </body>
 </html>

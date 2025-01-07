@@ -35,6 +35,7 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 		HashMap<String, Object> res = new HashMap<>();
 		
 		int  productCount  = quickFinderMapper.getProductCount(requestBody);
+		System.out.println(productCount);
 		
 	    PagingResponse<HashMap<String, Object>> response = null;
 	    if( productCount < 1 ) { // 현재 조회한 자료가 없다면
@@ -55,7 +56,7 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	    // 페이징을 위한 초기 설정
 	    SearchVo searchVo = new SearchVo();
 	    searchVo.setPage(nowpage);      // 현재 페이지 정보
-	    searchVo.setRecordSize(20);      // 페이지당 5개
+	    searchVo.setRecordSize(5);      // 페이지당 20개
 	    searchVo.setPageSize(5);        // paging.jsp에 출력할 페이지번호수
 	    
 	    // Pagination 설정

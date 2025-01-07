@@ -24,18 +24,28 @@
 	    <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
 	        AND PRODUCT_NAME LIKE '%'||#{requestBody.listSearch}||'%'
 	    </if> 
+	    <if test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != '' ">
+          AND PRICE BETWEEN #{requestBody.lowestPrice} AND #{requestBody.highestPrice}
+      </if>
 </select>
 
 <select id="getProductPagingList">
     SELECT P.PRODUCT_IDX,
-           P.PRODUCT_NAME,
-           P.PRODUCT_DESCRIPTION,
-           P.PRICE,
-           P.CATEGORY_IDX,
-           TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
-           PI.PRODUCT_SFILE_NAME
-    FROM   PRODUCT P 
-    LEFT JOIN PRODUCT_IMAGE PI ON P.PRODUCT_IDX = PI.PRODUCT_IDX
+       P.PRODUCT_NAME,
+       P.PRODUCT_DESCRIPTION,
+       P.PRICE,
+       P.CATEGORY_IDX,
+       TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
+       PI.PRODUCT_SFILE_NAME,
+       cpu.product_benchmark_score AS CPU_BENCH,
+       gpu.product_benchmark_score AS GPU_BENCH,
+       REGEXP_SUBSTR(cav.category_attribute_value_name, '[0-9]+')AS RAM_BENCH
+		FROM   product p
+			LEFT JOIN product_benchmark_score  cpu ON p.PRODUCT_IDX = cpu.PRODUCT_IDX AND cpu.CATEGORY_IDX = 5
+			LEFT JOIN product_benchmark_score  gpu ON p.PRODUCT_IDX = gpu.PRODUCT_IDX AND gpu.CATEGORY_IDX = 8
+			LEFT JOIN PRODUCT_ATTRIBUTE        ram on p.product_idx = ram.product_idx
+			LEFT JOIN PRODUCT_IMAGE            PI  ON P.PRODUCT_IDX = PI.PRODUCT_IDX
+			LEFT JOIN category_attribute_value CAV on ram.category_attribute_value_idx = cav.category_attribute_value_idx
     <where>
         <if test="requestBody.computerType == null or requestBody.computerType == ''">
             AND P.CATEGORY_IDX IN (2, 3)
@@ -51,13 +61,13 @@
         </if>
     </where>
     <if test="requestBody.sortType == 'highestPrice'">
-    	ORDER BY PRICE DESC
+    	ORDER BY P.PRICE DESC
     </if>        
     <if test="requestBody.sortType == 'lowestPrice'">
-    	ORDER BY PRICE ASC
+    	ORDER BY P.PRICE ASC
     </if>        
     <if test="requestBody.sortType == 'recent'">
-    	ORDER BY CREATED_AT DESC
+    	ORDER BY P.CREATED_AT DESC
     </if>        
     OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
 </select>

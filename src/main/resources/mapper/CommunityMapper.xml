@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.community.mapper.CommunityMapper">
+  <!-- 커뮤니티_조립앨범_게시글 목록(등록순)-->
+  <select id="getalbumList">
+   SELECT  
+    C.COMMUNITY_IDX,
+    C.COMMUNITY_TITLE,
+    C.COMMUNITY_REGDATE,
+    C.COMMUNITY_VIEWS,
+    CI.COMMUNITY_SFILE_NAME,
+    U.USER_NICKNAME AS USER_NICKNAME,
+    COUNT(CA.COMMUNITY_ANSWER_IDX) AS TOTAL_ANSWERS
+   FROM  
+    (SELECT  
+        COMMUNITY_IDX,
+        COMMUNITY_TITLE,
+        COMMUNITY_REGDATE,
+        COMMUNITY_VIEWS,
+        USER_IDX
+     FROM  
+        COMMUNITY) C
+   LEFT JOIN  
+    COMMUNITY_ANSWER CA ON C.COMMUNITY_IDX = CA.COMMUNITY_IDX
+   LEFT JOIN  
+    COMMUNITY_IMAGE CI ON C.COMMUNITY_IDX = CI.COMMUNITY_IDX
+   LEFT JOIN  
+    USERS U ON C.USER_IDX = U.USER_IDX
+   WHERE
+    ${searchBy} LIKE '%' || #{searchtext} || '%'
+   GROUP BY  
+    C.COMMUNITY_IDX, C.COMMUNITY_TITLE, C.COMMUNITY_REGDATE, C.COMMUNITY_VIEWS, CI.COMMUNITY_SFILE_NAME, U.USER_NICKNAME
+   ORDER BY  
+    ${orderBy} 
+    OFFSET #{startIndex} ROWS FETCH NEXT #{itemsPerPage} ROWS ONLY
+  </select>   
+  
+  <!-- 커뮤니티_조립앨범_게시글 목록(총 개수)-->
+  <select id="getTotalAlbumCount" resultType="int">
+   SELECT  
+    COUNT(DISTINCT C.COMMUNITY_IDX) AS TOTAL_ANSWERS
+   FROM  
+    (SELECT  
+        COMMUNITY_IDX,
+        COMMUNITY_TITLE,
+        COMMUNITY_REGDATE,
+        COMMUNITY_VIEWS,
+        USER_IDX
+     FROM  
+        COMMUNITY) C
+   LEFT JOIN  
+    COMMUNITY_ANSWER CA ON C.COMMUNITY_IDX = CA.COMMUNITY_IDX
+   LEFT JOIN  
+    COMMUNITY_IMAGE CI ON C.COMMUNITY_IDX = CI.COMMUNITY_IDX
+   LEFT JOIN  
+    USERS U ON C.USER_IDX = U.USER_IDX
+   WHERE
+    ${searchBy} LIKE '%' || #{searchtext} || '%'
+  </select>
+    
+  <!-- 커뮤니티_조립앨범_게시글 목록(조회순)-->
+  <select id="getalbumbestList">
+   SELECT  
+    C.COMMUNITY_IDX,
+    C.COMMUNITY_TITLE,
+    C.COMMUNITY_REGDATE,
+    C.COMMUNITY_CONTENT,
+    C.COMMUNITY_VIEWS,
+    COUNT(CA.COMMUNITY_ANSWER_IDX) AS TOTAL_ANSWERS
+   FROM  
+    (SELECT  
+        COMMUNITY_IDX,
+        COMMUNITY_TITLE,
+        COMMUNITY_REGDATE,
+        COMMUNITY_CONTENT,
+        COMMUNITY_VIEWS
+     FROM  
+        COMMUNITY
+     ORDER BY  
+        COMMUNITY_VIEWS DESC
+     FETCH FIRST 10 ROWS ONLY) C
+   LEFT JOIN  
+    COMMUNITY_ANSWER CA ON C.COMMUNITY_IDX = CA.COMMUNITY_IDX
+   GROUP BY  
+    C.COMMUNITY_IDX, C.COMMUNITY_TITLE, C.COMMUNITY_REGDATE, C.COMMUNITY_CONTENT, C.COMMUNITY_VIEWS
+   ORDER BY  
+    C.COMMUNITY_VIEWS DESC
+  </select> 
+  
+  <!-- 커뮤니티_조립앨범_검색 -->
+  <select id="getsearchList">
+   SELECT *
+   FROM  COMMUNITY
+   WHERE COMMUNITY_TITLE LIKE '%' || #{searchtext} || '%' 
+  </select>  
+  
+  <!-- 커뮤니티_조립앨범_스펙별 상품리스트 -->
+  <select id="getproductList">
+   SELECT PRODUCT_NAME 
+   FROM  PRODUCT
+   WHERE CATEGORY_IDX = #{category_idx} 
+   ORDER BY PRODUCT_NAME ASC
+  </select>    
+  
+  <!-- 커뮤니티_조립앨범_게시글 등록 --> 
+  <insert id="insertcommunity">
+   INSERT INTO COMMUNITY 
+    ( COMMUNITY_IDX, COMMUNITY_TITLE, COMMUNITY_MENU
+     ,COMMUNITY_CONTENT, COMMUNITY_SPEC_CPU
+     ,COMMUNITY_SPEC_MAINBOARD, COMMUNITY_SPEC_MEMORY
+     ,COMMUNITY_SPEC_GPU, COMMUNITY_SPEC_SSD
+     ,COMMUNITY_SPEC_HDD, COMMUNITY_SPEC_COOLER
+     ,COMMUNITY_SPEC_CASE, COMMUNITY_SPEC_POWER
+     ,USER_IDX) 
+   VALUES 
+    ( (SELECT NVL(MAX(community_idx),0)+1 FROM community ), #{community_title}, #{community_menu}
+     ,#{community_content}, #{community_spec_cpu}
+     ,#{community_spec_mainboard}, #{community_spec_memory}
+     ,#{community_spec_gpu}, #{community_spec_ssd}
+     ,#{community_spec_hdd}, #{community_spec_cooler}
+     ,#{community_spec_case}, #{community_spec_power}
+     ,#{user_idx})
+  </insert>
+  
+  <!-- 커뮤니티_조립앨범_이미지 등록 --> 
+  <insert id="insertcommunityImage">
+   INSERT INTO COMMUNITY_IMAGE (
+	COMMUNITY_IMAGE_IDX,
+	COMMUNITY_IDX,
+	COMMUNITY_IMAGE_NAME,
+	COMMUNITY_IMAGE_EXT,
+	COMMUNITY_SFILE_NAME
+	) VALUES (
+	(SELECT NVL(MAX(community_image_idx),0)+1 FROM COMMUNITY_IMAGE),
+	(SELECT MAX(community_idx) FROM COMMUNITY),
+	#{fileList[0].community_image_name},
+	#{fileList[0].community_image_ext},
+	#{fileList[0].community_sfile_name}
+	)
+  </insert>
+  
+  <!-- 커뮤니티_조립앨범_게시글 정보 --> 
+  <select id="getinfo">
+   SELECT  
+    C.COMMUNITY_IDX,
+    C.USER_IDX,
+    C.COMMUNITY_TITLE,
+    C.COMMUNITY_REGDATE,
+    C.COMMUNITY_CONTENT,
+    C.COMMUNITY_VIEWS,
+    C.COMMUNITY_SPEC_CPU,
+    C.COMMUNITY_SPEC_MAINBOARD,
+    C.COMMUNITY_SPEC_MEMORY,
+    C.COMMUNITY_SPEC_GPU,
+    C.COMMUNITY_SPEC_SSD,
+    C.COMMUNITY_SPEC_HDD,
+    C.COMMUNITY_SPEC_COOLER,
+    C.COMMUNITY_SPEC_CASE,
+    C.COMMUNITY_SPEC_POWER,
+    CI.COMMUNITY_SFILE_NAME,
+    U.USER_NICKNAME AS USER_NICKNAME,
+    COUNT(CA.COMMUNITY_ANSWER_IDX) AS TOTAL_ANSWERS
+   FROM  
+    (SELECT * FROM COMMUNITY) C
+   LEFT JOIN  
+    COMMUNITY_ANSWER CA ON C.COMMUNITY_IDX = CA.COMMUNITY_IDX
+   LEFT JOIN  
+    COMMUNITY_IMAGE CI ON C.COMMUNITY_IDX = CI.COMMUNITY_IDX
+   LEFT JOIN  
+    USERS U ON C.USER_IDX = U.USER_IDX
+   WHERE C.COMMUNITY_IDX = #{community_idx}
+   GROUP BY  
+    C.COMMUNITY_IDX, C.USER_IDX, C.COMMUNITY_TITLE, C.COMMUNITY_REGDATE, C.COMMUNITY_CONTENT, C.COMMUNITY_VIEWS, 
+    C.COMMUNITY_SPEC_CPU, C.COMMUNITY_SPEC_MAINBOARD, C.COMMUNITY_SPEC_MEMORY, C.COMMUNITY_SPEC_GPU, C.COMMUNITY_SPEC_SSD, 
+    C.COMMUNITY_SPEC_HDD, C.COMMUNITY_SPEC_COOLER, C.COMMUNITY_SPEC_CASE, C.COMMUNITY_SPEC_POWER, CI.COMMUNITY_SFILE_NAME, U.USER_NICKNAME
+  </select> 
+  
+  <!-- 커뮤니티_조립앨범_게시글 스펙정보 --> 
+  <select id="getspecinfo">
+   SELECT *
+   FROM   COMMUNITY
+   WHERE  COMMUNITY_IDX = #{community_idx}
+  </select> 
+  
+  <!-- 커뮤니티_조립앨범_게시글 댓글리스트 --> 
+  <select id="getanswerList">
+   SELECT  
+    C.COMMUNITY_IDX,
+    CA.COMMUNITY_ANSWER_REGDATE,
+    CA.COMMUNITY_ANSWER_CONTENT,
+    U.USER_NICKNAME AS USER_NICKNAME
+   FROM  
+    (SELECT  
+        COMMUNITY_IDX,
+        COMMUNITY_TITLE,
+        COMMUNITY_REGDATE,
+        COMMUNITY_VIEWS,
+        USER_IDX
+     FROM  
+        COMMUNITY) C
+   JOIN 
+    COMMUNITY_ANSWER CA ON C.COMMUNITY_IDX = CA.COMMUNITY_IDX
+   JOIN 
+    USERS U ON CA.USER_IDX = U.USER_IDX
+   WHERE C.COMMUNITY_IDX = #{community_idx}
+   GROUP BY  
+    C.COMMUNITY_IDX, CA.COMMUNITY_ANSWER_REGDATE, CA.COMMUNITY_ANSWER_CONTENT, U.USER_NICKNAME
+   ORDER BY CA.COMMUNITY_ANSWER_REGDATE DESC
+  </select> 
+  
+  <!-- 커뮤니티_조립앨범_게시글 댓글 등록 -->
+  <insert id="insertanswer">
+  INSERT INTO COMMUNITY_ANSWER
+    ( COMMUNITY_ANSWER_IDX, COMMUNITY_IDX
+     ,COMMUNITY_ANSWER_CONTENT, USER_IDX) 
+   VALUES 
+    ( (SELECT NVL(MAX(community_answer_idx),0)+1 FROM COMMUNITY_ANSWER ), #{community_idx}
+     ,#{community_answer_content}, #{user_idx})
+  </insert>
+  
+  <!-- 커뮤니티_조립앨범_게시글 수정 -->
+  <update id="updatecommunity">
+   UPDATE COMMUNITY
+   SET    COMMUNITY_TITLE          = #{community_title}
+         ,COMMUNITY_CONTENT        = #{community_content}
+         ,COMMUNITY_SPEC_CPU       = #{community_spec_cpu}
+         ,COMMUNITY_SPEC_MAINBOARD = #{community_spec_mainboard}
+         ,COMMUNITY_SPEC_MEMORY    = #{community_spec_memory}
+         ,COMMUNITY_SPEC_GPU       = #{community_spec_gpu}
+         ,COMMUNITY_SPEC_SSD       = #{community_spec_ssd}
+         ,COMMUNITY_SPEC_HDD       = #{community_spec_hdd}
+         ,COMMUNITY_SPEC_COOLER    = #{community_spec_cooler}
+         ,COMMUNITY_SPEC_CASE      = #{community_spec_case}
+         ,COMMUNITY_SPEC_POWER     = #{community_spec_power}
+   WHERE  COMMUNITY_IDX = #{community_idx}
+  </update>
+  
+  <!-- 커뮤니티_조립앨범_이미지 수정 -->
+  <update id="updatecommunityImage">
+   UPDATE COMMUNITY_IMAGE
+   SET    COMMUNITY_IMAGE_NAME = #{paramMap.fileList[0].community_image_name}
+         ,COMMUNITY_IMAGE_EXT  = #{paramMap.fileList[0].community_image_ext}
+         ,COMMUNITY_SFILE_NAME = #{paramMap.fileList[0].community_sfile_name}
+   WHERE  COMMUNITY_IDX = #{community_idx}
+  </update>
+
+  <!-- 커뮤니티_조립앨범_이미지 삭제 -->
+  <delete id="deleteimage">
+   DELETE FROM COMMUNITY_IMAGE
+   WHERE COMMUNITY_IDX = #{community_idx}
+  </delete>
+    
+  <!-- 커뮤니티_조립앨범_게시글 삭제 -->
+  <delete id="deletealbum">
+   DELETE FROM COMMUNITY
+   WHERE COMMUNITY_IDX = #{community_idx}
+  </delete>
+  
+</mapper>

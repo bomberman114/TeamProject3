@@ -19,13 +19,13 @@ import com.green.userDetails.service.CustomUserDetailsService;
 @EnableWebSecurity // 웹 보안을 활성화
 public class SecurityConfig {
 	    
-    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOAuth2UserService      customOAuth2UserService;
    
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsService           customUserDetailsService;
     
     private CustomAuthenticationSuccessHandler successHandler;
     
-    private CustomAccessDeniedHandler deniedHandler;
+    private CustomAccessDeniedHandler          deniedHandler;
 
     public SecurityConfig(CustomOAuth2UserService            customOAuth2UserService, CustomUserDetailsService  customUserDetailsService,
     		              CustomAuthenticationSuccessHandler successHandler,          CustomAccessDeniedHandler deniedHandler) {

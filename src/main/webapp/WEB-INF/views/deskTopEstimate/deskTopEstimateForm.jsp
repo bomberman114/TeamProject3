@@ -27,67 +27,67 @@
                 <button style="border:none; background-color: #D2CBCB; margin-left: 510px; color:#767676;">옵션 전체보기</button>
                 </h3>
 
-             <div style="margin: 15px;">
+			    <div style="margin: 15px;">
                 <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox"> 필터값2</label>
-                <label><input type="checkbox"> 필터값3</label>
-                <label><input type="checkbox"> 필터값4</label>
-                <label><input type="checkbox"> 필터값5</label>
+                <h3 style="color:#333333; margin-bottom: 12px;margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값5</label>
                 <p style="margin-left:20px;">##개+</p>
                 </div>
                 </div>
                 <div style="margin: 15px;">
                 <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox"> 필터값2</label>
-                <label><input type="checkbox"> 필터값3</label>
-                <label><input type="checkbox"> 필터값4</label>
-                <label><input type="checkbox"> 필터값5</label>
+                <h3 style="color:#333333; margin-bottom: 12px;margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값5</label>
                 <p style="margin-left:20px;">##개+</p>
                 </div>
                 </div>
                 <div style="margin: 15px;">
                 <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox"> 필터값2</label>
-                <label><input type="checkbox"> 필터값3</label>
-                <label><input type="checkbox"> 필터값4</label>
-                <label><input type="checkbox"> 필터값5</label>
+                <h3 style="color:#333333; margin-bottom: 12px;margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값5</label>
                 <p style="margin-left:20px;">##개+</p>
                 </div>
                 </div>
                 <div style="margin: 15px;">
                 <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값2</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값3</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값4</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값5</label>
-                <p style="margin-left:20px;">##개+</p> 
+                <h3 style="color:#333333; margin-bottom: 12px;margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값5</label>
+                <p style="margin-left:20px;">##개+</p>
                 </div>
                 </div>
                 <div style="margin: 15px;">
                 <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값2</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값3</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값4</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값5</label>
+                <h3 style="color:#333333; margin-bottom: 12px;margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555; margin-bottom: 12px;"> 필터값5</label>
                 <p style="margin-left:20px;">##개+</p>
                 </div>
                 </div>
             </div>
-         
-         <div class="desk-click">
-         <p>인기상품순</p><p>낮은가격순</p><p>높은가격순</p><p>신상품순</p>
-         </div>
-         
+			
+			<div class="desk-click">
+			<p>인기상품순</p><p>낮은가격순</p><p>높은가격순</p><p>신상품순</p>
+			</div>
+			
             <div class="product-list">
                 <div class="product-item">
                 <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
@@ -192,8 +192,8 @@
             <p class="amount">#원</p>
             </div>
             <button class="desk-button">AI 호환성 체크</button>
-         <button class="desk-button">호환성 체크</button>
-         <button class="desk-button">견적 캡쳐</button>
+			<button class="desk-button">호환성 체크</button>
+			<button class="desk-button">견적 캡쳐</button>
             </div>
         </aside>
     </main>

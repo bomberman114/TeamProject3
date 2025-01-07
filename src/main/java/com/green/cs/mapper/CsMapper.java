@@ -76,33 +76,4 @@ public interface CsMapper {
 
 	void insertnotice(CsVo csVo);
 
-
-
-	List<CsVo> getmacsList(
-			@Param("start") int start, 
-			@Param("size") int size
-			);
-	
-	int getcountaskList();
-
-	int getcountmacsList();
-
-	int getcountnoticeList();
-
-	void insertask(CsVo csVo);
-
-	void updateask(CsVo csVo);
-
-	CsVo selectask(int idx);
-
-	void deleteAsk(int idx);
-
-	CsVo selectnotice(int idx);
-
-	void updatenotice(CsVo csVo);
-
-	void deletenotice(int idx);
-
-	void insertnotice(CsVo csVo);
-
 }

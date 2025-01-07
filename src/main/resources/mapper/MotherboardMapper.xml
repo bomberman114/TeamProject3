@@ -1,45 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.motherboard.mapper.MotherboardMapper">  
+<mapper namespace="com.green.gpu.mapper.GpuMapper">  
 
-<select id="getdeskTopEstimateMotherBoadFilterList">
-SELECT
-*
-FROM
-    MOTHERBOARD_MANUFACTURER  MM
-JOIN
-    MOTHERBOARD_SOCKET_TYPE  MST
-ON
-    MM.COMPUTER_PART_IDX = MST.COMPUTER_PART_IDX
-JOIN
-    MOTHERBOARD_CHIPSET  MC
-ON
-    MST.COMPUTER_PART_IDX = MC.COMPUTER_PART_IDX
-JOIN
-    MOTHERBOARD_FORM_FACTOR  MFF
-ON
-    MC.COMPUTER_PART_IDX = MFF.COMPUTER_PART_IDX
-    
-</select>
-
-
-<select id="getmotherBoardResultList">
-
-SELECT
-    MOTHERBOARD_IDX,
-    MOTHERBOARD_TOTAL_DATA,
-    MOTHERBOARD_SFILE_NAME,
-    MOTHERBOARD_SOCKET_TYPE,
-    MOTHERBOARD_CHIPSET,
-    MOTHERBOARD_MEMORY_TYPE,
-    MOTHERBOARD_MEMORY_SLOTS,
-    MOTHERBOARD_MAXIMUM_MEMORY_SIZE,
-    MOTHERBOARD_FORM_FACTOR,
-    COMPUTER_PART_IDX
-FROM
-    MOTHERBOARD
-
-</select>
 
 </mapper>

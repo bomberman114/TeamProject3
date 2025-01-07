@@ -1058,3 +1058,291 @@ footer {
     }
   }
 }
+
+.brand-box {
+	display: flex;
+	flex-wrap: wrap; /* 줄 바꿈을 허용 */
+	max-width: 1200px; /* 최대 너비 설정 */
+	margin: 0 auto; /* 중앙 정렬 */
+	margin-top: 60px;
+	padding: 20px; /* 패딩 추가 */
+	background-color: #2a2b33;
+	border-radius: 8px;
+	margin-bottom: 30px;
+}
+
+.brand-links {
+	display: flex;
+	flex-direction: row; /* 가로 방향으로 배치 */
+	margin: 10px; /* 상하 여백 조정 */
+	flex-wrap: wrap; /* 줄 바꿈을 허용 */
+	justify-content: space-around; /* 아이템 간격 조정 */
+}
+
+.brand-item {
+	width: 265px;
+	height: 100px;
+	margin: 10px; /* 각 박스 간의 여백 */
+	padding: 0; /* 박스 내부 여백 */
+	border: 1px solid #ccc; /* 테두리 */
+	border-radius: 8px; /* 모서리 둥글게 */
+	background-color: #f9f9f9; /* 배경색 */
+	text-align: center; /* 텍스트 중앙 정렬 */
+	transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
+	align-items: center; /* 수직 정렬 */
+	display: flex; /* Flexbox로 설정 */
+	justify-content: center; /* 수평 정렬 */
+}
+
+.brand-item a {
+	text-decoration: none; /* 밑줄 제거 */
+	color: #333; /* 글자 색상 */
+	font-size: 18px; /* 글자 크기 조정 */
+}
+
+.brand-item img {
+	width: 265px;
+	height: 100px;
+	object-fit: contain;
+	vertical-align: middle;
+}
+
+.brand-item:hover {
+	background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+}
+
+.img:hover {
+	background-color: #e0e0e0;
+}
+
+.brand-text {
+	font-size: 24px; /* 글자 크기 */
+	color: #ffffff; /* 글자 색상 */
+	text-align: center; /* 중앙 정렬 */
+	font-weight: bold; /* 글씨 두께 */
+	padding: 10px; /* 패딩 추가 */
+	background-color: #2a2b33;
+	border-radius: 8px; /* 모서리 둥글게 */
+	margin-left: 480px;
+}
+
+.text-finder {
+	alingn-items: center;
+	background: #2070eb;
+	border-radius: 20px;
+	gap: 4px;
+	justify-content: center;
+	padding: 4px 25px;
+}
+
+.brand-explain {
+	text-align: center;
+	height: 150px;
+}
+
+.brand-description-container {
+	display: flex; /* Flexbox를 사용하여 정렬 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
+	align-items: flex-start; /* 왼쪽 정렬 */
+	margin-top: 20px; /* 상단 여백 */
+	padding-left: 200px; /* 왼쪽 여백 */
+	font-size: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+
+.additional-info-container {
+    display: flex; /* Flexbox 사용 */
+    flex-wrap: wrap; /* 여러 줄로 나눔 */
+    margin-top: 20px; /* 상단 여백 */
+}
+
+.additional-info-item {
+    flex: 1 1 30%; /* 각 항목이 30% 너비를 차지하도록 설정 */
+    margin: 10px; /* 항목 간 여백 */
+    border: 1px solid #ccc; /* 경계선 */
+    padding: 10px; /* 패딩 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.additional-info-item img {
+    max-width: 100%; /* 이미지의 최대 너비를 100%로 설정 */
+    height: auto; /* 비율을 유지하여 높이 자동 설정 */
+}
+
+.desktopestimate-main {
+    display: flex;
+    padding: 20px;
+}
+       
+.content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    width: 790px;
+}
+
+.sidebar-name {
+	text-align: center;
+	font-size: 20px;
+	color:#333333;
+	margin-bottom: 20px;
+	font-weight: bold;
+	
+}
+
+.desktop-specs {
+	padding: 10px;
+	font-size: 20px;
+	color:#333333;
+	font-weight: bold;
+}
+
+.desktop-mini {
+	margin-bottom: 10px;
+	background-color: #ffffff;
+	width: 325px;
+	height: 48px;
+	padding: 10px;
+}
+
+.under-specs {
+    padding: 13px;
+    margin: 0; /* 여백 없애기 */
+    width: 110%; /* 너비를 100%로 설정 */
+}
+.desktop-mini:hover {
+	background-color: #FFBEBE; /* hover 시 변경할 색상 */
+}
+
+.under-under {
+	text-align:right;
+	color: #333333;
+	font-size: 14px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.desk-button {
+	width: 103px;
+	height: 30px;
+	background-color: #ffffff;
+	font-size: 14px;
+	border: none;
+	padding: 3px;
+	font-weight: regular;
+	margin-right: 5px;
+}
+
+.amount {
+    margin-right: 23px; /* 원하는 값으로 조정 */
+	margin-bottom: 10px;
+}
+
+
+.sidebar-right {
+     width: 380px;
+     height:730px;
+     background: linear-gradient(to bottom, #CCCCCC 610px, #D9D9D9 120px);
+     padding: 20px;
+     margin-left: 50px;
+     margin-top: 63px;
+}
+.desk-search-bar {
+     display: flex;
+     margin-bottom: 20px;
+     width: 790px;
+     height: 60px;
+}
+
+.desk-click {
+    display: flex; /* 전체 요소를 flex로 설정하여 한 줄로 배치 */
+    align-items: center; /* 수직 정렬 */
+    margin-left: -10px; /* 왼쪽으로 이동시키기 위한 음수 마진 추가 */
+    margin-bottom: 10px;
+}
+
+.desk-click p {
+    margin: 0 10px; /* p 요소의 기본 마진 제거 및 간격 추가 */
+}
+
+.desk-click p:not(:last-child)::after {
+    content: '|'; /* 구분선 추가 */
+    margin-left: 10px; /* 구분선과 텍스트 사이의 간격 */
+    margin-right: 10px; /* 구분선과 텍스트 사이의 간격 */
+}
+
+
+.desk-filters {
+     margin-bottom: 20px;
+     border:1px solid #D9D9D9;
+     width: 790px;
+     height: 300px;
+     
+}
+
+.product-list {
+     margin-bottom: 20px;
+}
+
+    .product-item {
+        display: flex; /* 플렉스 박스 설정 */
+        align-items: center; /* 세로 중앙 정렬 */
+        margin-bottom: 20px; /* 아래쪽 여백 */
+        border: 1px solid #ddd; /* 테두리 추가 (선택 사항) */
+        padding: 10px; /* 패딩 추가 (선택 사항) */
+        width: 790px;
+        height:183px; 
+        
+    }
+
+    .product-item img {
+        height: 80px; /* 이미지 높이 */
+        width: 80px; /* 이미지 너비 */
+        margin-right: 20px; /* 이미지와 설명 사이의 간격 */
+    }
+
+    .product-description {
+        flex: 1; /* 설명 영역이 남은 공간을 차지하도록 설정 */
+        max-width: calc(100% - 100px); /* 최대 너비 설정 (이미지 너비를 고려) */
+    }
+
+    .product-description h4 {
+        font-weight: bold; /* 제목 굵게 설정 */
+        margin: 0; /* 기본 마진 제거 */
+    }
+
+    .product-description p {
+        margin: 5px 0; /* 문단 간격 설정 */
+        font-size: 14px; /* 기본 폰트 크기 설정 */
+    }
+
+    .price-container {
+        display: flex; /* 가격과 버튼을 수직으로 배치 */
+        flex-direction: column; /* 세로 방향으로 정렬 */
+        align-items: flex-end; /* 오른쪽 정렬 */
+        margin-top: 10px; /* 가격과 버튼 간격 */
+    }
+
+    .price-container p {
+        margin: 0; /* 가격 문단의 기본 마진 제거 */
+        margin-bottom: 5px; /* 가격과 버튼 사이의 간격 */
+    }
+
+
+.pagination {
+     display: flex;
+     justify-content: center;
+ }
+
+.pagination button {
+     margin: 0 5px;
+     border: none;
+     background-color: #ffffff;
+     height: 32px;
+     width: 32px;
+     font-size: 14px;
+     color:#333333;
+}

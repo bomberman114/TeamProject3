@@ -39,7 +39,6 @@ public class SecurityConfig {
         auth.userDetailsService(customUserDetailsService);
     }
     
-    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -47,6 +46,10 @@ public class SecurityConfig {
             .authorizeHttpRequests((auth) -> auth                  // 요청에 대한 인가를 설정
             		.requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN권한을 가진 유저만 허용할 엔드포인트 설정
             		.requestMatchers("/user/**").hasRole("USER")   // USER 권한을 가진 유저만 허용할 엔드포인트 설정
+            		.requestMatchers("/Cs/Mycslist").hasRole("USER")
+            		.requestMatchers("/Cs/CswriteForm").hasRole("USER")
+            		.requestMatchers("/Community/AlbumwriteForm").hasRole("USER")
+            		.requestMatchers("/Community/Albumview").hasRole("USER")
                     .anyRequest().permitAll())                     // 위에 설정한 엔드포인트 제외하곤 인가 
             .userDetailsService(customUserDetailsService)
             .formLogin((login) -> login

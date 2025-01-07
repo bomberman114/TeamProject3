@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 
-<title>공지사항상세페이지</title>
+<title>공지사항 상세페이지</title>
 <style>
 .cs-nav {
     max-width: 200px; /* 고정된 너비 */  

@@ -25,18 +25,39 @@
           OR CUSTOMER_SERVICE_CONTENT LIKE '%' || #{searchtext} || '%') 
   </select>
   
-  <!-- 고객센터_문의글 등록 -->
+  <!-- 고객센터_문의글 등록 --> 
   <insert id="insertcs">
    INSERT INTO CUSTOMER_SERVICE 
    	( CUSTOMER_SERVICE_IDX, CUSTOMER_SERVICE_TITLE 
      ,CUSTOMER_SERVICE_TYPE, CUSTOMER_SERVICE_REGDATE 
-     ,CUSTOMER_SERVICE_CONTENT, USER_IDX 
-     ,CUSTOMER_SERVICE_IMAGE_NAME, CUSTOMER_SERVICE_SFILE_NAME) 
+     ,CUSTOMER_SERVICE_CONTENT, USER_IDX) 
    VALUES 
    	( (SELECT NVL(MAX(customer_service_idx),0)+1 FROM CUSTOMER_SERVICE ) ,#{customer_service_title} 
      ,#{customer_service_type}, SYSDATE
-     ,#{customer_service_content}, #{user_idx}
-     ,#{saved_image_paths}, #{customer_service_sfile_name} )
+     ,#{customer_service_content}, #{user_idx})
+  </insert>
+  
+  <!-- 고객센터_이미지 등록 -->
+  <insert id="insertcsImage">
+    <foreach collection="fileList" item ="file" 
+             index      = "i"
+             open       = "INSERT ALL"
+             close      = "SELECT * FROM DUAL"
+             separator  = " " >
+		INTO CUSTOMER_SERVICE_IMAGE (
+		CUSTOMER_SERVICE_IMAGE_IDX,
+		CUSTOMER_SERVICE_IDX,
+		CUSTOMER_SERVICE_IMAGE_NAME,
+		CUSTOMER_SERVICE_IMAGE_EXT,
+		CUSTOMER_SERVICE_SFILE_NAME
+		) VALUES (
+		(SELECT NVL(MAX(customer_service_image_idx),0)+1 FROM CUSTOMER_SERVICE_IMAGE) + #{i} + 1,
+		(SELECT MAX(customer_service_idx) FROM CUSTOMER_SERVICE),
+		#{file.customer_service_image_name},
+		#{file.customer_service_image_ext},
+		#{file.customer_service_sfile_name}
+		)
+    </foreach>
   </insert>
   
   <!-- 고객센터_문의글 등록_회원정보 -->

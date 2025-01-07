@@ -2,10 +2,9 @@ package com.green.cs.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 
 import com.green.cs.mapper.CsMapper;
 import com.green.cs.vo.CsVo;
@@ -27,9 +22,12 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/Cs")
 public class CsController {
 	
+	@Value("${part4.upload-path}")
+	private String uploadPath;
+
 	@Autowired
 	private CsMapper csMapper;
-
+	
 	//------------------------고객센터 메인화면-----------------------------//
 	// Cs/Cslist (홈)
 	@RequestMapping("/Cslist")
@@ -94,6 +92,7 @@ public class CsController {
 		mv.setViewName("cs/cswrite");
 		return mv;
 		}
+	
 	// Cs/Cswrite (문의글 작성)
 	@RequestMapping(value = "/Cswrite", method = RequestMethod.POST)
 	public ModelAndView cswrite(
@@ -102,20 +101,26 @@ public class CsController {
 	        @RequestParam("customer_service_image_name") MultipartFile[] files,
 	        HttpServletRequest request) {
 	    // 업로드 경로 설정
-	    String uploadPath = request.getServletContext().getRealPath("/uploads");
+
 	    HashMap<String, Object> map = new HashMap<>();
 	    map.put("uploadPath", uploadPath);
-
+	    map.put("csProfile", "csProfile");
+	    System.out.println("map: " + uploadPath);
 	    // 파일 저장 후 경로와 파일명 저장
-	    String savedPaths = FileImage.save(map, files, csVo);
-	    System.out.println("Returned Saved Paths: " + savedPaths);
-	    csVo.setSaved_image_paths(savedPaths); // 파일 경로 저장
-
+	    FileImage.save(map, files);
+	    
+	    map.get("fileList");
+	    System.out.println("fileList::" + map.get("fileList"));
+	    
 	    // 문의글 저장
 	    csMapper.insertcs(csVo);
+	    
+	    // 사진 저장
+	    csMapper.insertcsImage(map);
 
 	    ModelAndView mv = new ModelAndView();
 		mv.addObject("user_idx", user_idx);
+		mv.addObject("uploadPath", uploadPath);
 	    mv.setViewName("redirect:/Cs/Mycslist");
 	    return mv;
 	}

@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 
-<title>공지사항홈</title>
+<title>고객센터 상세페이지</title>
 <style>
 .title {
     text-align: center;

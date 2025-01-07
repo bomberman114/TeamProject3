@@ -1,4 +1,4 @@
-package com.green.cs.controller;
+package com.green.community.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.green.cs.vo.CsImageVo;
+import com.green.community.vo.CommunityImageVo;
 
 public class FileImage {
 
@@ -26,7 +26,7 @@ public class FileImage {
     	String uploadPath = String.valueOf(map.get("uploadPath"));
     	
 		// 파일 목록 리스트 선언
-	    List<CsImageVo> csImageList = new ArrayList<>();
+	    List<CommunityImageVo> communityImageList = new ArrayList<>();
 
         // 파일별로 처리
         for (MultipartFile uploadfile : files) {
@@ -75,10 +75,10 @@ public class FileImage {
 				
 				// 저장된 파일들의 정보를 map 에  List 방식으로 저장 -> pdsServiceImpl 에 전달 
 
-				if(map.get("csProfile") != null ) {
+				if(map.get("communityProfile") != null ) {
 
-					CsImageVo  csImageVo = new CsImageVo(0, 0, fileName, fileExt, saveName2);
-					csImageList.add( csImageVo );
+					CommunityImageVo  communityImageVo = new CommunityImageVo(0, 0, fileName, fileExt, saveName2);
+					communityImageList.add( communityImageVo );
 				};
 				
 				
@@ -86,8 +86,8 @@ public class FileImage {
 			
 			// 돌려줄 정보 map 저장
 			  // 조건에 따라 해당 리스트를 map에 추가
-		    if (!csImageList.isEmpty()) {
-		        map.put("fileList", csImageList);
+		    if (!communityImageList.isEmpty()) {
+		        map.put("fileList", communityImageList);
 		    }  
 
 		}
@@ -115,12 +115,12 @@ public class FileImage {
 		// 실제 물리파일 삭제 : 여러파일 삭제
 		public static void deleteCompanyImage(
 			String uploadPath, 
-			List<CsImageVo> fileList  ) {
+			List<CommunityImageVo> fileList  ) {
 			
 			String  path  = uploadPath;
 			
 			fileList.forEach( ( file ) -> {
-				String  sfile  = file.getCustomer_service_sfile_name();  // 실제 파일명 uuid
+				String  sfile  = file.getCommunity_sfile_name();  // 실제 파일명 uuid
 				
 				File    dfile  = new  File( path + sfile );
 				if( dfile.exists() )

@@ -4,11 +4,37 @@
 <mapper namespace="com.green.power.mapper.PowerMapper">  
 
 <select id="getdeskTopEstimatePowerFilterList">
-
+SELECT
+*
+FROM
+    POWER_MANUFACTURER  PM
+JOIN
+    POWER_CATEGORY  PCA
+ON
+    PM.COMPUTER_PART_IDX = PCA.COMPUTER_PART_IDX
+JOIN
+    POWER_CAPACITY  PCP
+ON
+    PCA.COMPUTER_PART_IDX = PCP.COMPUTER_PART_IDX
+JOIN
+    POWER_CERTIFICATION  PCE
+ON
+    PCP.COMPUTER_PART_IDX = PCE.COMPUTER_PART_IDX
+    
 </select>
 
 
 <select id="getPowerResultList">
+   
+SELECT
+    POWER_IDX,
+    POWER_TOTAL_DATA,
+    POWER_SFILE_NAME,
+    POWER_DEPTH,
+    POWER_CAPACITY,
+    COMPUTER_PART_IDX
+FROM
+    POWER
 
 </select>
 

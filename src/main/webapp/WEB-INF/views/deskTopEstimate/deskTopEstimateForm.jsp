@@ -8,177 +8,158 @@
     <title>PC 견적</title>
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-        }
-
-        header nav a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        main {
-            display: flex;
-            padding: 20px;
-        }
-
-        .sidebar {
-            width: 200px;
-            background-color: #fff;
-            padding: 20px;
-            margin-right: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .content {
-            flex-grow: 1;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar-right {
-            width: 250px;
-            background-color: #fff;
-            padding: 20px;
-            margin-left: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-bar {
-            display: flex;
-            margin-bottom: 20px;
-        }
-
-        .search-bar input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        .search-bar button {
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .filters {
-            margin-bottom: 20px;
-        }
-
-        .filters h3 {
-            margin-bottom: 10px;
-        }
-
-        .filters label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .product-list {
-            margin-bottom: 20px;
-        }
-
-        .product-item {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .product-item button {
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-        }
-
-        .pagination button {
-            margin: 0 5px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 <script type="text/javascript">
-    
-    
 </script>
 </head>
 <body>
     <%@include file="/WEB-INF/include/header.jsp"%>
-
-    <main>
+    <main class="desktopestimate-main" style="max-width: 1100px; margin-left: 150px;">
         <section class="content">
-            <h1>PC 견적</h1>
-            <div class="search-bar">
-                <input type="text" placeholder="검색어를 입력하세요">
-                <button>검색</button>
+            <h1 style="font-size: 24px; color: #333333; margin-bottom: 10px; font-weight: bold;">PC 견적</h1>
+            <div class="desk-search-bar">
+                <input type="text" class="desk-search-bar"  placeholder="  상품명을 입력하세요">
+                <button style="border:none; height: 60px; width: 60px; background-color: #D2CBCB;">검색</button>
             </div>
 
-            <div class="filters">
-                <h3>CPU</h3>
-                <label><input type="checkbox"> 옵션 1</label>
-                <label><input type="checkbox"> 옵션 2</label>
-                <label><input type="checkbox"> 옵션 3</label>
+            <div class="desk-filters">
+                <h3 style="padding-left:40px; line-height: 60px; background-color: #cccccc; height: 60px; width: 788px;">
+                <strong>CPU</strong> 상품 개수 : <strong>##개</strong> 
+                <button style="border:none; background-color: #D2CBCB; margin-left: 510px; color:#767676;">옵션 전체보기</button>
+                </h3>
 
-                <h3>메인보드</h3>
-                <label><input type="checkbox"> 옵션 1</label>
-                <label><input type="checkbox"> 옵션 2</label>
-                <label><input type="checkbox"> 옵션 3</label>
-
-                <h3>메모리</h3>
-                <label><input type="checkbox"> 옵션 1</label>
-                <label><input type="checkbox"> 옵션 2</label>
-                <label><input type="checkbox"> 옵션 3</label>
+             <div style="margin: 15px;">
+                <div style="display: flex; align-items: center; gap: 50px;">
+                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
+                <label><input type="checkbox"> 필터값2</label>
+                <label><input type="checkbox"> 필터값3</label>
+                <label><input type="checkbox"> 필터값4</label>
+                <label><input type="checkbox"> 필터값5</label>
+                <p style="margin-left:20px;">##개+</p>
+                </div>
+                </div>
+                <div style="margin: 15px;">
+                <div style="display: flex; align-items: center; gap: 50px;">
+                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
+                <label><input type="checkbox"> 필터값2</label>
+                <label><input type="checkbox"> 필터값3</label>
+                <label><input type="checkbox"> 필터값4</label>
+                <label><input type="checkbox"> 필터값5</label>
+                <p style="margin-left:20px;">##개+</p>
+                </div>
+                </div>
+                <div style="margin: 15px;">
+                <div style="display: flex; align-items: center; gap: 50px;">
+                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
+                <label><input type="checkbox"> 필터값2</label>
+                <label><input type="checkbox"> 필터값3</label>
+                <label><input type="checkbox"> 필터값4</label>
+                <label><input type="checkbox"> 필터값5</label>
+                <p style="margin-left:20px;">##개+</p>
+                </div>
+                </div>
+                <div style="margin: 15px;">
+                <div style="display: flex; align-items: center; gap: 50px;">
+                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값5</label>
+                <p style="margin-left:20px;">##개+</p> 
+                </div>
+                </div>
+                <div style="margin: 15px;">
+                <div style="display: flex; align-items: center; gap: 50px;">
+                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
+                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값2</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값3</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값4</label>
+                <label><input type="checkbox" style="color:#55555;"> 필터값5</label>
+                <p style="margin-left:20px;">##개+</p>
+                </div>
+                </div>
             </div>
-
+         
+         <div class="desk-click">
+         <p>인기상품순</p><p>낮은가격순</p><p>높은가격순</p><p>신상품순</p>
+         </div>
+         
             <div class="product-list">
                 <div class="product-item">
-                    <h4>상품명 1</h4>
-                    <p>상품 설명이 들어갑니다. 가격: ###,###원</p>
-                    <button>상세보기</button>
+                <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
+                <div class="product-description">
+                <h4 style="font-weight: bold; margin-left: 20px;">상품제목</h4>
+                <p style="color:#767676;font-size:14px; max-width: 492px; margin-left: 20px;">상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세...</p> 
+                <p style="color:#767676;margin-left: 20px;">등록일 : 2024.12</p>
+                </div>
+                <div class="price-container">
+                <p style="font-weight: 20px; color:#333333; margin-right: 5px;">###,###원</p>
+                <button style="height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;">담기</button>
+                </div>
+                </div>
+               <div class="product-item">
+                <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
+                <div class="product-description">
+                <h4 style="font-weight: bold; margin-left: 20px;">상품제목</h4>
+                <p style="color:#767676;font-size:14px; max-width: 492px; margin-left: 20px;">상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세...</p> 
+                <p style="color:#767676;margin-left: 20px;">등록일 : 2024.12</p>
+                </div>
+                <div class="price-container">
+                <p style="font-weight: 20px; color:#333333; margin-right: 5px;">###,###원</p>
+                <button style="height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;">담기</button>
+                </div>
                 </div>
                 <div class="product-item">
-                    <h4>상품명 2</h4>
-                    <p>상품 설명이 들어갑니다. 가격: ###,###원</p>
-                    <button>상세보기</button>
+                <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
+                <div class="product-description">
+                <h4 style="font-weight: bold; margin-left: 20px;">상품제목</h4>
+                <p style="color:#767676;font-size:14px; max-width: 492px; margin-left: 20px;">상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세...</p> 
+                <p style="color:#767676;margin-left: 20px;">등록일 : 2024.12</p>
+                </div>
+                <div class="price-container">
+                <p style="font-weight: 20px; color:#333333; margin-right: 5px;">###,###원</p>
+                <button style="height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;">담기</button>
+                </div>
                 </div>
                 <div class="product-item">
-                    <h4>상품명 3</h4>
-                    <p>상품 설명이 들어갑니다. 가격: ###,###원</p>
-                    <button>상세보기</button>
+                <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
+                <div class="product-description">
+                <h4 style="font-weight: bold; margin-left: 20px;">상품제목</h4>
+                <p style="color:#767676;font-size:14px; max-width: 492px; margin-left: 20px;">상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세...</p> 
+                <p style="color:#767676;margin-left: 20px;">등록일 : 2024.12</p>
+                </div>
+                <div class="price-container">
+                <p style="font-weight: 20px; color:#333333; margin-right: 5px;">###,###원</p>
+                <button style="height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;">담기</button>
+                </div>
                 </div>
                 <div class="product-item">
-                    <h4>상품명 4</h4>
-                    <p>상품 설명이 들어갑니다. 가격: ###,###원</p>
-                    <button>상세보기</button>
+                <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
+                <div class="product-description">
+                <h4 style="font-weight: bold; margin-left: 20px;">상품제목</h4>
+                <p style="color:#767676;font-size:14px; max-width: 492px; margin-left: 20px;">상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세...</p> 
+                <p style="color:#767676;margin-left: 20px;">등록일 : 2024.12</p>
+                </div>
+                <div class="price-container">
+                <p style="font-weight: 20px; color:#333333; margin-right: 5px;">###,###원</p>
+                <button style="height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;">담기</button>
+                </div>
+                </div>
+                <div class="product-item">
+                <img src="/img/desktopestimate/빅터스 정면.jpg" alt="상품 이미지" style="height: 80px; width: 80px; margin-left: 10px; ">
+                <div class="product-description">
+                <h4 style="font-weight: bold; margin-left: 20px;">상품제목</h4>
+                <p style="color:#767676;font-size:14px; max-width: 492px; margin-left: 20px;">상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세스펙상품상세...</p> 
+                <p style="color:#767676;margin-left: 20px;">등록일 : 2024.12</p>
+                </div>
+                <div class="price-container">
+                <p style="font-weight: 20px; color:#333333; margin-right: 5px;">###,###원</p>
+                <button style="height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;">담기</button>
+                </div>
                 </div>
             </div>
 
@@ -192,22 +173,30 @@
         </section>
 
         <aside class="sidebar-right">
-            <h2>PC 주요 구성</h2>
-            <div class="specs">
-                <h4>CPU</h4>
-                <h4>메인보드</h4>
-                <h4>메모리</h4>
-                <h4>그래픽카드</h4>
-                <h4>SSD</h4>
-                <h4>HDD</h4>
-                <h4>CPU 쿨러</h4>
-                <h4>케이스</h4>
-                <h4>파워</h4>
+            <div class="sidebar-name"> PC 주요 구성</div>
+            <div class="desktop-specs">
+                <div class="desktop-mini">CPU</div>
+                <div class="desktop-mini">메인보드</div>
+                <div class="desktop-mini">메모리</div>
+                <div class="desktop-mini">그래픽카드</div>
+                <div class="desktop-mini">SSD</div>
+                <div class="desktop-mini">HDD</div>
+                <div class="desktop-mini">CPU 쿨러</div>
+                <div class="desktop-mini">케이스</div>
+                <div class="desktop-mini">파워</div>
             </div>
-            <button>전체 검색</button>
+            <div class="under-specs">
+            <p class="under-under">총#개 품목선택 &nbsp; <button style="background-color: #ffffff; margin-right:15px; border: none;">전체 삭제</button></p>
+            <div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
+            <p class="total-amount" style="margin-right: auto;">총 합계 금액</p>
+            <p class="amount">#원</p>
+            </div>
+            <button class="desk-button">AI 호환성 체크</button>
+         <button class="desk-button">호환성 체크</button>
+         <button class="desk-button">견적 캡쳐</button>
+            </div>
         </aside>
     </main>
-
-    <%@include file="/WEB-INF/include/footer.jsp"%>
+<%@include file="/WEB-INF/include/footer.jsp"%>
 </body>
 </html>

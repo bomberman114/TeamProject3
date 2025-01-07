@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.product.mapper.ProductMapper">  
+
+<select id="getdeskTopEstimateProductFilterList">
+SELECT
+   *
+FROM
+    category_attribute  CA
+JOIN
+    CATEGORY_ATTRIBUTE_VALUE  CAV
+ON
+    CA.CATEGORY_ATTRIBUTE_IDX = CAV.CATEGORY_ATTRIBUTE_IDX
+WHERE 
+    CA.CATEGORY_IDX = #{category}
+    
+
+</select>
+
+<select id="getProductResultList" parameterType="hashMap" resultType="hashMap">
+
+SELECT
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    P.CREATED_AT,
+    P.UPDATED_AT,
+    PA.PRODUCT_ATTRIBUTE_IDX,
+    PA.PRODUCT_IDX,
+    PA.CATEGORY_ATTRIBUTE_IDX,
+    PA.CATEGORY_ATTRIBUTE_VALUE_IDX,
+    PA.CUSTOM_VALUE,
+    CAV.CATEGORY_ATTRIBUTE_VALUE_IDX,
+    CAV.CATEGORY_ATTRIBUTE_IDX,
+    CAV.CATEGORY_ATTRIBUTE_VALUE_NAME,
+    PI.PRODUCT_IMAGE_IDX,
+    PI.PRODUCT_IMAGE_NAME,
+    PI.PRODUCT_IMAGE_EXT,
+    PI.PRODUCT_SFILE_NAME
+FROM
+    PRODUCT  P
+LEFT JOIN
+    PRODUCT_ATTRIBUTE  PA
+ON
+    P.PRODUCT_IDX = PA.PRODUCT_IDX
+LEFT JOIN
+    CATEGORY_ATTRIBUTE_VALUE  CAV
+ON
+    PA.CATEGORY_ATTRIBUTE_IDX = CAV.CATEGORY_ATTRIBUTE_IDX
+LEFT JOIN
+    PRODUCT_IMAGE  PI
+ON
+    P.PRODUCT_IDX = PI.PRODUCT_IDX
+WHERE
+    P.CATEGORY_IDX = #{category}
+    
+
+</select>
+
+<select id="getcategoryAttributeList">
+SELECT 
+*
+FROM
+    CATEGORY_ATTRIBUTE  CA
+JOIN
+    CATEGORY_ATTRIBUTE_VALUE  CAV
+ON
+    CA.CATEGORY_ATTRIBUTE_IDX = CAV.CATEGORY_ATTRIBUTE_IDX
+WHERE 
+    CA.CATEGORY_IDX = #{category}
+    
+</select>
+
+<insert id="setProductCpu">
+INSERT INTO PRODUCT_ATTRIBUTE (
+    PRODUCT_IDX,
+    CATEGORY_ATTRIBUTE_IDX,
+    CATEGORY_ATTRIBUTE_VALUE_IDX
+) VALUES (
+    #{PRODUCT_IDX},
+    #{CATEGORY_ATTRIBUTE_IDX} ,
+    #{CATEGORY_ATTRIBUTE_VALUE_IDX}
+    
+)
+
+</insert>
+
+
+</mapper>

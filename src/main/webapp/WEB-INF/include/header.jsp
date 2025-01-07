@@ -43,6 +43,7 @@
 					</div>
 				</div>
 				<ul class="header__gnb">
+					<li><a href="/Cs/ManagerCsList">관리자</a></li>
 					<li><a href="/QuickFinder">간편검색</a></li>
 					<li><a href="/DeskTopEstimate/DeskTopEstimateForm">PC견적</a></li>
 					<li><a href="#">브랜드관</a></li>

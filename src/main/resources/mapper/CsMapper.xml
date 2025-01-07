@@ -5,15 +5,124 @@
   <!-- 고객센터_자주하는질문_목록 -->
 
   <select id="getcsList">
-   SELECT 
-   	CUSTOMER_SERVICE_IDX,
-    CUSTOMER_SERVICE_TITLE,
-    CUSTOMER_SERVICE_TYPE,
-    CUSTOMER_SERVICE_REGDATE,
-    CUSTOMER_SERVICE_CONTENT,
-    ADMIN_USER_IDX
+   SELECT *
    FROM  CUSTOMER_SERVICE
    WHERE ADMIN_USER_IDX IS NOT NULL
+  </select>
+  
+  <!-- 고객센터_자주하는질문_상세페이지 -->
+  <select id="getfaqList">
+   SELECT *
+   FROM  CUSTOMER_SERVICE
+   WHERE CUSTOMER_SERVICE_IDX = #{customer_service_idx}
+  </select>
+  
+  <!-- 고객센터_검색 -->
+  <select id="getsearchList">
+   SELECT *
+   FROM  CUSTOMER_SERVICE
+   WHERE ADMIN_USER_IDX IS NOT NULL 
+     AND (   CUSTOMER_SERVICE_TITLE   LIKE '%' || #{searchtext} || '%' 
+          OR CUSTOMER_SERVICE_CONTENT LIKE '%' || #{searchtext} || '%') 
+  </select>
+  
+  <!-- 고객센터_문의글 등록 --> 
+  <insert id="insertcs">
+   INSERT INTO CUSTOMER_SERVICE 
+   	( CUSTOMER_SERVICE_IDX, CUSTOMER_SERVICE_TITLE 
+     ,CUSTOMER_SERVICE_TYPE, CUSTOMER_SERVICE_REGDATE 
+     ,CUSTOMER_SERVICE_CONTENT, USER_IDX) 
+   VALUES 
+   	( (SELECT NVL(MAX(customer_service_idx),0)+1 FROM CUSTOMER_SERVICE ) ,#{customer_service_title} 
+     ,#{customer_service_type}, SYSDATE
+     ,#{customer_service_content}, #{user_idx})
+  </insert>
+  
+  <!-- 고객센터_이미지 등록 -->
+  <insert id="insertcsImage">
+    <foreach collection="fileList" item ="file" 
+             index      = "i"
+             open       = "INSERT ALL"
+             close      = "SELECT * FROM DUAL"
+             separator  = " " >
+		INTO CUSTOMER_SERVICE_IMAGE (
+		CUSTOMER_SERVICE_IMAGE_IDX,
+		CUSTOMER_SERVICE_IDX,
+		CUSTOMER_SERVICE_IMAGE_NAME,
+		CUSTOMER_SERVICE_IMAGE_EXT,
+		CUSTOMER_SERVICE_SFILE_NAME
+		) VALUES (
+		(SELECT NVL(MAX(customer_service_image_idx),0)+1 FROM CUSTOMER_SERVICE_IMAGE) + #{i} + 1,
+		(SELECT MAX(customer_service_idx) FROM CUSTOMER_SERVICE),
+		#{file.customer_service_image_name},
+		#{file.customer_service_image_ext},
+		#{file.customer_service_sfile_name}
+		)
+    </foreach>
+  </insert>
+  
+  <!-- 고객센터_문의글 등록_회원정보 -->
+  <select id="getminfo">
+   SELECT *
+   FROM  USERS
+   WHERE USER_IDX = #{user_idx}
+  </select>
+  
+  <!-- 고객센터_나의 문의내역_목록 -->
+  <select id="getmycsList">
+   SELECT *
+   FROM  CUSTOMER_SERVICE
+   WHERE USER_IDX = #{user_idx}
+   ORDER BY CUSTOMER_SERVICE_IDX DESC
+  </select>
+  
+  <!-- 고객센터_나의 문의내역_상세페이지 -->
+  <select id="getmycs">
+   SELECT *
+   FROM CUSTOMER_SERVICE
+   WHERE CUSTOMER_SERVICE_IDX = #{customer_service_idx}
+  </select>
+  
+  <!-- 고객센터_나의 문의내역_상세페이지_답변 -->
+  <select id="getanswer">
+   SELECT *
+   FROM CUSTOMER_SERVICE_ANSWER
+   WHERE CUSTOMER_SERVICE_IDX = #{customer_service_idx}
+  </select>
+  
+  <!-- 고객센터_공지사항_목록 -->
+  <select id="getntList">
+   SELECT *
+   FROM  NOTICE 
+   ORDER BY NOTICE_IDX DESC
+   FETCH FIRST 5 ROWS ONLY
+  </select>
+  
+  <!-- 고객센터_공지사항_상세페이지 -->
+  <select id="getnotice">
+   SELECT *
+   FROM NOTICE
+   WHERE NOTICE_IDX = #{notice_idx}
+  </select>
+  
+  <!-- 고객센터_공지사항_상세페이지_이전 공지 값 -->
+  <select id="getprevious">
+   SELECT *
+   FROM NOTICE
+   WHERE NOTICE_IDX = 
+   	(SELECT MAX(NOTICE_IDX)
+     FROM NOTICE
+     WHERE NOTICE_IDX &lt; #{notice_idx})
+  </select>
+  
+    <!-- 고객센터_공지사항_상세페이지_다음 공지 값 -->
+  <select id="getnext">
+   SELECT *
+   FROM NOTICE
+   WHERE NOTICE_IDX = 
+   	(SELECT MIN(NOTICE_IDX)
+     FROM NOTICE
+     WHERE NOTICE_IDX &gt; #{notice_idx})
   </select>
 
 </mapper>

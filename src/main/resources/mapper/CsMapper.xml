@@ -3,6 +3,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.cs.mapper.CsMapper">  
   <!-- 고객센터_자주하는질문_목록 -->
+
   <select id="getcsList">
    SELECT *
    FROM  CUSTOMER_SERVICE

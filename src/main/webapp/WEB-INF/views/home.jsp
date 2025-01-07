@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<<<<<<< HEAD
+=======
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +16,14 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/include/header.jsp"%>
+<<<<<<< HEAD
+	  <a href="/DeskTopEstimate/DeskTopEstimateForm">PC견적</a>
+	<main class="home">
+		<div class="inner">
+			<div class="home__main-carousel">
+				<div class="dim-left dim"></div>
+				<div class="dim-right dim"></div>
+=======
 	<c:if test="${not empty error}">
 		<script>
 			alert("${error}")
@@ -24,6 +35,7 @@
 			<div class="home__main-carousel">
 				<div class="dim-prev dim"></div>
 				<div class="dim-next dim"></div>
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
 				<div class="carousel-container">
 					<div class="carousel-slide">
 						<div>aa</div>
@@ -55,12 +67,322 @@
 				브랜드관
 				<ul>
 					<li class="brand-prev-btn"><img
+<<<<<<< HEAD
+						src="/images/icon/home-icon/brand-carousel-left.png" alt="" />
+					</li>
+=======
 						src="/images/icon/home-icon/brand-carousel-left.png" alt="" /></li>
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
 					<li class="brand-next-btn"><img
 						src="/images/icon/home-icon/brand-carousel-right-active.png"
 						alt="" /></li>
 				</ul>
 			</h2>
+<<<<<<< HEAD
+			<div class="brand-carousel">
+				<ul class="brand-carousel-container">
+					<li>MSI1</li>
+					<li>MSI2</li>
+					<li>MSI3</li>
+					<li>MSI4</li>
+					<li>MSI5</li>
+					<li>MSI6</li>
+					<li>MSI7</li>
+					<li>MSI8</li>
+					<li>MSI9</li>
+					<li>MSI10</li>
+				</ul>
+			</div>
+			<h2>지금 가장 인기 있는 상품</h2>
+			<div class="home__box-best">
+				<div class="box-best-btn">
+					<ul class="box-best-btn-container">
+						<li data-bestIdx="0">전체</li>
+						<li data-bestIdx="1">PC</li>
+						<li data-bestIdx="2">노트북</li>
+						<li data-bestIdx="3">주요부품</li>
+						<li data-bestIdx="4">주변기기</li>
+					</ul>
+				</div>
+				<div class="box-best-container">
+					<div class="box-best-container-item">
+						<h3>전체</h3>
+						<div class="box-best-item-list">
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명 제품명
+									제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-best-container-item">
+						<h3>PC</h3>
+						<div class="box-best-item-list">
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명 제품명
+									제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-best-container-item">
+						<h3>노트북</h3>
+						<div class="box-best-item-list">
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명 제품명
+									제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-best-container-item">
+						<h3>주요부품</h3>
+						<div class="box-best-item-list">
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명 제품명
+									제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-best-container-item">
+						<h3>주변기기</h3>
+						<div class="box-best-item-list">
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명 제품명
+									제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+							</div>
+							<div class="box-best-item">
+								<div class="box-best-item-img">1</div>
+								<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
+								<div class="box-best-item-price">###,###원</div>
+=======
 			<div>
 				<div class="brand-carousel">
 					<ul class="brand-carousel-container">
@@ -366,22 +688,35 @@
 									<div class="box-best-item-title">제품명 제품명 제품명 제품명 제품명</div>
 									<div class="box-best-item-price">###,###원</div>
 								</div>
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+<<<<<<< HEAD
+		</div>
+=======
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	<script>
     let brandCarouselIdx = 0;
 
     const $brandCarouselContainer = document.querySelector(".brand-carousel-container");
+<<<<<<< HEAD
+    const $brandCarouselSlide =
+      $brandCarouselContainer.querySelectorAll("li");
+    const $brandPrevBtn = document.querySelector(".brand-prev-btn img");
+    const $brandNextBtn = document.querySelector(".brand-next-btn img");
+
+=======
     const $brandCarouselSlide     = $brandCarouselContainer.querySelectorAll("li");
     const $brandPrevBtn           = document.querySelector(".brand-prev-btn img");
     const $brandNextBtn           = document.querySelector(".brand-next-btn img");
 
     // 브랜드 캐러셀 이전 클릭 이벤트
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
     $brandPrevBtn.addEventListener("click", () => {
       if (brandCarouselIdx >= 1) {
         $brandPrevBtn.src =
@@ -395,9 +730,13 @@
         $brandNextBtn.src = "/images/icon/home-icon/brand-carousel-right-active.png";
       }
     });
+<<<<<<< HEAD
+
+=======
     
     
     // 브랜드 캐러셀 다음 클릭 이벤트
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
     $brandNextBtn.addEventListener("click", () => {
       if (brandCarouselIdx < $brandCarouselSlide.length - 8) {
         brandCarouselBtnClick(1);
@@ -412,12 +751,20 @@
       }
     });
 
+<<<<<<< HEAD
+=======
     // 브랜드 캐러셀 클릭 함수
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
     function brandCarouselBtnClick(direct) {
         brandCarouselIdx += direct;
         $brandCarouselContainer.style.transform = "translateX(-" + $brandCarouselSlide[0].clientWidth * brandCarouselIdx + "px)";
     }
 
+<<<<<<< HEAD
+    const $bestItemList = document.querySelector('.box-best-container');
+    window.addEventListener("scroll", checkslide);
+
+=======
     
     const $bestItemList = document.querySelector('.box-best-container');
     
@@ -425,6 +772,7 @@
     window.addEventListener("scroll", checkslide);
 
  		// 스크롤 시 실행함수
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
     function checkslide(){
       const $bestItemBtnList = document.querySelector(".box-best-btn-container")
       if( $bestItemList.getBoundingClientRect().top < 0){
@@ -434,7 +782,10 @@
       }
     }
 
+<<<<<<< HEAD
+=======
  		// 해당 카테고리 위치로 이동 함수
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
     const $bestConatinerItem = $bestItemList.querySelectorAll(".box-best-container-item")
     document.addEventListener("click",(e)=>{
       const clicked = e.target
@@ -447,6 +798,8 @@
       }
     })
 
+<<<<<<< HEAD
+=======
     
    const $scrollTopBtn = document.querySelector(".scroll-top-btn");
     window.addEventListener("scroll", (e)=>{
@@ -463,6 +816,7 @@
     	window.scroll({  top: 0 , behavior: "smooth"})
     })
 
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588
     </script>
 </html>
 
@@ -471,3 +825,7 @@
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> a73e39eb39448019ec618d9b1a4ef21bf4eb7588

@@ -15,7 +15,6 @@
 <script src="/js/searchHistory.js" defer></script>
 <style type="text/css">
 
-
 .program-filter {
 	display: none;
 	position: fixed;
@@ -143,16 +142,16 @@
 				<div class="quick-finder-filter">
 					<ul>
 						<li class="quick-finder-filter-division"><span>구분</span><select
-							name="" id="">
-								<option value="" selected style="display: none">전체</option>
-								<option value="">PC</option>
-								<option value="">노트북</option>
+							name="computerType">
+								<option value="" selected>전체</option>
+								<option value="2">PC</option>
+								<option value="3">노트북</option>
 						</select></li>
 						<li class="quick-finder-filter-company"><span>제조사</span>
 							<div>
 								<div class="filter-company-container">
 									<div>
-										<select name="" id="">
+										<select name="manufacture">
 											<option value="" selected style="display: none">제조사
 											</option>
 											<option value="">삼성</option>
@@ -162,15 +161,15 @@
 											<option value="">갤럭시 북 360</option>
 										</select>
 									</div>
-									<p>선택된 라인업이 없습니다.</p>
+									<p class="brand-hint">선택된 라인업이 없습니다.</p>
 								</div>
 							</div></li>
 						<li><span>가격</span>
 							<div class="quick-finder-filter-price">
-								<input type="text" maxlength="11" />~<input type="text"
-									maxlength="11" />
+								<input type="text" maxlength="11"  name="lowestPrice"/>~
+								<input type="text" maxlength="11" name="highestPrice"/>
 							</div>
-							<button>조회</button></li>
+							<button class="quick-finder-filter-btn">조회</button></li>
 					</ul>
 				</div>
 			</div>
@@ -180,154 +179,32 @@
 				</h3>
 				<p>
 					<input class="list-search" type="text" placeholder="리스트 내 검색" />
-					<button>검색</button>
+					<button class="list-search-btn">검색</button>
 				</p>
 			</div>
 			<div class="quick-finder-search-container">
 				<ul>
-					<li class="list-filter-active">인기상품순</li>
-					<li>낮은가격순</li>
-					<li>높은가격순</li>
-					<li>신상품순</li>
+					<li class="list-filter-active" data-sortType="">인기상품순</li>
+					<li data-sortType="lowestPrice">낮은가격순</li>
+					<li data-sortType="highestPrice">높은가격순</li>
+					<li data-sortType="recent">신상품순</li>
 				</ul>
-				<div class="quick-finder-search-list">
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 21000, "vga" : 7000, "ram" : 16}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-					<div class="quick-finder-search-item">
-						<div class="quick-searched-item-left">
-							<div class="quick-searched-item-img">이미지</div>
-							<div class="quick-searched-item-info">
-								<div>
-									<p>제품명</p>
-									<div>
-										<a href="#" target="_blank">상품스펙</a>
-									</div>
-								</div>
-								<ul class="quick-searched-item-util">
-									<li>등록월 : 2024.12</li>
-									<li>
-										<div class=""></div> 관심
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="quick-searched-item-right">
-							<canvas class="bench-graph"
-								data-bench='{"cpu" : 11000, "vga" : 5000, "ram" : 8}'></canvas>
-							<p>###,###원</p>
-						</div>
-					</div>
-				</div>
+				<div class="quick-finder-search-list"></div>
 			</div>
-			<ul class="paging-container">
-				<li class="paging-nowpage"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><img src="/images/icon/common-icon/paging-next-btn.png"
-					alt=""></li>
-			</ul>
-		</div>
+			<div class="paging-container"></div>
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	<script>
     
       let chartInstances = [];
+      let computerType = null; 
+      let manufacture = null; 
+      let manufactureBrand = null;
+      let lowestPrice = null;
+      let highestPrice = null; 
+      let listSearch = null; 
+      let sortType = null; 
+      let nowpage = null;
     
       // 가격 입력 정규식 이벤트
 	    document.addEventListener('keyup', function(e) {
@@ -353,27 +230,33 @@
 	    	}
 	    });
       
-      
-      //JSON.parse(document.querySelector("canvas").dataset.bench)["cpu"]
       let { pcpu, pvga, pram } = { pcpu: 16000, pvga: 8000, pram: 16 };
 
-      renderCanvas();
-
       // 화면에 있는 canavs들 dataset으로 계산해서 그래프 그리기
-      function renderCanvas() {
-    	  destroyCharts();
-    	  const $canvasList = document.querySelectorAll("canvas");
+		function renderCanvas() {
+		  const $canvasList = document.querySelectorAll("canvas");
+		  $canvasList.forEach((canvas, i) => {
+		    const ctx = canvas.getContext('2d');
+		    const currentData = JSON.parse(canvas.dataset.bench);
+		    const newData = [
+		      Math.floor((currentData.cpu / pcpu) * 100),
+		      Math.floor((currentData.vga / pvga) * 100),
+		      Math.floor((currentData.ram / pram) * 100),
+		    ];
+		
+		    if (!chartInstances[i]) {
+		      createGraph(canvas, newData, i);
+		    } else {
+		      updateGraph(chartInstances[i], newData);
+		    }
+		  });
+		}
+		
+		function updateGraph(chart, newData) {
+		  chart.data.datasets[0].data = newData;
+		  chart.update();
+		}
 
-    	  $canvasList.forEach((canvas, i) => {
-    	    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-    	    let data = [
-    	      Math.floor((JSON.parse(canvas.dataset.bench)["cpu"] / pcpu) * 100),
-    	      Math.floor((JSON.parse(canvas.dataset.bench)["vga"] / pvga) * 100),
-    	      Math.floor((JSON.parse(canvas.dataset.bench)["ram"] / pram) * 100),
-    	    ];
-    	    createGraph(canvas, data, i);
-    	  });
-    	}
 
 
   		// Chart.js 그래프 설정
@@ -516,7 +399,7 @@
      
       let purposeCurrentIdx = 0;
       
-      // 사용용도 렌더링하는 함수
+      // 사용용도 프로그램 렌더링하는 함수
       function renderPurposeList(purposeList){
     	  const $purposeContainer = document.querySelector(".quick-finder-program");
     	  const $purposeFilterContainer = document.querySelector(".quick-finder-filter-program");
@@ -547,7 +430,7 @@
     	  })
       }
       
-      // 클릭 이벤트리스너 
+      // 프로그램 선택시 그래프 다시 그리거나 캐러셀 이벤트
       document.addEventListener("click",(e)=>{
     	  const clicked = e.target
     	  if(clicked.matches(".li-purpose-idx")){
@@ -573,8 +456,42 @@
     		  purposeCurrentIdx--;
     		  purposeSlideMove(purposeCurrentIdx)
     	  }
+    	  if(clicked.matches(".paging-container li")){
+    		  nowpage = clicked.textContent;
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    		  window.scrollTo(0, 700)
+    	  }
+    	  if(clicked.matches(".quick-finder-search-container li")){
+    		  sortType = clicked.dataset.sorttype;
+    		  document.querySelectorAll(".quick-finder-search-container li").forEach(li=>li.className = "")
+    		  clicked.className = "list-filter-active"
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+    	  }
+    	  if(clicked.matches(".quick-finder-filter-btn")){
+    		  computerType = document.querySelector("select[name='computerType']").value
+    		  manufacture = document.querySelector("select[name='manufacture']").value
+    		  lowestPrice = document.querySelector("input[name='lowestPrice']").value.replaceAll(",","")
+    		  highestPrice = document.querySelector("input[name='highestPrice']").value.replaceAll(",","")
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+    	  }
+    	  if(clicked.matches(".list-search-btn")){
+    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+    	  }
+    	  if(clicked.closest(".paging-next-btn")){
+    		  nowpage = document.querySelector(".paging-next-btn").dataset.nowpage;
+
+    		  console.log(nowpage)
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    	  }
+    	  if(clicked.closest(".paging-prev-btn")){
+    		  nowpage = document.querySelector(".paging-prev-btn").dataset.nowpage;
+    		  console.log("다음" + nowpage)
+    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    	  }
       })
       
+      // 사용용도 프로그램 캐러셀 함수
       function purposeSlideMove(idx){
     	  const $purposeSlideContainer = document.querySelector(".quick-finder-filter-program")
     	  const $purposeSlide = $purposeSlideContainer.querySelector("li");
@@ -591,20 +508,180 @@
     	  }
       }
       
-      
+      // 스크롤 위치 따라 사용용도 프로그램 fixed 하는 이벤트
       window.addEventListener("scroll",checkslide)
       
       function checkslide(){
       const $quickFinder = document.querySelector(".quick-finder")
       const $programFilter = document.querySelector(".program-filter")
-      if( $quickFinder.getBoundingClientRect().bottom < 0){
+      if( $quickFinder.getBoundingClientRect().bottom < 200){
     	  $programFilter.classList.add("scroll-active")
       }else{
     	  $programFilter.classList.remove("scroll-active")
       }
     }
+     
+   
+      getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
       
-      
+     // 상품 가져오는 fetch 함수
+     async function getProductPagingFilterList(
+    		 computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage
+    		 ){
+ 	    const res = await fetch("/QuickFinder/getProductPagingFilterList", {
+        method: "POST",
+        headers: {"Content-Type": "application/json",},
+        body: JSON.stringify({ 
+        	computerType     : computerType,
+        	manufacture      : manufacture, 
+        	manufactureBrand : manufactureBrand,
+        	lowestPrice      : lowestPrice,
+        	highestPrice     : highestPrice,
+        	listSearch       : listSearch,
+        	sortType         : sortType,
+        	nowpage          : nowpage})
+	    });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error status: ${res.status}`);
+      }
+
+      const result = await res.json();
+      document.querySelector(".quick-finder-search-title span").textContent = result.response.pagination.totalRecordCount
+      console.log(result)
+      createPagingList(result)
+      createProductList(result.response.list)
+      destroyCharts()
+      renderCanvas();
+    
+    	return result.purposeList;
+		}
+
+     function formatNumberWithCommasAndWon(number) {
+    	  return number.toLocaleString('ko-KR') + '원';
+    	}
+     
+     
+     function createProductList(list) {
+    	 const $itemList = document.querySelector(".quick-finder-search-list");
+    	 $itemList.innerHTML = "";
+		  if(list){
+    	  list.forEach(item => {
+    	    const itemDiv             = document.createElement("div");
+    	    itemDiv.className         = "quick-finder-search-item";
+    	    const itemLeftDiv         = document.createElement("div");
+    	    itemLeftDiv.className     = "quick-searched-item-left";
+    	    const itemLeftImgDiv      = document.createElement("div");
+    	    itemLeftImgDiv.className  = "quick-searched-item-img";
+    	    const itemLeftInfoDiv     = document.createElement("div");
+    	    itemLeftInfoDiv.className = "quick-searched-item-info";
+    	    const itemLeftUtilUl      = document.createElement("ul");
+    	    itemLeftUtilUl.className  = "quick-searched-item-util";
+    	    const itemLeftUtilbookmarkDiv     = document.createElement("div");
+    	    itemLeftUtilbookmarkDiv.className = "product-bookmark";
+    	    const itemRightDiv                = document.createElement("div");
+    	    itemRightDiv.className            = "quick-searched-item-right";
+
+    	    const productTitleDiv       = document.createElement("div");
+    	    const productTitleP         = document.createElement("p");
+    	    const productSpectDiv       = document.createElement("div");
+    	    productTitleP.textContent   = item.PRODUCT_NAME;
+    	    productSpectDiv.textContent = item.PRODUCT_DESCRIPTION;
+    	    productTitleDiv.append(productTitleP);
+    	    productTitleDiv.append(productSpectDiv);
+    	    itemLeftInfoDiv.append(productTitleDiv);
+
+    	    const createAtLi    = document.createElement("li");
+    	    const bookMarkLi    = document.createElement("li");
+    	    const bookMarkLiImg = document.createElement("div");
+
+    	    createAtLi.textContent = item.CREATED_AT;
+    	    bookMarkLi.textContent = "관심";
+
+    	    bookMarkLi.append(bookMarkLiImg);
+
+    	    itemLeftUtilUl.append(createAtLi);
+    	    itemLeftUtilUl.append(bookMarkLi);
+
+    	    itemLeftInfoDiv.append(itemLeftUtilUl);
+
+    	    
+    	    const itemImg = document.createElement("img");
+    	    itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
+    	    
+    	    itemLeftImgDiv.append(itemImg);
+    	    
+    	    itemLeftDiv.append(itemLeftImgDiv);
+    	    itemLeftDiv.append(itemLeftInfoDiv);
+
+    	    const itemRightP = document.createElement("p");
+   	      const itemRightCanvas = document.createElement("canvas");
+   	      itemRightCanvas.className = "bench-graph";
+   	      itemRightCanvas.dataset.bench = JSON.stringify({
+   	        cpu: item.CPU_BENCH,
+   	        vga: item.GPU_BENCH,
+   	        ram: item.RAM_BENCH
+   	      });
+    	    itemRightP.textContent = formatNumberWithCommasAndWon(item.PRICE);
+    	    itemRightDiv.append(itemRightCanvas);
+    	    itemRightDiv.append(itemRightP)
+    	    itemDiv.append(itemLeftDiv);
+    	    itemDiv.append(itemRightDiv);
+
+    	    $itemList.append(itemDiv);
+    	  });
+		  }
+    	}
+
+     function createPagingList(result) {
+    	  document.querySelector(".paging-container").innerHTML = "";
+    	  const ul = document.createElement("ul");
+    	  
+    	  if (result.response.pagination.existPrevPage) {
+    	    const li = document.createElement("li");
+    	    const img = document.createElement("img");
+    	    img.src = "/images/icon/common-icon/paging-prev-btn.png";
+    	    li.className = "paging-prev-btn";
+    	    li.dataset.nowpage = result.response.pagination.startPage - result.searchVo.pageSize ;
+    	    li.append(img);
+    	    ul.append(li);
+    	  }
+    	  
+    	  for (
+    	    let i = result.response.pagination.startPage;
+    	    i <= result.response.pagination.endPage;
+    	    i++
+    	  ) {
+    	    const li = document.createElement("li");
+    		  if(result.nowpage == i){
+    			  li.className = "paging-nowpage"
+    		  }
+    	    li.textContent = i;
+    	    ul.append(li);
+    	  }
+    	  
+    	  if (result.response.pagination.existNextPage) {
+    	    const li = document.createElement("li");
+    	    const img = document.createElement("img");
+    	    img.src = "/images/icon/common-icon/paging-next-btn.png";
+    	    li.className = "paging-next-btn";
+    	    li.dataset.nowpage = result.response.pagination.endPage + 1;
+    	    li.append(img);
+    	    ul.append(li);
+    	  }
+    	  
+    	  const $pagingContainer = document.querySelector(".paging-container");
+    	  $pagingContainer.append(ul);
+    	 }
+     
+ 		   document.querySelector(".list-search").addEventListener("keyup",(e)=>{
+ 			   if(e.keyCode == 13 ){
+ 	    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
+ 	    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
+ 			   }
+ 		   })
+     
+     
     </script>
 </body>
 </html>

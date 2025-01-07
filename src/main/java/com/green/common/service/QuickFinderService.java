@@ -7,6 +7,6 @@ public interface QuickFinderService {
 
 	List<HashMap<String, Object>> findPurposeList(String purposeIdx);
 
-
+	HashMap<String, Object> getProductPagingList(HashMap<String, Object> requestBody);
 
 }

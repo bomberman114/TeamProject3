@@ -52,7 +52,8 @@
 	const $form = document.querySelector("form");
 	const $ref  = document.querySelector(".hint-text");
 
-	$form.addEventListener("submit", async (e) => {  // async 추가
+	// form 제출 아이디, 비번 유효 확인 -> 유효하면 submit
+	$form.addEventListener("submit", async (e) => { 
 	  e.preventDefault();
 	  $ref.innerHTML = "";
 
@@ -78,7 +79,8 @@
 	    $ref.innerHTML = "로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
 	  } 
 	});
-
+	
+	// 아이디, 비번 유효 확인 ajax
 	async function isUserExist(userEmail, userPassword) {
 	    const res = await fetch("/IsUserExist", {
 	        method: "POST",
@@ -95,6 +97,8 @@
 	}
 
 
+			
+	    // 입력 비밀번호 확인
       const $hiddenBtn = document.querySelector(".hidden-btn");
       let isHidden    = true;
       document.addEventListener("click", (e) => {
@@ -104,6 +108,7 @@
         }
       });
 
+      // 입력 비밀번호 확인 함수 
       function hiddenBtnClick(boolVal, target){
         console.log(target.previousSibling.previousSibling)
         if (boolVal) {
@@ -115,6 +120,7 @@
         }
       }
       
+      // 소셜로그인
       document.addEventListener("click",(e)=>{
     	  const clicked = e.target;
     	  if(clicked.closest(".social-btn")){

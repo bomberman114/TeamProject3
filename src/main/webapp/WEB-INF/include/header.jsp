@@ -45,7 +45,7 @@
 				<ul class="header__gnb">
 					<li><a href="/QuickFinder">간편검색</a></li>
 					<li><a href="/DeskTopEstimate/DeskTopEstimateForm">PC견적</a></li>
-					<li><a href="#">브랜드관</a></li>
+					<li><a href="/LaptopBrand/Brand">브랜드관</a></li>
 					<li><a href="/Community/Albumlist">커뮤니티</a></li>
 					<li><a href="/Cs/Cslist"">고객센터</a></li>
 				</ul>

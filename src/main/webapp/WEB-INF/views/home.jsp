@@ -164,23 +164,6 @@
 
     
     const $bestItemList = document.querySelector('.box-best-container');
-    
- 		// 스크롤 이벤트
-    //window.addEventListener("scroll", checkslide);
-
- 		// 스크롤 시 실행함수
-    /*function checkslide(){	
-      const $bestItemBtnList = document.querySelector(".box-best-btn-container")
-      if( $bestItemList.getBoundingClientRect().top < 0){
-    	  const translateY = Math.max(0,document.querySelector(".box-best-btn").clientHeight)
-        $bestItemBtnList.style.transform = "translateY("+ ($bestItemList.getBoundingClientRect().top *-1 + 120 )+ "px)";
-        if($bestItemList.getBoundingClientRect().top > document.querySelector(".box-best-btn").clientHeight){
-        }
-      }else{
-        $bestItemBtnList.style.transform = "translateY(0px)";
-      }
-    }
- 		*/
 
  		// 해당 카테고리 위치로 이동 함수
     const $bestConatinerItem = $bestItemList.querySelectorAll(".box-best-container-item")

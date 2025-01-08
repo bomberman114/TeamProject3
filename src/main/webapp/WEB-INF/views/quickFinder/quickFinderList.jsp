@@ -15,97 +15,6 @@
 <script src="/js/searchHistory.js" defer></script>
 <style type="text/css">
 
-.program-filter {
-	display: none;
-	position: fixed;
-	align-items : center;
-	padding : 20px 40px;
-	z-index: 2;
-	width : 100%;
-	background : #2a2b33;
-	color: #fff;
-	
-	 & .quick-finder-program {
-	background: #2a2b33;
-	display: flex;
-	overflow: hidden;
-	}
-}
-
-.program-filter.scroll-active {
-	display: flex;
-	flex-wrap: nowrap;
-	width : 100%;
-	gap : 40px;
-	
-	& >div{
-		width : 100%;
-		display: flex;
-		gap : 40px;
-		align-items: center;
-		padding : 0  20px;
-	}
-	
-	& .purpose-container{
-		width: 100%;
-		overflow: hidden;
-	}
-	
-	& .purpose-btn{
-		flex-shink : 1;
-		width: 40px;
-		height: 40px;
-
-		& img{
-		width : 40px;
-		cursor: pointer;
-		}
-	}
-	
-	& >ul:first-child{
-		width : 300px;
-		white-space : nowrap;
-		
-		
-		& li{
-			display : flex;
-			justify-content: center;
-			align-items: center;
-			width : 100%;
-			border : solid 1px #ccc;
-			padding : 12px;
-			border : solid 1px rbg(189,234,20);
-			margin-bottom: 12px;
-			cursor: pointer;
-		}
-		
-		& li:last-child{
-			margin-bottom: 0;
-		}
-		
-		& .purpose-active{
-		color : #37D0FD;
-		border : solid 1px #37D0FD;
-		}
-	}
-}
-
-.quick-finder-filter-program{
-	display: flex;
-	width: 90%;
-	height : 100%;
-	gap : 8px;
-	transition : all 0.4s;
-	
-	& li{
-		width : calc(100%/5);
-		aspect-ratio : 1.618;
-		flex-shrink : 0;
-		height : 100%;
-		background: #ccc;
-		cursor: pointer;
-	}
-}
 
 
 </style>
@@ -242,7 +151,9 @@
 		      Math.floor((currentData.cpu / pcpu) * 100),
 		      Math.floor((currentData.vga / pvga) * 100),
 		      Math.floor((currentData.ram / pram) * 100),
-		    ];
+		    ];		    	
+		    if(!pvga){newData[1] = 0}
+		 
 		
 		    if (!chartInstances[i]) {
 		      createGraph(canvas, newData, i);
@@ -302,13 +213,16 @@
             },
             plugins: {
               datalabels: {
-                color: "#fff",
+                color: "#111",
                 anchor: "start",
                 align: "top",
                 offset: 0,
                 formatter: function (value, context) {
-                  return context.datasetIndex === 0 ? value + "%" : null;
-                },
+                    if (context.datasetIndex === 0) {
+                      return value === 0 ? null : value + "%";
+                    }
+                    return null;
+                  },
               },
               tooltip: {
                 enabled: true,
@@ -444,8 +358,7 @@
     	  if(clicked.matches(".purpose")){
     		  pcpu = JSON.parse(e.target.dataset.bench).cpu
     		  pvga = JSON.parse(e.target.dataset.bench).vga
-    		  pram = JSON.parse(e.target.dataset.bench).ram
-    		    		  
+    		  pram = JSON.parse(e.target.dataset.bench).ram	  
     		  renderCanvas();
     	  }
     	  if(clicked.matches(".purpose-btn-next img")){
@@ -619,7 +532,7 @@
    	      itemRightCanvas.className = "bench-graph";
    	      itemRightCanvas.dataset.bench = JSON.stringify({
    	        cpu: item.CPU_BENCH,
-   	        vga: item.GPU_BENCH,
+   	    	  vga: item.GPU_BENCH,
    	        ram: item.RAM_BENCH
    	      });
     	    itemRightP.textContent = formatNumberWithCommasAndWon(item.PRICE);

@@ -39,7 +39,7 @@
 			<div class="quick-finder">
 				<div class="quick-finder-title">
 					<div>
-						간편검색<span>Quick Finder</span>
+						간편검색<span><b>Quick</b> Finder</span>
 					</div>
 					<ul>
 						<li class="li-purpose-idx purpose-active" data-purposeIdx="">전체</li>
@@ -115,7 +115,10 @@
       let listSearch = null; 
       let sortType = null; 
       let nowpage = null;
-    
+      
+      
+      getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+
       // 가격 입력 정규식 이벤트
 	    document.addEventListener('keyup', function(e) {
 	       let value = e.target.value;
@@ -370,7 +373,7 @@
     		  purposeCurrentIdx--;
     		  purposeSlideMove(purposeCurrentIdx)
     	  }
-    	  if(clicked.matches(".paging-container li")){
+    	  if(clicked.matches(".paging-li")){
     		  nowpage = clicked.textContent;
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
     		  window.scrollTo(0, 700)
@@ -392,16 +395,13 @@
     		  listSearch = document.querySelector(".list-search").value.toUpperCase();
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
     	  }
-    	  if(clicked.closest(".paging-next-btn")){
-    		  nowpage = document.querySelector(".paging-next-btn").dataset.nowpage;
-
-    		  console.log(nowpage)
+    	  if(clicked.matches(".paging-next-btn")){
+    		  nowpage = clicked.dataset.nowpage;
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
-    	  }
-    	  if(clicked.closest(".paging-prev-btn")){
-    		  nowpage = document.querySelector(".paging-prev-btn").dataset.nowpage;
-    		  console.log("다음" + nowpage)
-    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    		}
+    	  if(clicked.matches(".paging-prev-btn")){
+    		  nowpage = clicked.dataset.nowpage;
+  		   getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
     	  }
       })
       
@@ -435,8 +435,7 @@
       }
     }
      
-   
-      getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+
       
      // 상품 가져오는 fetch 함수
      async function getProductPagingFilterList(
@@ -462,7 +461,6 @@
 
       const result = await res.json();
       document.querySelector(".quick-finder-search-title span").textContent = result.response.pagination.totalRecordCount
-      console.log(result)
       createPagingList(result)
       createProductList(result.response.list)
       destroyCharts()
@@ -521,7 +519,7 @@
 
     	    
     	    const itemImg = document.createElement("img");
-    	    itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
+    	    //itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
     	    
     	    itemLeftImgDiv.append(itemImg);
     	    
@@ -553,11 +551,8 @@
     	  
     	  if (result.response.pagination.existPrevPage) {
     	    const li = document.createElement("li");
-    	    const img = document.createElement("img");
-    	    img.src = "/images/icon/common-icon/paging-prev-btn.png";
     	    li.className = "paging-prev-btn";
     	    li.dataset.nowpage = result.response.pagination.startPage - result.searchVo.pageSize ;
-    	    li.append(img);
     	    ul.append(li);
     	  }
     	  
@@ -568,19 +563,18 @@
     	  ) {
     	    const li = document.createElement("li");
     		  if(result.nowpage == i){
-    			  li.className = "paging-nowpage"
+    			  li.className = "paging-li paging-nowpage"
+    		  }else{
+    			  li.className = "paging-li";
     		  }
     	    li.textContent = i;
     	    ul.append(li);
     	  }
     	  
     	  if (result.response.pagination.existNextPage) {
-    	    const li = document.createElement("li");
-    	    const img = document.createElement("img");
-    	    img.src = "/images/icon/common-icon/paging-next-btn.png";
+    	    const li = document.createElement("li");;
     	    li.className = "paging-next-btn";
     	    li.dataset.nowpage = result.response.pagination.endPage + 1;
-    	    li.append(img);
     	    ul.append(li);
     	  }
     	  

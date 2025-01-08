@@ -26,7 +26,7 @@
 			<div class="header__logo-gnb-contaienr">
 				<div class="logo-searchbar">
 					<h1>
-						<a href="/">로고</a>
+						<a href="/"><img src="/images/logo/logo.svg" alt="찾았닷컴 로고"></a>
 					</h1>
 					<div class="header-nav">
 						<div class="search-div">
@@ -54,10 +54,9 @@
 			<c:choose>
 				<c:when test="${empty sessionScope.user}">
 					<ul class="header__utill">
-						<li><a href="/loginForm"><img
-								src="images/icon/header-icon/icon-btn.png" alt="관심제품" /> 관심</a></li>
+						<li><a href="/loginForm"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심</a></li>
 						<li class="header__utill-login-btn"><a href="/loginForm">
-								<img src="images/icon/header-icon/icon-btn.png" alt="로그인" />
+								<img src="images/icon/header-icon/user.png" alt="로그인" />
 								로그인
 						</a>
 							<ul>
@@ -69,12 +68,11 @@
 				</c:when>
 				<c:when test="${not empty sessionScope.user}">
 					<ul class="header__utill">
-						<li><a href="#"> <img
-								src="images/icon/header-icon/icon-btn.png" alt="관심제품" /> 관심
+						<li><a href="#"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심
 						</a></li>
 						<li class="header__utill-login-btn">
 							<a>
-								<img src="images/icon/header-icon/icon-btn.png" alt="로그인" />
+								<img src="images/icon/header-icon/user.png" alt="유저메뉴" />
 								${sessionScope.user.user_nickname}
 							</a>
 							<ul>

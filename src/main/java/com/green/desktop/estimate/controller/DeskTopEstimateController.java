@@ -57,22 +57,17 @@ public class DeskTopEstimateController {
 	@Autowired
 	private MotherboardMapper motherboardMapper;
 	
-	
-	
-	
-	
-	
 	@RequestMapping("/DeskTopEstimateForm")
 	public ModelAndView deskTopEstimateForm() {
 		ModelAndView mv = new ModelAndView();
 //		List<HashMap<String, Object>> deskTopEstimateCpuFilterList = cpuMapper.getdeskTopEstimateCpuFilterList();
 //		List<HashMap<String, Object>> cpuResultList = deskTopEstimateService.getCpuResultList(); 
-		mv.setViewName("/deskTopEstimate/deskTopEstimateForm");
+		mv.setViewName("deskTopEstimate/deskTopEstimateForm");
 		return mv;
 		
 	};
 	
-	@RequestMapping("deskTopEstimateFiler")
+	@RequestMapping("/deskTopEstimateFiler")
 	@ResponseBody
 	public List<String> deskTopEstimateFiler (@RequestParam HashMap<String, Object> map){
 		System.out.println(map);

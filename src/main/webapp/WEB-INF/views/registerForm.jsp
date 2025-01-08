@@ -13,7 +13,7 @@
 	<div class="login-wrap">
 		<div class="login-inner">
 			<h1 class="register__h1">
-				<a href="/index.html">로고</a>회원가입<img onclick="history.back();"
+				<a href="/"><img src="/images/logo/logo.svg" alt="찾았닷컴 로고"></a>회원가입<img class="login-back-btn" onclick="history.back();"
 					src="/images/icon/common-icon/back-btn.png" alt="뒤로가기" />
 			</h1>
 			<form action="/register" method="POST">

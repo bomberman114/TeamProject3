@@ -28,18 +28,25 @@ public class CrollingServiceImpl implements CrollingService {
 	@Override
 	public void DownloadAndSaveImg(HashMap<String, Object> map) {
 		List<HashMap<String, Object> >list = (List<HashMap<String, Object>>) map.get("products");
-		System.out.println(list);
 		for (HashMap<String, Object> product : list) {
 			try {
 				// DB 저장 로직
 				HashMap<String, Object> exist = crollingMapper.findByProductName(product);
 				
-				if(exist == null) {
+				
+				if(exist != null) {
+					int proudctIDx = Integer.parseInt(String.valueOf(exist.get("PRODUCT_IDX")));
+					HashMap<String, Object> existImg = crollingMapper.findByIdx(proudctIDx);
+					if(existImg == null) {
+					CrollingImgVo img = CrollingUtil.downloadAndSaveImage(String.valueOf(product.get("product_img")), uploadpath);
+					crollingMapper.reinforceProductImg(img,proudctIDx);
+					}
+				}else {
 					crollingMapper.saveProduct(product);
 					CrollingImgVo img = CrollingUtil.downloadAndSaveImage(String.valueOf(product.get("product_img")), uploadpath);
 					crollingMapper.saveProductImg(img);
 				}
-
+				
 			} catch (Exception e) {
 				// 예외 발생 시 롤백됨
 				throw new RuntimeException("Error processing products", e);

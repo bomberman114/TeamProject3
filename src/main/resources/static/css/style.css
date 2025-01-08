@@ -1,4 +1,8 @@
 @charset "UTF-8";
+:root {
+	--main-color: #1A3D91;  /* CSS 전역 변수 선언 */
+}
+
 
 /* 헤더 */
 /*===============================================================================*/
@@ -16,14 +20,14 @@ header {
   width: 132px;
   height: 132px;
   aspect-ratio: 1;
-  background: #ccc;
+  background: var(--main-color);
   position: relative;
   display: flex;
   gap: 6px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-weight: 500;
+  font-weight: 300;
   color: #fff;
   cursor: pointer;
 }
@@ -38,16 +42,23 @@ header {
   z-index: 3;
   bottom: 0;
   transform: translateY(100%);
+  background : #fff;
+  border : solid 1px #eee;
+  box-shadow : 0 2px 4px rgba(0,0,0,0.08);
 
   & li {
     padding: 10px;
-    background: #eee;
     position: relative;
     
     & a{
     display : block;
     width : 100%;
     height: 100%}
+  }
+  
+  & >li:hover{
+  	color : var(--main-color);
+  	font-weight: 500;
   }
 }
 
@@ -66,6 +77,15 @@ header {
   top: 0;
   transform: translateX(100%);
   width: 100%;
+  color: #333;
+  font-weight : 300;
+  background: #fff;
+  box-shadow : 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.header__category-3depth li:hover{
+	color : var(--main-color);
+  	font-weight: 500;
 }
 
 .header__content {
@@ -80,19 +100,19 @@ header {
   display: flex;
   gap: 20px;
   height: 50px;
-  line-height: 50px;
+  align-items : center;
   margin-bottom: 20px;
 
   & h1 {
-    width: 168px;
-    background: #ccc;
-    text-align: center;
-  }
-
-  & div {
-    width: 573px;
-    background: #ccc;
-    text-align: center;
+    width: 200px;
+    
+    & a{
+        display : flex;
+    justify-content: center;
+    align-items: center;}
+    
+    & img{
+    height : 100%;}
   }
 }
 
@@ -101,6 +121,10 @@ header {
   gap: 18px;
   font-size: 16px;
   font-weight: 500;
+}
+
+.header__gnb li:hover{
+	color : var(--main-color)
 }
 
 .header-nav {
@@ -114,11 +138,11 @@ header {
 
 /* 헤더__검색바 */
 .search-div {
-  width: 100%;
+  width: 573px;
+  border : solid 2px var(--main-color);
+  text-align: center;
   height: 100%;
-  background: url(/images/icon/search.png) no-repeat right 30px center;
-  border: solid 1px var(--main-color);
-  border-radius: 4px;
+  background: url(/images/icon/header-icon/search.svg) no-repeat right 24px center;
   transition: width 0.4s;
 
   & input {
@@ -126,10 +150,11 @@ header {
     height: 100%;
     font-size: 18px;
     padding: 0 100px 0 30px;
-    border-radius: 4px;
+    height : 50px;
     border: none;
     background: none;
     font-family: "Pretendard";
+    outline: none;
   }
   & .recent-list {
     display: none;
@@ -138,7 +163,6 @@ header {
 
 .search-div.recent {
   line-height: 1.3;
-  border-radius: 16px 16px 0 0;
   border: solid 1px #d7dce5;
   font-size: 14px;
   position: relative;
@@ -148,7 +172,7 @@ header {
     padding: 20px 30px;
     top: 48px;
     border: solid 1px #d7dce5;
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 2px 2px;
     background: #fff;
     position: absolute;
     z-index: 4;
@@ -251,9 +275,6 @@ footer {
 
 /* 홈  */
 /*===============================================================================*/
-.home {
-  overflow: hidden;
-}
 
 .scroll-top-btn{
 	opacity : 0;
@@ -262,29 +283,38 @@ footer {
 	right: 40px; 
 	bottom: 40px;
 	border-radius : 30px;
+	border : solid 1px #767676;
 	cursor: pointer;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.08)}
+	}
 
 /* 메인 캐러셀 */
 .home__main-carousel {
   width: 100%;
   height: 400px;
-  position: relative;
+  overflow : hidden;
+  
+	& .inner{
+		position: relative;
+		width : 1200px;
+		margin : auto;
+		padding : 0;
+		height: 400px
+	}
 
   & .dim {
     position: absolute;
     width: 100%;
     height: 400px;
     cursor : pointer;
-    right: 0;
+    right: 0px;
     transform: translateX(-100%);
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.2);
     z-index: 3;
     top: 0;
   }
 
   & .dim-next {
-    left: 0;
+    left: 0px;
     transform: translateX(100%);
   }
   
@@ -325,7 +355,7 @@ footer {
   display: flex;
   gap: 6px;
   bottom: 20px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.2);
   color: #fff;
   padding: 8px 20px;
   align-items: center;
@@ -387,10 +417,19 @@ footer {
   margin-top: 12px;
   display: flex;
   gap: 30px;
+  height: 100%; /* 또는 적절한 높이 */
+  overflow: visible;
+}
+
+.box-best-btn-container {
+  position: sticky;
+  top: 30px; /* 또는 원하는 위치 */
+  transition: all 0.6s;
 }
 
 .box-best-btn {
   width: 73px;
+  overflow: visible;
 
   & .box-best-btn-container {
     transition: all 0.6s;
@@ -401,8 +440,20 @@ footer {
     height: 54px;
     line-height: 54px;
     text-align: center;
-    background: #ccc;
+    border: solid 1px #ccc;
     cursor: pointer;
+    border-bottom : none;
+  }
+  
+  & li:last-child{
+  	border-bottom : solid 1px #ccc
+  }
+  
+  & li.box-best-btn-active{
+  	background : var(--main-color);
+  	color : #fff;
+  	font-weight: 500;
+  	border : none;
   }
 }
 
@@ -438,6 +489,11 @@ footer {
   aspect-ratio: 1;
   background: #ccc;
   margin-bottom: 8px;
+  
+  & img{
+  	display : block;
+  	width: 100%;
+  }
 }
 
 .box-best-item-title {
@@ -446,6 +502,7 @@ footer {
   word-break: break-word;
   display: -webkit-box;
   line-clamp: 2;
+  min-height : 40px;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
@@ -479,14 +536,16 @@ footer {
     position: relative;
 
     & a {
-      display: block;
-      width: 150px;
+      display: flex;
+      justify-content : center;
+      align-items : center;
+      width: 200px;
       height: 40px;
       margin: auto;
-      background: #ccc;
+      
     }
 
-    & img {
+    & .login-back-btn {
       position: absolute;
       left: 24px;
       top: 50%;
@@ -546,7 +605,7 @@ footer {
   }
 
   & button {
-    background: #333;
+    background: var(--main-color);
     font-size: 20px;
     color: #fff;
     font-weight: 700;
@@ -560,7 +619,7 @@ footer {
 
     & a {
       font-weight: 500;
-      color: #333;
+      color: #3863c9;
       margin-left: 8px;
     }
   }
@@ -678,7 +737,7 @@ footer {
   & span {
     font-size: 20px;
     background: #fff;
-    color: #333;
+    color: var(--main-color);
     padding: 10px;
     border-radius: 100px;
   }
@@ -731,6 +790,119 @@ footer {
     cursor: pointer
   }
 }
+
+.program-filter {
+	display: none;
+	position: fixed;
+	align-items : center;
+	padding : 20px 40px;
+	z-index: 2;
+	width : 100%;
+	background : #2a2b33;
+	color: #fff;
+	
+	 & .quick-finder-program {
+	background: #2a2b33;
+	display: flex;
+	overflow: hidden;
+	}
+}
+
+.program-filter.scroll-active {
+	display: flex;
+	flex-wrap: nowrap;
+	width : 100%;
+	gap : 40px;
+	
+	& >div{
+		width : 100%;
+		display: flex;
+		gap : 40px;
+		align-items: center;
+		padding : 0  20px;
+	}
+	
+	& .purpose-container{
+		width: 100%;
+		overflow: hidden;
+	}
+	
+	& .purpose-btn{
+		flex-shink : 1;
+		width: 40px;
+		height: 40px;
+
+		& img{
+		width : 40px;
+		cursor: pointer;
+		}
+	}
+	
+	& >ul:first-child{
+		width : 300px;
+		white-space : nowrap;
+		
+		
+		& li{
+			display : flex;
+			justify-content: center;
+			align-items: center;
+			width : 100%;
+			border : solid 1px #ccc;
+			padding : 12px;
+			border : solid 1px rbg(189,234,20);
+			margin-bottom: 12px;
+			cursor: pointer;
+		}
+		
+		& li:last-child{
+			margin-bottom: 0;
+		}
+		
+		& .purpose-active{
+		color : #37D0FD;
+		border : solid 1px #37D0FD;
+		}
+	}
+}
+
+.quick-finder-filter-program{
+	display: flex;
+	width: 90%;
+	height : 100%;
+	gap : 8px;
+	transition : all 0.4s;
+	
+	& li{
+		width : calc(100%/5);
+		aspect-ratio : 1.618;
+		flex-shrink : 0;
+		height : 100%;
+		background: #ccc;
+		cursor: pointer;
+	}
+}
+
+
+.list-search-btn{
+	background-image: url("/images/icon/common-icon/search-fff.svg");
+	background-repeat : no-repeat;
+	background-position : center;
+	background-color : var(--main-color);
+	text-indent: -9999px;
+	border : none;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.paging-prev-btn{
+	background: url("/images/icon/common-icon/paging-prev-btn.png") no-repeat center;
+}
+.paging-next-btn{
+	background: url("/images/icon/common-icon/paging-next-btn.png") no-repeat center;
+}
+
+
 
 .quick-finder-filter {
   & li {
@@ -884,13 +1056,17 @@ footer {
     gap: 30px;
 
     & .quick-searched-item-img {
-      width: 103px;
-      height: 103px;
+      width: 120px;
+      height: 120px;
       margin-right : 12px;
       line-height: 103px;
       text-align: center;
       background: #ccc;
       flex-shrink: 0;
+      
+      & img{
+      display : block;
+      width: 100%;}
     }
 
     & .quick-searched-item-info {

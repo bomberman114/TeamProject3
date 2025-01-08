@@ -259,8 +259,9 @@ footer {
 	right: 40px; 
 	bottom: 40px;
 	border-radius : 30px;
+	border : solid 1px #767676;
 	cursor: pointer;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.08)}
+	}
 
 /* 메인 캐러셀 */
 .home__main-carousel {

@@ -20,6 +20,7 @@
 </style>
 </head>
 <body>
+	<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 	<div class="program-filter">
 		<ul>
 			<li class="li-purpose-idx purpose-active" data-purposeIdx="">전체</li>
@@ -594,6 +595,21 @@
  			   }
  		   })
      
+ 		   const $scrollTopBtn = document.querySelector(".scroll-top-btn");
+ 		  window.addEventListener("scroll", (e)=>{
+ 		    	if(window.scrollY > 0){
+ 		    		$scrollTopBtn.style.opacity = "1"
+ 		    		$scrollTopBtn.style.pointerEvents = "auto";
+ 		    	}else{
+ 		    		$scrollTopBtn.style.opacity = "0"
+ 		        $scrollTopBtn.style.pointerEvents = "none";
+ 		    	}
+ 		    });
+ 		   
+ 		   
+	    $scrollTopBtn.addEventListener("click", () => {
+	        window.scroll({ top: 0, behavior: "smooth" });
+	    });
      
     </script>
 </body>

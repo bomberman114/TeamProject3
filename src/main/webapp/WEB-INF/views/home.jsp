@@ -195,9 +195,16 @@ const $scrollTopBtn = document.querySelector(".scroll-top-btn");
                 btnContainers[i].classList.add("box-best-btn-active");
             }
         });
+          	if(window.scrollY > 0){
+        		$scrollTopBtn.style.opacity = "1"
+        		$scrollTopBtn.style.pointerEvents = "auto";
+        	}else{
+        		$scrollTopBtn.style.opacity = "0"
+            $scrollTopBtn.style.pointerEvents = "none";
+        	}
     });
-
-
+    
+    
 $scrollTopBtn.addEventListener("click", () => {
     window.scroll({ top: 0, behavior: "smooth" });
 });

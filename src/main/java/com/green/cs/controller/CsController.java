@@ -34,11 +34,11 @@ public class CsController {
 	public ModelAndView cslist() {
 		// 자주하는 질문 List
 		List<CsVo> csList = csMapper.getcsList();
-		System.out.println("csList=" + csList);
+		//System.out.println("csList=" + csList);
 		
 		// 공지사항 List
 		List<CsVo> ntList = csMapper.getntList();
-		System.out.println("ntList=" + ntList);
+		//System.out.println("ntList=" + ntList);
 				
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("csList", csList);
@@ -52,7 +52,7 @@ public class CsController {
 	public ModelAndView cssearch(@RequestParam("searchtext") String searchtext) {
 		// 자주하는 질문 List(검색어)
 		List<CsVo> csList = csMapper.getsearchList(searchtext);
-		System.out.println("csList=" + csList);
+		//System.out.println("csList=" + csList);
 		
 		// 검색 갯수
 		int searchcount = csList.size();
@@ -80,7 +80,7 @@ public class CsController {
 	// Cs/CswriteForm (문의글 작성)
 	@RequestMapping("/CswriteForm")
 	public ModelAndView cswriteForm(CsVo csVo, @RequestParam("user_idx") int user_idx) {
-		System.out.println("user_idx:" + user_idx);
+		//System.out.println("user_idx:" + user_idx);
 		
 		// 회원정보
 	    CsVo vo = csMapper.getminfo(user_idx);
@@ -110,7 +110,7 @@ public class CsController {
 	    FileImage.save(map, files);
 	    
 	    map.get("fileList");
-	    System.out.println("fileList::" + map.get("fileList"));
+	    //System.out.println("fileList::" + map.get("fileList"));
 	    
 	    // 문의글 저장
 	    csMapper.insertcs(csVo);
@@ -130,10 +130,10 @@ public class CsController {
 	@RequestMapping("/Mycslist")
 	public ModelAndView mycslist(@RequestParam("user_idx") int user_idx) {
 		
-		System.out.println("user: " + user_idx);
+		//System.out.println("user: " + user_idx);
 		// 나의 문의내역 List
 		List<CsVo> mycsList = csMapper.getmycsList(user_idx);
-		System.out.println("mycsList=" + mycsList);
+		//System.out.println("mycsList=" + mycsList);
 		
 				
 		ModelAndView mv = new ModelAndView();
@@ -150,7 +150,7 @@ public class CsController {
 		
 		// 문의글 답변
 		CsVo aw = csMapper.getanswer(customer_service_idx);
-		System.out.println("aw=" + aw);
+		//System.out.println("aw=" + aw);
 				
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("vo", vo);
@@ -165,7 +165,7 @@ public class CsController {
 	public ModelAndView noticelist() {
 		// 공지사항 List
 		List<CsVo> ntList = csMapper.getntList();
-		System.out.println("ntList=" + ntList);
+		//System.out.println("ntList=" + ntList);
 				
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("ntList", ntList);
@@ -181,11 +181,11 @@ public class CsController {
 	    
 	    // 이전 공지사항
 	    CsVo pv = csMapper.getprevious(notice_idx);
-	    System.out.println("pv=" + pv);
+	    //System.out.println("pv=" + pv);
 	    
 	    //  다음 공지사항
 	    CsVo nt = csMapper.getnext(notice_idx);
-	    System.out.println("nt=" + nt);
+	    //System.out.println("nt=" + nt);
 	    
 	    ModelAndView mv = new ModelAndView();
 	    mv.addObject("vo", vo);
@@ -346,13 +346,13 @@ public class CsController {
 		}
 		
 		// ------------------------관리자 공지사항 삭제-----------------------------//
-			@RequestMapping(value = "/ManagerNoticeDelete", method = RequestMethod.POST)
-			public ModelAndView managerNoticeDelete(@RequestParam("notice_idx") int idx) {
-			    ModelAndView mv = new ModelAndView();
-			    csMapper.deletenotice(idx);
-			    mv.setViewName("redirect:/Cs/ManagerNoticeList");
-			    return mv;
-			}
+		@RequestMapping(value = "/ManagerNoticeDelete", method = RequestMethod.POST)
+		public ModelAndView managerNoticeDelete(@RequestParam("notice_idx") int idx) {
+		    ModelAndView mv = new ModelAndView();
+		    csMapper.deletenotice(idx);
+		    mv.setViewName("redirect:/Cs/ManagerNoticeList");
+		    return mv;
+		}
 
 		// ------------------------관리자 자유게시판-----------------------------//
 		@RequestMapping("/ManagerBoardList")

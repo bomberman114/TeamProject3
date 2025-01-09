@@ -26,36 +26,32 @@
 			<div class="detail-search-title">상세검색</div>
 			<div class="detail-search-container">
 				<table>
-					<tr>
-						<td>필터조건1</td>
-						<td>
-							<ul>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-							</ul>
-							<button class="filter-val-all"># 더보기</button>
-						</td>
-					</tr>
-					<tr>
-						<td>필터조건1</td>
-						<td>
-							<ul>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-								<li><input type="checkbox" name="" id=""><label>값1</label></li>
-							</ul>
-							<button class="filter-val-all"># 더보기</button>
-						</td>
-					</tr>
+				<c:forEach var="attribute" items="${categoryAttribueList}">
+				    <tr>
+				        <td>
+				            <c:forEach var="entry" items="${attribute}" varStatus="status">
+				                <c:if test="${entry.key != 'Group'}">
+				                    ${entry.key}
+				                </c:if>
+				            </c:forEach>
+				        </td>
+				        <td>
+				            <ul>
+				                <c:forEach var="entry" items="${attribute}">
+				                    <c:if test="${entry.key != 'Group'}">
+				                        <c:forEach var="attributeValue" items="${entry.value}">
+				                            <li>
+				                                <input type="checkbox" name="${entry.key}" id="${entry.key}_${attributeValue.attribute_value_idx}">
+				                                <label for="${entry.key}_${attributeValue.attribute_value_idx}">${attributeValue.attribute_value_name}</label>
+				                            </li>
+				                        </c:forEach>
+				                    </c:if>
+				                </c:forEach>
+				            </ul>
+				            <button class="filter-val-all"># 더보기</button>
+				        </td>
+				    </tr>
+				</c:forEach>
 					<tr>
 						<td>필터조건1</td>
 						<td>

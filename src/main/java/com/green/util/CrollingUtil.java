@@ -15,7 +15,7 @@ import com.green.crolling.vo.CrollingImgVo;
 
 public class CrollingUtil {
 
-    // Download and save images from the list of products
+    // 다나와 크롤링 이미지 다운로드,저장
     public static CrollingImgVo downloadAndSaveImage(String imgUrl, String uploadPath) {
 
             try {

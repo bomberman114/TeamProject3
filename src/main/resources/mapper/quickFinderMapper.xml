@@ -3,8 +3,14 @@
 <mapper namespace="com.green.common.mapper.QuickFinderMapper">
 
 <select id="findPurposeList">
-    SELECT *
-    FROM   PURPOSE_CONTENT
+    SELECT PC.PURPOSE_CONTENT_IDX, 
+           PC.PURPOSE_IDX, 
+           PC.PURPOSE_CONTENT_NAME, 
+           PC.CPU_BENCH, 
+           PC.GPU_BENCH, 
+           PC.RAM_BENCH,
+           PI.PURPOSE_SFILE_NAME
+    FROM   PURPOSE_CONTENT PC LEFT JOIN PURPOSE_IMAGE PI ON PC.PURPOSE_CONTENT_IDX = PI.PURPOSE_CONTENT_IDX 
     WHERE  1 = 1
     <if test="purposeIdx != null and purposeIdx != ''">
         AND PURPOSE_IDX = #{purposeIdx}
@@ -14,19 +20,39 @@
 <select id="getProductCount">
     SELECT COUNT(*)
     FROM   PRODUCT
-    WHERE  1 = 1
-	    <if test="requestBody.computerType == null or requestBody.computerType == ''">
-	        AND CATEGORY_IDX IN (2, 3)
-	    </if>
-	    <if test="requestBody.computerType != null and requestBody.computerType != ''">
-	        AND CATEGORY_IDX = #{requestBody.computerType}
-	    </if>
-	    <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-	        AND PRODUCT_NAME LIKE '%'||#{requestBody.listSearch}||'%'
-	    </if> 
-	    <if test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != '' ">
-          AND PRICE BETWEEN #{requestBody.lowestPrice} AND #{requestBody.highestPrice}
-      </if>
+    <where>
+        <choose>
+            <when test="requestBody.computerType == null or requestBody.computerType == ''">
+                CATEGORY_IDX IN (2, 3)
+            </when>
+            <otherwise>
+                CATEGORY_IDX = #{requestBody.computerType}
+            </otherwise>
+        </choose>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+            AND (REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
+            OR REGEXP_LIKE(PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+        </if> 
+    </where>
+	    <choose>
+        <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
+            AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
+        </when>
+				<when test="requestBody.manufacture != null and requestBody.manufacture != ''">
+				   AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*'))
+				</when>
+      </choose>
+	    <choose>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND PRICE &gt;= #{requestBody.lowestPrice} AND PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+		        AND PRICE &gt;= #{requestBody.lowestPrice}
+		    </when>
+		    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+			</choose>
 </select>
 
 <select id="getProductPagingList">
@@ -47,19 +73,38 @@
 			LEFT JOIN PRODUCT_IMAGE            PI  ON P.PRODUCT_IDX = PI.PRODUCT_IDX
 			LEFT JOIN category_attribute_value CAV on ram.category_attribute_value_idx = cav.category_attribute_value_idx
     <where>
-        <if test="requestBody.computerType == null or requestBody.computerType == ''">
-            AND P.CATEGORY_IDX IN (2, 3)
-        </if>
-        <if test="requestBody.computerType != null and requestBody.computerType != ''">
-            AND P.CATEGORY_IDX = #{requestBody.computerType}
-        </if>
+        <choose>
+            <when test="requestBody.computerType == null or requestBody.computerType == ''">
+                P.CATEGORY_IDX IN (2, 3)
+            </when>
+            <otherwise>
+                P.CATEGORY_IDX = #{requestBody.computerType}
+            </otherwise>
+        </choose>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-            AND P.PRODUCT_NAME LIKE '%'||#{requestBody.listSearch}||'%'
-        </if>
-        <if test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != '' ">
-            AND P.PRICE BETWEEN #{requestBody.lowestPrice} AND #{requestBody.highestPrice}
-        </if>
+            AND (REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
+            OR REGEXP_LIKE(P.PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+        </if> 
     </where>
+    <choose>
+        <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
+             AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
+        </when>
+				<when test="requestBody.manufacture != null and requestBody.manufacture != ''">
+				  AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*'))
+				</when>
+    </choose>
+		<choose>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND P.PRICE &gt;= #{requestBody.lowestPrice} AND P.PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+		        AND P.PRICE &gt;= #{requestBody.lowestPrice}
+		    </when>
+		    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND P.PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+		</choose>
     <if test="requestBody.sortType == 'highestPrice'">
     	ORDER BY P.PRICE DESC
     </if>        
@@ -71,6 +116,42 @@
     </if>        
     OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
 </select>
+
+<select id="findManufacturerList">
+	SELECT
+    BRAND_MANUFACTURER_IDX,
+    BRAND_MANUFACTURER_NAME
+	FROM
+    BRAND_MANUFACTURER
+</select>
+
+<select id="findBrandListByManufactureIdx">
+	SELECT
+	    BRAND_LINEUP_IDX,
+	    BRAND_LINEUP_NAME,
+	    BRAND_MANUFACTURER_IDX,
+	    BRAND_PURPOSE_IDX,
+	    BRAND_LINEUP_RANK_IDX,
+	    BRAND_SIMPLE_TERMS_EXPLAIN,
+	    BRAND_TERMS_EXPLAIN,
+	    CATEGORY_IDX
+	FROM
+	    BRAND_LINEUP WHERE BRAND_MANUFACTURER_IDX = #{manufactureIdx}
+</select>
+
+<insert id="saveTestPurposeImg">
+INSERT INTO purpose_image (
+    purpose_content_idx,
+    purpose_image_name,
+    purpose_image_ext,
+    purpose_sfile_name
+) VALUES (
+    (select nvl(max(PURPOSE_IMAGE_IDX),0)+1 from purpose_image),
+    #{product_image_name},
+    #{product_image_ext},
+    #{product_sfile_name}  
+)
+</insert>
 
 
 </mapper>

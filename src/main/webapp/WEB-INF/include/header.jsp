@@ -10,16 +10,21 @@
 				src="/images/icon/header-icon/category-btn.png" alt="카테고리 버튼" />
 				카테고리
 				<ul class="header__category-2depth">
-					<li><a href="/DetailSearch">PC</a></li>
-					<li><a href="/DetailSearch">노트북</a></li>
+					<li><a href="/DetailSearch?category=2">PC</a></li>
+					<li><a href="/DetailSearch?category=3">노트북</a></li>
 					<li>주요부품
 						<ul class="header__category-3depth">
-							<li><a href="/DetailSearch">CPU</a></li>
-							<li><a href="/DetailSearch">메인보드</a></li>
-							<li><a href="/DetailSearch">메모리</a></li>
+							<li><a href="/DetailSearch?category=5">CPU</a></li>
+							<li><a href="/DetailSearch?category=6">메인보드</a></li>
+							<li><a href="/DetailSearch?category=7">메모리</a></li>
+							<li><a href="/DetailSearch?category=8">그래픽카드</a></li>
+							<li><a href="/DetailSearch?category=9">SSD</a></li>
+							<li><a href="/DetailSearch?category=10">HDD</a></li>
+							<li><a href="/DetailSearch?category=11">CPU 쿨러</a></li>
+							<li><a href="/DetailSearch?category=12">케이스</a></li>
+							<li><a href="/DetailSearch?category=13">파워</a></li>
 						</ul>
 					</li>
-					<li><a href="/DetailSearch">주변기기</a></li>
 				</ul></li>
 		</ul>
 		<div class="header__content">

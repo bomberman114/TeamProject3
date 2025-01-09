@@ -14,13 +14,11 @@
 	src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="/js/searchHistory.js" defer></script>
 <style type="text/css">
-
-
-
 </style>
 </head>
 <body>
-	<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
+	<img class="scroll-top-btn"
+		src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 	<div class="program-filter">
 		<ul>
 			<li class="li-purpose-idx purpose-active" data-purposeIdx="">전체</li>
@@ -28,9 +26,15 @@
 			<li class="li-purpose-idx" data-purposeIdx=2>게임용</li>
 		</ul>
 		<div>
-			<div class="purpose-btn purpose-btn-prev"><img src="/images/icon/common-icon/prev-btn-fff-48.png" alt="prev"></div>
-			<div class="purpose-container"><ul class="quick-finder-filter-program"></ul></div>
-			<div class="purpose-btn purpose-btn-next"><img src="/images/icon/common-icon/next-btn-fff-48.png" alt="next"></div>		
+			<div class="purpose-btn purpose-btn-prev">
+				<img src="/images/icon/common-icon/prev-btn-fff-48.png" alt="prev">
+			</div>
+			<div class="purpose-container">
+				<ul class="quick-finder-filter-program"></ul>
+			</div>
+			<div class="purpose-btn purpose-btn-next">
+				<img src="/images/icon/common-icon/next-btn-fff-48.png" alt="next">
+			</div>
 		</div>
 	</div>
 	<%@include file="/WEB-INF/include/header.jsp"%>
@@ -63,12 +67,13 @@
 									<div>
 										<select name="manufacture">
 											<option value="" selected style="display: none">제조사
-											</option>
-											<option value="">삼성</option>
-										</select> <select name="" id="" disabled="disabled">
+											<option value="" >전체</option>
+											<c:forEach var="manufacturer" items="${manufacturerList}">
+												<option value="${manufacturer.BRAND_MANUFACTURER_IDX}">${manufacturer.BRAND_MANUFACTURER_NAME}</option>
+											</c:forEach>
+										</select> <select name="brand-list" id="brand-list" disabled="disabled">
 											<option value="" selected style="display: none">라인업
 											</option>
-											<option value="">갤럭시 북 360</option>
 										</select>
 									</div>
 									<p class="brand-hint">선택된 라인업이 없습니다.</p>
@@ -76,8 +81,8 @@
 							</div></li>
 						<li><span>가격</span>
 							<div class="quick-finder-filter-price">
-								<input type="text" maxlength="11"  name="lowestPrice"/>~
-								<input type="text" maxlength="11" name="highestPrice"/>
+								<input type="text" maxlength="11" name="lowestPrice" />~ <input
+									type="text" maxlength="11" name="highestPrice" />
 							</div>
 							<button class="quick-finder-filter-btn">조회</button></li>
 					</ul>
@@ -107,6 +112,7 @@
 	<script>
     
       let chartInstances = [];
+      let brandHintList = [];
       let computerType = null; 
       let manufacture = null; 
       let manufactureBrand = null;
@@ -116,32 +122,36 @@
       let sortType = null; 
       let nowpage = null;
       
-      
       getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
 
       // 가격 입력 정규식 이벤트
-	    document.addEventListener('keyup', function(e) {
-	       let value = e.target.value;
-	    	if(e.target.closest(".quick-finder-filter-price input")){
-	        
-	        // 숫자와 쉼표만 허용하는 정규식
-	        const regex = /^[0-9,]*$/;
-	        
-	        if (!regex.test(value)) {
-	          // 숫자나 쉼표가 아닌 문자가 입력되면 해당 문자를 제거
-	          value = value.replace(/[^0-9,]/g, '');
-	        }
-	        
-	        value = Number(value.replaceAll(',', ''));
-	        if(isNaN(value)) {
-	          e.target.value = 0;
-	        } else {
-	          const formatValue = value.toLocaleString('ko-KR');
-	          e.target.value = formatValue;
-	        }
-	    		
-	    	}
-	    });
+			document.addEventListener('keyup', function(e) {
+			    if (e.target.closest(".quick-finder-filter-price input")) {
+			        let value = e.target.value.trim(); // 앞뒤 공백 제거
+			        
+			        // 입력값이 비어있으면 빈 문자열로 설정하고 함수 종료
+			        if (value === '') {
+			            e.target.value = '';
+			            return;
+			        }
+			        
+			        // 숫자와 쉼표만 허용하는 정규식
+			        const regex = /^[0-9,]*$/;
+			        
+			        if (!regex.test(value)) {
+			            // 숫자나 쉼표가 아닌 문자가 입력되면 해당 문자를 제거
+			            value = value.replace(/[^0-9,]/g, '');
+			        }
+			        
+			        value = Number(value.replaceAll(',', ''));
+			        if (isNaN(value)) {
+			            e.target.value = '';
+			        } else {
+			            const formatValue = value.toLocaleString('ko-KR');
+			            e.target.value = formatValue;
+			        }
+			    }
+			});
       
       let { pcpu, pvga, pram } = { pcpu: 16000, pvga: 8000, pram: 16 };
 
@@ -171,7 +181,6 @@
 		  chart.data.datasets[0].data = newData;
 		  chart.update();
 		}
-
 
 
   		// Chart.js 그래프 설정
@@ -328,22 +337,28 @@
     	  let html = "";
     	  purposeList.forEach(purpose => {
     		    const li = document.createElement('li');
-    		    li.textContent = purpose.PURPOSE_CONTENT_NAME;
+    		    const img1 = document.createElement('img');
+    		    img1.src = "/images/purpose/" + purpose.PURPOSE_SFILE_NAME
+    		    img1.alt = purpose.PURPOSE_CONTENT_NAME;
     		    li.classList.add("purpose")
     		    li.dataset.bench = JSON.stringify({
     		        cpu: purpose.CPU_BENCH,
     		        vga: purpose.GPU_BENCH,
     		        ram: purpose.RAM_BENCH
     		      });
+    		    li.append(img1)
     		    $purposeContainer.appendChild(li);
     		    const li2 = document.createElement('li');
-    		    li2.textContent = purpose.PURPOSE_CONTENT_NAME;
+    		    const img2 = document.createElement('img');
+    		    img2.src = "/images/purpose/" + purpose.PURPOSE_SFILE_NAME
+    		    img2.alt = purpose.PURPOSE_CONTENT_NAME;
     		    li2.classList.add("purpose")
     		    li2.dataset.bench = JSON.stringify({
     		        cpu: purpose.CPU_BENCH,
     		        vga: purpose.GPU_BENCH,
     		        ram: purpose.RAM_BENCH
     		      }); 
+    		    li2.append(img2)
     		    $purposeFilterContainer.appendChild(li2);
     	  })
       }
@@ -359,11 +374,13 @@
     		  })
     		  getPurposeList(clicked.dataset.purposeidx)
     	  }
-    	  if(clicked.matches(".purpose")){
-    		  pcpu = JSON.parse(e.target.dataset.bench).cpu
-    		  pvga = JSON.parse(e.target.dataset.bench).vga
-    		  pram = JSON.parse(e.target.dataset.bench).ram	  
-    		  renderCanvas();
+    	  if(clicked.closest(".purpose")){
+    		  const purposeElement = clicked.closest(".purpose");
+   		    const benchData = JSON.parse(purposeElement.dataset.bench);
+   		    pcpu = benchData.cpu;
+   		    pvga = benchData.vga;
+   		    pram = benchData.ram;
+   		    renderCanvas();
     	  }
     	  if(clicked.matches(".purpose-btn-next img")){
     		  purposeCurrentIdx++;
@@ -386,7 +403,6 @@
     	  }
     	  if(clicked.matches(".quick-finder-filter-btn")){
     		  computerType = document.querySelector("select[name='computerType']").value
-    		  manufacture = document.querySelector("select[name='manufacture']").value
     		  lowestPrice = document.querySelector("input[name='lowestPrice']").value.replaceAll(",","")
     		  highestPrice = document.querySelector("input[name='highestPrice']").value.replaceAll(",","")
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
@@ -519,7 +535,7 @@
 
     	    
     	    const itemImg = document.createElement("img");
-    	    //itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
+    	    itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
     	    
     	    itemLeftImgDiv.append(itemImg);
     	    
@@ -605,6 +621,77 @@
 	        window.scroll({ top: 0, behavior: "smooth" });
 	    });
      
+	    document.addEventListener("change",(e)=>{
+	    	if(e.target.matches("select[name='manufacture']")){
+	    		if(e.target.options[e.target.selectedIndex].value){
+		    		getBrandByManufacture(e.target.value)
+		    		manufacture = e.target.options[e.target.selectedIndex].text;	    			
+	    		}else{
+	    			manufacture = null;
+	    			const $brandSelect = document.querySelector("select[name='brand-list']")
+		 	    	$brandSelect.disabled = true;
+		 	    	$brandSelect.innerHTML = "";
+		 	    	const $initOption = document.createElement("option");
+		 	    	$initOption.textContent = "라인업"
+		 	    	$initOption.value = "";
+		 				$brandSelect.append($initOption)
+		 				document.querySelector(".brand-hint").textContent = "선택된 라인업이 없습니다."
+	    		}
+	    	}
+	    	if(e.target.matches("select[name='brand-list']")){
+	    		const hintText = brandHintList.filter((brand)=>brand.brandIdx == e.target.value);
+	    		if(hintText[0]){
+		    		document.querySelector(".brand-hint").textContent = hintText[0].brandHint;
+		    		manufactureBrand = e.target.options[e.target.selectedIndex].text;
+	    		}else{
+	    			document.querySelector(".brand-hint").textContent = "선택된 라인업이 없습니다."
+	    		  manufactureBrand = null
+	    		}
+	    	}
+	    	if(e.target.matches(".list-search")){
+	    		listSearch = e.target.value;
+	    	}
+	    	})
+	    
+	    async function getBrandByManufacture(manufactureIdx){
+	 	    const res = await fetch("/QuickFinder/getBrandByManufactureList?manufactureIdx=" + manufactureIdx);
+	 	    
+	 	    if (!res.ok) {
+	 	        throw new Error(`HTTP error status: ${res.status}`);
+	 	     }
+
+	 	    const result = await res.json();
+	 	    const $brandSelect = document.querySelector("select[name='brand-list']")
+	 	    if(result.brandList.length >= 1){
+	 	    	$brandSelect.disabled = false;
+	 	    	$brandSelect.innerHTML = "";
+	 	    	brandHintList = [];
+	 	    	const $initOption = document.createElement("option");
+	 	    	$initOption.textContent = "전체"
+	 	    	$initOption.value = "";
+	 				$brandSelect.append($initOption)
+	 	    	
+	 	    	result.brandList.forEach(brand=>{
+	 	    		const $option       = document.createElement("option")
+	 	    		$option.value       = brand.BRAND_LINEUP_IDX
+	 	    		$option.textContent = brand.BRAND_LINEUP_NAME
+	 	    		$brandSelect.append($option);
+	 	    		brandHintList.push({brandIdx : brand.BRAND_LINEUP_IDX, brandHint : brand.BRAND_SIMPLE_TERMS_EXPLAIN })
+	 	    	})
+	 	    }else{
+    			manufactureBrand = null;
+	 	    	$brandSelect.disabled = true;
+	 	    	$brandSelect.innerHTML = "";
+	 	    	const $initOption = document.createElement("option");
+	 	    	$initOption.textContent = "라인업"
+	 	    	$initOption.value = "";
+	 				$brandSelect.append($initOption)
+	 				document.querySelector(".brand-hint").textContent = "선택된 라인업이 없습니다."
+	 	    }
+	 	    
+	 	    return result;
+	    }
+
     </script>
 </body>
 </html>

@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.green.crolling.vo.CrollingImgVo;
+
 @Mapper
 public interface QuickFinderMapper {
 
@@ -16,5 +18,14 @@ public interface QuickFinderMapper {
     List<HashMap<String, Object>> getProductPagingList(@Param("offset") int offset, 
             @Param("recordSize") int recordSize, 
             @Param("requestBody") HashMap<String, Object> requestBody);
+
+	List<HashMap<String, Object>> findManufacturerList();
+
+	List<HashMap<String, Object>> findBrandListByManufactureIdx(String manufactureIdx);
+
+	void postTestPurposeImg(String manufactureIdx);
+
+	void saveTestPurposeImg(CrollingImgVo crollingImgVo);
+
 
 }

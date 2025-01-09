@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.common.mapper.DetailSearchMapper">
+	
+<select id="getAttributeListByCategoryIdx">
+		SELECT *
+		FROM   CATEGORY_ATTRIBUTE CA LEFT JOIN  CATEGORY_ATTRIBUTE_VALUE CAV ON CA.CATEGORY_ATTRIBUTE_IDX = CAV.CATEGORY_ATTRIBUTE_IDX
+		WHERE  1=1
+    <if test="categoryIdx != null and categoryIdx != ''">
+        AND CA.CATEGORY_IDX = #{categoryIdx}
+    </if>
+</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+		@charset "UTF-8";
 :root {
 	--main-color: #1A3D91;  /* CSS 전역 변수 선언 */
 }
@@ -736,8 +736,8 @@ footer {
 
   & span {
     font-size: 20px;
-    background: #fff;
-    color: var(--main-color);
+    background: var(--main-color);
+    color: #fff;
     padding: 10px;
     border-radius: 100px;
   }
@@ -783,11 +783,16 @@ footer {
   grid-template-columns: repeat(5, 1fr);
 
   & li {
-    background: #ccc;
-    aspect-ratio: 1.618;
     border-radius: 4px;
     width: 100%;
-    cursor: pointer
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    & img{
+    width : 100%;}
   }
 }
 
@@ -823,12 +828,29 @@ footer {
 	}
 	
 	& .purpose-container{
-		width: 100%;
 		overflow: hidden;
+		
+		& ul{
+			width : 100%;
+		}
+		
+		& li{
+			width : calc(100%/5);
+			max-width: 250px;
+			max-height : 160px;
+			border-radius: 4px;
+			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+		}
+		
+		& img{
+			width : 100%;
+		}
 	}
 	
 	& .purpose-btn{
-		flex-shink : 1;
 		width: 40px;
 		height: 40px;
 
@@ -874,15 +896,15 @@ footer {
 	transition : all 0.4s;
 	
 	& li{
-		width : calc(100%/5);
-		aspect-ratio : 1.618;
 		flex-shrink : 0;
 		height : 100%;
-		background: #ccc;
 		cursor: pointer;
 	}
 }
 
+.list-search{
+	outline: none;
+}
 
 .list-search-btn{
 	background-image: url("/images/icon/common-icon/search-fff.svg");

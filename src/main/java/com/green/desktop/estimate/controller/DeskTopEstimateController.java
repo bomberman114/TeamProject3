@@ -59,6 +59,7 @@ public class DeskTopEstimateController {
 	@Autowired
 	private MotherboardMapper motherboardMapper;
 
+
 	@Autowired
 	private ProductMapper productMapper;
 
@@ -78,6 +79,7 @@ public class DeskTopEstimateController {
 		System.out.println("deskTopEstimateProductFilterList:" + deskTopEstimateProductFilterList);
 		System.out.println("productResultList:" + productResultList);
 		System.out.println("categoryAttributeList:" + categoryAttributeList);
+
 		
 		
 		mv.addObject("deskTopEstimateProductFilterList", deskTopEstimateProductFilterList);
@@ -87,6 +89,7 @@ public class DeskTopEstimateController {
 		return mv;
 
 	};
+
 
 	private static String extractLengthInfo(String input) {
 		String[] parts = input.split("/");
@@ -109,7 +112,9 @@ public class DeskTopEstimateController {
 		return 0; // 길이를 찾지 못했을 경우
 	}
 
-	@RequestMapping("deskTopEstimateFiler")
+
+	@RequestMapping("/deskTopEstimateFiler")
+
 	@ResponseBody
 	public List<String> deskTopEstimateFiler(@RequestParam HashMap<String, Object> map) {
 		System.out.println(map);

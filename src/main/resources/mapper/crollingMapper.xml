@@ -6,7 +6,13 @@
 	<select id="findByProductName">
 		SELECT *
 		FROM   PRODUCT
-		WHERE  PRODUCT_NAME LIKE '%'||#{product_name}||'%' AND PRICE = #{price}
+		WHERE  PRODUCT_NAME = #{product_name}
+	</select>
+	
+	<select id="findByIdx">
+		SELECT *
+		FROM   PRODUCT_IMAGE
+		WHERE  PRODUCT_IDX = #{proudctIDx}
 	</select>
 
 	<insert id="saveProduct">
@@ -31,9 +37,23 @@
 			product_sfile_name
 		) VALUES (
 			(SELECT MAX(PRODUCT_IDX) FROM PRODUCT),
-			#{product_image_name},
-			#{product_image_ext},
-		  #{product_sfile_name}
+			#{img.product_image_name},
+			#{img.product_image_ext},
+		  #{img.product_sfile_name}
+		)
+
+	</insert>
+	<insert id="reinforceProductImg">
+		INSERT INTO product_image (
+			product_idx,
+			product_image_name,
+			product_image_ext,
+			product_sfile_name
+		) VALUES (
+			#{proudctIDx},
+			#{img.product_image_name},
+			#{img.product_image_ext},
+		  #{img.product_sfile_name}
 		)
 
 	</insert>

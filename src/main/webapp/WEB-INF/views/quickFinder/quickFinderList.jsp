@@ -15,102 +15,12 @@
 <script src="/js/searchHistory.js" defer></script>
 <style type="text/css">
 
-.program-filter {
-	display: none;
-	position: fixed;
-	align-items : center;
-	padding : 20px 40px;
-	z-index: 2;
-	width : 100%;
-	background : #2a2b33;
-	color: #fff;
-	
-	 & .quick-finder-program {
-	background: #2a2b33;
-	display: flex;
-	overflow: hidden;
-	}
-}
-
-.program-filter.scroll-active {
-	display: flex;
-	flex-wrap: nowrap;
-	width : 100%;
-	gap : 40px;
-	
-	& >div{
-		width : 100%;
-		display: flex;
-		gap : 40px;
-		align-items: center;
-		padding : 0  20px;
-	}
-	
-	& .purpose-container{
-		width: 100%;
-		overflow: hidden;
-	}
-	
-	& .purpose-btn{
-		flex-shink : 1;
-		width: 40px;
-		height: 40px;
-
-		& img{
-		width : 40px;
-		cursor: pointer;
-		}
-	}
-	
-	& >ul:first-child{
-		width : 300px;
-		white-space : nowrap;
-		
-		
-		& li{
-			display : flex;
-			justify-content: center;
-			align-items: center;
-			width : 100%;
-			border : solid 1px #ccc;
-			padding : 12px;
-			border : solid 1px rbg(189,234,20);
-			margin-bottom: 12px;
-			cursor: pointer;
-		}
-		
-		& li:last-child{
-			margin-bottom: 0;
-		}
-		
-		& .purpose-active{
-		color : #37D0FD;
-		border : solid 1px #37D0FD;
-		}
-	}
-}
-
-.quick-finder-filter-program{
-	display: flex;
-	width: 90%;
-	height : 100%;
-	gap : 8px;
-	transition : all 0.4s;
-	
-	& li{
-		width : calc(100%/5);
-		aspect-ratio : 1.618;
-		flex-shrink : 0;
-		height : 100%;
-		background: #ccc;
-		cursor: pointer;
-	}
-}
 
 
 </style>
 </head>
 <body>
+	<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 	<div class="program-filter">
 		<ul>
 			<li class="li-purpose-idx purpose-active" data-purposeIdx="">전체</li>
@@ -129,7 +39,7 @@
 			<div class="quick-finder">
 				<div class="quick-finder-title">
 					<div>
-						간편검색<span>Quick Finder</span>
+						간편검색<span><b>Quick</b> Finder</span>
 					</div>
 					<ul>
 						<li class="li-purpose-idx purpose-active" data-purposeIdx="">전체</li>
@@ -205,7 +115,10 @@
       let listSearch = null; 
       let sortType = null; 
       let nowpage = null;
-    
+      
+      
+      getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+
       // 가격 입력 정규식 이벤트
 	    document.addEventListener('keyup', function(e) {
 	       let value = e.target.value;
@@ -242,7 +155,9 @@
 		      Math.floor((currentData.cpu / pcpu) * 100),
 		      Math.floor((currentData.vga / pvga) * 100),
 		      Math.floor((currentData.ram / pram) * 100),
-		    ];
+		    ];		    	
+		    if(!pvga){newData[1] = 0}
+		 
 		
 		    if (!chartInstances[i]) {
 		      createGraph(canvas, newData, i);
@@ -302,13 +217,16 @@
             },
             plugins: {
               datalabels: {
-                color: "#fff",
+                color: "#111",
                 anchor: "start",
                 align: "top",
                 offset: 0,
                 formatter: function (value, context) {
-                  return context.datasetIndex === 0 ? value + "%" : null;
-                },
+                    if (context.datasetIndex === 0) {
+                      return value === 0 ? null : value + "%";
+                    }
+                    return null;
+                  },
               },
               tooltip: {
                 enabled: true,
@@ -444,8 +362,7 @@
     	  if(clicked.matches(".purpose")){
     		  pcpu = JSON.parse(e.target.dataset.bench).cpu
     		  pvga = JSON.parse(e.target.dataset.bench).vga
-    		  pram = JSON.parse(e.target.dataset.bench).ram
-    		    		  
+    		  pram = JSON.parse(e.target.dataset.bench).ram	  
     		  renderCanvas();
     	  }
     	  if(clicked.matches(".purpose-btn-next img")){
@@ -456,7 +373,7 @@
     		  purposeCurrentIdx--;
     		  purposeSlideMove(purposeCurrentIdx)
     	  }
-    	  if(clicked.matches(".paging-container li")){
+    	  if(clicked.matches(".paging-li")){
     		  nowpage = clicked.textContent;
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
     		  window.scrollTo(0, 700)
@@ -478,16 +395,13 @@
     		  listSearch = document.querySelector(".list-search").value.toUpperCase();
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,1);
     	  }
-    	  if(clicked.closest(".paging-next-btn")){
-    		  nowpage = document.querySelector(".paging-next-btn").dataset.nowpage;
-
-    		  console.log(nowpage)
+    	  if(clicked.matches(".paging-next-btn")){
+    		  nowpage = clicked.dataset.nowpage;
     		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
-    	  }
-    	  if(clicked.closest(".paging-prev-btn")){
-    		  nowpage = document.querySelector(".paging-prev-btn").dataset.nowpage;
-    		  console.log("다음" + nowpage)
-    		  getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+    		}
+    	  if(clicked.matches(".paging-prev-btn")){
+    		  nowpage = clicked.dataset.nowpage;
+  		   getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
     	  }
       })
       
@@ -521,8 +435,7 @@
       }
     }
      
-   
-      getProductPagingFilterList(computerType,manufacture,manufactureBrand,lowestPrice,highestPrice,listSearch,sortType,nowpage);
+
       
      // 상품 가져오는 fetch 함수
      async function getProductPagingFilterList(
@@ -548,7 +461,6 @@
 
       const result = await res.json();
       document.querySelector(".quick-finder-search-title span").textContent = result.response.pagination.totalRecordCount
-      console.log(result)
       createPagingList(result)
       createProductList(result.response.list)
       destroyCharts()
@@ -607,7 +519,7 @@
 
     	    
     	    const itemImg = document.createElement("img");
-    	    itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
+    	    //itemImg.src = "/images/product/" +  item.PRODUCT_SFILE_NAME
     	    
     	    itemLeftImgDiv.append(itemImg);
     	    
@@ -619,7 +531,7 @@
    	      itemRightCanvas.className = "bench-graph";
    	      itemRightCanvas.dataset.bench = JSON.stringify({
    	        cpu: item.CPU_BENCH,
-   	        vga: item.GPU_BENCH,
+   	    	  vga: item.GPU_BENCH,
    	        ram: item.RAM_BENCH
    	      });
     	    itemRightP.textContent = formatNumberWithCommasAndWon(item.PRICE);
@@ -639,11 +551,8 @@
     	  
     	  if (result.response.pagination.existPrevPage) {
     	    const li = document.createElement("li");
-    	    const img = document.createElement("img");
-    	    img.src = "/images/icon/common-icon/paging-prev-btn.png";
     	    li.className = "paging-prev-btn";
     	    li.dataset.nowpage = result.response.pagination.startPage - result.searchVo.pageSize ;
-    	    li.append(img);
     	    ul.append(li);
     	  }
     	  
@@ -654,19 +563,18 @@
     	  ) {
     	    const li = document.createElement("li");
     		  if(result.nowpage == i){
-    			  li.className = "paging-nowpage"
+    			  li.className = "paging-li paging-nowpage"
+    		  }else{
+    			  li.className = "paging-li";
     		  }
     	    li.textContent = i;
     	    ul.append(li);
     	  }
     	  
     	  if (result.response.pagination.existNextPage) {
-    	    const li = document.createElement("li");
-    	    const img = document.createElement("img");
-    	    img.src = "/images/icon/common-icon/paging-next-btn.png";
+    	    const li = document.createElement("li");;
     	    li.className = "paging-next-btn";
     	    li.dataset.nowpage = result.response.pagination.endPage + 1;
-    	    li.append(img);
     	    ul.append(li);
     	  }
     	  
@@ -681,6 +589,21 @@
  			   }
  		   })
      
+ 		   const $scrollTopBtn = document.querySelector(".scroll-top-btn");
+ 		  window.addEventListener("scroll", (e)=>{
+ 		    	if(window.scrollY > 0){
+ 		    		$scrollTopBtn.style.opacity = "1"
+ 		    		$scrollTopBtn.style.pointerEvents = "auto";
+ 		    	}else{
+ 		    		$scrollTopBtn.style.opacity = "0"
+ 		        $scrollTopBtn.style.pointerEvents = "none";
+ 		    	}
+ 		    });
+ 		   
+ 		   
+	    $scrollTopBtn.addEventListener("click", () => {
+	        window.scroll({ top: 0, behavior: "smooth" });
+	    });
      
     </script>
 </body>

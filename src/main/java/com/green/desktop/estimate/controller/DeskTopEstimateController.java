@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import com.green.gpu.mapper.GpuMapper;
 import com.green.hdd.mapper.HddMapper;
 import com.green.motherboard.mapper.MotherboardMapper;
 import com.green.power.mapper.PowerMapper;
+import com.green.product.mapper.ProductMapper;
 import com.green.ram.mapper.RamMapper;
 import com.green.ssd.mapper.SsdMapper;
 
@@ -26,103 +28,105 @@ import com.green.ssd.mapper.SsdMapper;
 @RequestMapping("/DeskTopEstimate")
 public class DeskTopEstimateController {
 // PC 견적
-	
+
 	@Autowired
 	private DeskTopEstimateService deskTopEstimateService;
-	
+
 	@Autowired
 	private CpuMapper cpuMapper;
-	
+
 	@Autowired
 	private GpuMapper gpuMapper;
-	
+
 	@Autowired
 	private RamMapper ramMapper;
-	
+
 	@Autowired
 	private SsdMapper ssdMapper;
-	
+
 	@Autowired
 	private CoolerMapper coolerMapper;
-	
+
 	@Autowired
 	private DesktopCaseMapper desktopCaseMapper;
-	
+
 	@Autowired
 	private PowerMapper powerMapper;
-	
+
 	@Autowired
 	private HddMapper hddMapper;
-	
+
 	@Autowired
 	private MotherboardMapper motherboardMapper;
-	
-	@RequestMapping("/DeskTopEstimateForm")
+
+
+	@Autowired
+	private ProductMapper productMapper;
+
+	@GetMapping("/DeskTopEstimateForm")
 	public ModelAndView deskTopEstimateForm() {
 		ModelAndView mv = new ModelAndView();
-//		List<HashMap<String, Object>> deskTopEstimateCpuFilterList = cpuMapper.getdeskTopEstimateCpuFilterList();
-//		List<HashMap<String, Object>> cpuResultList = deskTopEstimateService.getCpuResultList(); 
+		HashMap<String, Object> map = new HashMap<>();
+		System.out.println("도착");
+		map.put("category", 5);
+		List<HashMap<String, Object>> deskTopEstimateProductFilterList = deskTopEstimateService
+				.getdeskTopEstimateProductFilterList(map);
+		List<HashMap<String, Object>> productResultList = deskTopEstimateService.getProductResultList(map);
+		List<HashMap<String, Object>> categoryAttributeList = productMapper.getcategoryAttributeList(map);
+		System.out.println("productResultList:" + productResultList);
+
+		
+		System.out.println("deskTopEstimateProductFilterList:" + deskTopEstimateProductFilterList);
+		System.out.println("productResultList:" + productResultList);
+		System.out.println("categoryAttributeList:" + categoryAttributeList);
+
+		
+		
+		mv.addObject("deskTopEstimateProductFilterList", deskTopEstimateProductFilterList);
+		mv.addObject("productResultList", productResultList);
+
 		mv.setViewName("deskTopEstimate/deskTopEstimateForm");
 		return mv;
-		
+
 	};
-	
+
+
+	private static String extractLengthInfo(String input) {
+		String[] parts = input.split("/");
+
+		for (String part : parts) {
+			if (part.contains("정격출력")) {
+				return part.trim();
+			}
+		}
+
+		return null; // 길이 정보를 찾지 못했을 경우
+	}
+
+	private static double extractLength(String lengthInfo) {
+		String[] parts = lengthInfo.split(":");
+		if (parts.length > 1) {
+			String lengthStr = parts[1].trim();
+			return Double.parseDouble(lengthStr.replace("W", "").trim());
+		}
+		return 0; // 길이를 찾지 못했을 경우
+	}
+
+
 	@RequestMapping("/deskTopEstimateFiler")
+
 	@ResponseBody
-	public List<String> deskTopEstimateFiler (@RequestParam HashMap<String, Object> map){
+	public List<String> deskTopEstimateFiler(@RequestParam HashMap<String, Object> map) {
 		System.out.println(map);
 		String name = String.valueOf(map.get("name"));
 		List<String> list = new ArrayList<>();
-		if(name.equals("GPU")) {
 			List<HashMap<String, Object>> deskTopEstimateGpuFilterList = gpuMapper.getdeskTopEstimateGpuFilterList();
-			List<HashMap<String, Object>> gpuResultList = deskTopEstimateService.getGpuResultList(); 
+			//List<HashMap<String, Object>> gpuResultList = deskTopEstimateService.getGpuResultList();
 			list.add(String.valueOf(deskTopEstimateGpuFilterList));
-			list.add(String.valueOf(gpuResultList));
-		};
-		if(name.equals("RAM")) {
-			List<HashMap<String, Object>> deskTopEstimateRamFilterList = ramMapper.getdeskTopEstimateRamFilterList();
-			List<HashMap<String, Object>> ramResultList = deskTopEstimateService.getRamResultList(); 
-			list.add(String.valueOf(deskTopEstimateRamFilterList));
-			list.add(String.valueOf(ramResultList));
-		};
-		if(name.equals("COOLER")) {
-			List<HashMap<String, Object>> deskTopEstimateCoolerFilterList = coolerMapper.getdeskTopEstimateCoolerFilterList();
-			List<HashMap<String, Object>> coolerResultList = deskTopEstimateService.getCoolerResultList(); 
-			list.add(String.valueOf(deskTopEstimateCoolerFilterList));
-			list.add(String.valueOf(coolerResultList));
-		};
-		if(name.equals("DESKTOP_CASE")) {
-			List<HashMap<String, Object>> deskTopEstimateDesktopCaseFilterList = desktopCaseMapper.getdeskTopEstimateDesktopCaseFilterList();
-			List<HashMap<String, Object>> desktopCaseResultList = deskTopEstimateService.getDesktopCaseResultList(); 
-			list.add(String.valueOf(deskTopEstimateDesktopCaseFilterList));
-			list.add(String.valueOf(desktopCaseResultList));
-		};
-		if(name.equals("SSD")) {
-			List<HashMap<String, Object>> deskTopEstimateSsdFilterList = ssdMapper.getdeskTopEstimateSsdFilterList();
-			List<HashMap<String, Object>> ssdResultList = deskTopEstimateService.getSsdResultList(); 
-			list.add(String.valueOf(deskTopEstimateSsdFilterList));
-			list.add(String.valueOf(ssdResultList));
-		};
-		if(name.equals("HDD")) {
-			List<HashMap<String, Object>> deskTopEstimateHddFilterList = hddMapper.getdeskTopEstimateHddFilterList();
-			List<HashMap<String, Object>> hddResultList = deskTopEstimateService.getHddResultList(); 
-			list.add(String.valueOf(deskTopEstimateHddFilterList));
-			list.add(String.valueOf(hddResultList));
-		};
-		if(name.equals("POWER")) {
-			List<HashMap<String, Object>> deskTopEstimatePowerFilterList = powerMapper.getdeskTopEstimatePowerFilterList();
-			List<HashMap<String, Object>> powerResultList = deskTopEstimateService.getPowerResultList(); 
-			list.add(String.valueOf(deskTopEstimatePowerFilterList));
-			list.add(String.valueOf(powerResultList));
-		};
-		if(name.equals("MOTHERBOARD")) {
-			List<HashMap<String, Object>> deskTopEstimateDesktopCaseFilterList = desktopCaseMapper.getdeskTopEstimateDesktopCaseFilterList();
-			List<HashMap<String, Object>> desktopCaseResultList = deskTopEstimateService.getDesktopCaseResultList(); 
-			list.add(String.valueOf(deskTopEstimateDesktopCaseFilterList));
-			list.add(String.valueOf(desktopCaseResultList));
-		};
+			//list.add(String.valueOf(gpuResultList));
 		
+
 		return list;
 	};
-	
+
 }

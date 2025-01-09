@@ -49,6 +49,7 @@
 					<li><a href="/LaptopBrand/Brand">브랜드관</a></li>
 					<li><a href="/Community/Albumlist">커뮤니티</a></li>
 					<li><a href="/Cs/Cslist">고객센터</a></li>
+
 				</ul>
 			</div>
 			<c:choose>

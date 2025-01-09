@@ -1455,7 +1455,7 @@ footer {
      margin-bottom: 20px;
      border:1px solid #D9D9D9;
      width: 790px;
-     height: 300px;
+     max-height: auto;
      
 }
 

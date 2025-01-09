@@ -56,7 +56,7 @@
 					<ul class="header__utill">
 						<li><a href="/loginForm"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심</a></li>
 						<li class="header__utill-login-btn"><a href="/loginForm">
-								<img src="images/icon/header-icon/user.png" alt="로그인" />
+								<img src="/images/icon/header-icon/user.png" alt="로그인" />
 								로그인
 						</a>
 							<ul>
@@ -72,7 +72,7 @@
 						</a></li>
 						<li class="header__utill-login-btn">
 							<a>
-								<img src="images/icon/header-icon/user.png" alt="유저메뉴" />
+								<img src="/images/icon/header-icon/user.png" alt="유저메뉴" />
 								${sessionScope.user.user_nickname}
 							</a>
 							<ul>

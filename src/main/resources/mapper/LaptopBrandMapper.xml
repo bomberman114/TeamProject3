@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.laptop.brand.mapper.LaptopBrandMapper">  
+
+<select id="brandExplainList">
+SELECT *
+FROM   BRAND_LINEUP     BL
+LEFT JOIN   BRAND_LINEUP_IMAGE      BLI 
+ON     BL.BRAND_LINEUP_IDX = BLI.BRAND_LINEUP_IDX
+JOIN   BRAND_MANUFACTURER     BM
+ON     BL.BRAND_MANUFACTURER_IDX = BM.BRAND_MANUFACTURER_IDX
+JOIN   BRAND_PURPOSE  BP
+ON     BL.BRAND_PURPOSE_IDX = BP.BRAND_PURPOSE_IDX
+JOIN   BRAND_LINEUP_RANKS    BLR
+ON     BL.BRAND_LINEUP_RANK_IDX = BLR.BRAND_LINEUP_RANK_IDX
+WHERE  BL.BRAND_MANUFACTURER_IDX = #{BRAND_MANUFACTURER_IDX}
+</select>
+
+
+
+
+</mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,61 +28,18 @@
                 <button style="border:none; background-color: #D2CBCB; margin-left: 510px; color:#767676;">옵션 전체보기</button>
                 </h3>
 
-             <div style="margin: 15px;">
+			<c:forEach  var="deskTopEstimateProductFilterList"  items="${deskTopEstimateProductFilterList}">
+             <div style="margin: 15px; " >
                 <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox"> 필터값2</label>
-                <label><input type="checkbox"> 필터값3</label>
-                <label><input type="checkbox"> 필터값4</label>
-                <label><input type="checkbox"> 필터값5</label>
+                <h3 style="color:#333333; margin-bottom: 12px;margin-left: 30px; font-weight: bold;">${deskTopEstimateProductFilterList.CATEGORY_ATTRIBUTE_NAME}</h3>
+                <input type="hidden" name="CATEGORY_ATTRIBUTE_IDX" value="${ deskTopEstimateProductFilterList.CATEGORY_ATTRIBUTE_IDX}">
+                <c:forEach var="item"  items="${deskTopEstimateProductFilterList.items}">
+                	<label><input type="checkbox" style="color:#55555; margin-bottom: 12px;" name="CATEGORY_ATTRIBUTE_VALUE_IDX" value="${item.CATEGORY_ATTRIBUTE_VALUE_IDX}">${ item.CATEGORY_ATTRIBUTE_VALUE_NAME}</label>
+                </c:forEach>
                 <p style="margin-left:20px;">##개+</p>
                 </div>
-                </div>
-                <div style="margin: 15px;">
-                <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox"> 필터값2</label>
-                <label><input type="checkbox"> 필터값3</label>
-                <label><input type="checkbox"> 필터값4</label>
-                <label><input type="checkbox"> 필터값5</label>
-                <p style="margin-left:20px;">##개+</p>
-                </div>
-                </div>
-                <div style="margin: 15px;">
-                <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox"> 필터값2</label>
-                <label><input type="checkbox"> 필터값3</label>
-                <label><input type="checkbox"> 필터값4</label>
-                <label><input type="checkbox"> 필터값5</label>
-                <p style="margin-left:20px;">##개+</p>
-                </div>
-                </div>
-                <div style="margin: 15px;">
-                <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값2</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값3</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값4</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값5</label>
-                <p style="margin-left:20px;">##개+</p> 
-                </div>
-                </div>
-                <div style="margin: 15px;">
-                <div style="display: flex; align-items: center; gap: 50px;">
-                <h3 style="color:#333333; margin-left: 30px; font-weight: bold;">필터1</h3>
-                <label><input type="checkbox" style="color:#55555;"> 필터값1</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값2</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값3</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값4</label>
-                <label><input type="checkbox" style="color:#55555;"> 필터값5</label>
-                <p style="margin-left:20px;">##개+</p>
-                </div>
-                </div>
+              </div>
+			</c:forEach>
             </div>
          
          <div class="desk-click">

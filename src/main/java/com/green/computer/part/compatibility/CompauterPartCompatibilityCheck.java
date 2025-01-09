@@ -2,13 +2,11 @@ package com.green.computer.part.compatibility;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CompauterPartCompatibilityCheck {
 
-	public static HashMap<String, Object> compauterPartCompatibilityCheck(HashMap<String, Object> map2) {
-		// HashMap<String, Object> map2 = new HashMap<>();
+	public static HashMap<String, Object> compauterPartCompatibilityCheck(List<HashMap<String, Object>> computerPart) {
+		HashMap<String, Object> map2 = new HashMap<>();
 
 		// CPU와 메인보드 호환성 체크
 		map2 = checkCompatibilityBetweenCpuAndMotherboard(map2);
@@ -54,11 +52,6 @@ public class CompauterPartCompatibilityCheck {
 		boolean checkCompatibilityBetweenPowerAndGpuResult = (Boolean) map2.get("compatibilityBetweenPowerAndGpu");
 		double compatibilityBetweenPowerAndGpuScore = (Double) map2.get("compatibilityBetweenPowerAndGpuScore");
 
-		map2 = checkCompatibilityBetweenCpuAndGpu(map2);
-		double compatibilityBetweenCpuAndGpuScore = (Double) map2.get("compatibilityBetweenCpuAndGpuScore");
-		
-		double totalScore = 0;
-		double maxScore = 0;
 		// 모든 호환성 체크를 AND 조건으로 결합
 		if (checkCompatibilityBetweenCpuAndMotherboardResult && checkCompatibilityBetweenCpuAndRamResult
 				&& checkCompatibilityBetweenMotherboardAndRamResult
@@ -69,6 +62,8 @@ public class CompauterPartCompatibilityCheck {
 			// 모든 부품이 호환될 때 점수 계산
 			System.out.println("모든 부품이 호환됩니다.");
 			// 점수 초기화 및 가중치 설정
+			double totalScore = 0;
+			double maxScore = 0;
 
 			// 각 항목의 가중치와 점수 계산
 			double cpuMotherboardWeight = 5.0;
@@ -98,10 +93,6 @@ public class CompauterPartCompatibilityCheck {
 			double desktopCasePowerWeight = 4.5; // 데스크탑 케이스와 파워 호환성 가중치
 			totalScore += desktopCasePowerWeight * compatibilityBetweenDesktopCaseAndPowerScore;
 			maxScore += desktopCasePowerWeight * 3;
-			
-			double cpuGpuWeight = 5.0; // CPU 와 GPU 가중치
-			totalScore += compatibilityBetweenCpuAndGpuScore;
-			maxScore += cpuGpuWeight * 3;
 
 			// 점수 정규화
 			double normalizedScore = (totalScore / maxScore) * 100;
@@ -111,10 +102,9 @@ public class CompauterPartCompatibilityCheck {
 			map2.put("normalizedScore", normalizedScore);
 		}
 
-		System.out.println(totalScore);
-		System.out.println(maxScore);
 		return map2;
 	}
+	
 
 	private static HashMap<String, Object> checkCompatibilityBetweenCpuAndMotherboard(HashMap<String, Object> map) {
 		Boolean check = false;
@@ -122,12 +112,12 @@ public class CompauterPartCompatibilityCheck {
 		String motherboardSocketType = String.valueOf(map.get("MOTHERBOARD_SOCKET_TYPE"));
 		String motherboardChipset = String.valueOf(map.get("MOTHERBOARD_CHIPSET"));
 		String cpuTypeName = String.valueOf(map.get("CPU_TYPE_NAME"));
-		double motherboardScore = 0; // 기본 점수 0점 (호환성 있는 경우)
-		
+		double motherboardScore = 1; // 기본 점수 1점 (호환성 있는 경우)
+
 		// 소켓 타입 체크
 		if (cpuSocketType.equals(motherboardSocketType)) {
 			check = true;
-			motherboardScore = 1;
+
 			// CPU 타입에 따른 점수 조정
 			if (cpuTypeName.contains("울트라") || cpuTypeName.contains("9") || cpuTypeName.contains("7")) {
 				if (motherboardChipset.contains("x") || motherboardChipset.contains("z")) {
@@ -174,7 +164,6 @@ public class CompauterPartCompatibilityCheck {
 		Boolean check = false;
 		double compatibilityBetweenMotherboardAndRamScore = 0;
 		String motherboardMemoryType = String.valueOf(map.get("MOTHERBOARD_MEMORY_TYPE"));
-		System.out.println(map);
 		int motherboardMemorySlots = Integer.parseInt(String.valueOf(map.get("MOTHERBOARD_MEMORY_SLOTS")));
 		int motherboardMaximumMemorySize = Integer.parseInt(String.valueOf(map.get("MOTHERBOARD_MAXIMUM_MEMORY_SIZE")));
 		String ramType = String.valueOf(map.get("RAM_TYPE"));
@@ -209,7 +198,7 @@ public class CompauterPartCompatibilityCheck {
 		Boolean check = false;
 		double compatibilityBetweenMotherboardAndDesktopCaseScore = 0;
 		String motherboardFormFactor = String.valueOf(map.get("MOTHERBOARD_FORM_FACTOR"));
-		String desktopCaseSupportedBoard = String.valueOf(map.get("DESKTOP_CASE_SUPPORTED_BOARD"));
+		String desktopCaseSupportedBoard = String.valueOf(map.get(" DESKTOP_CASE_SUPPORTED_BOARD"));
 		if (motherboardFormFactor.equals(desktopCaseSupportedBoard)) {
 			check = true;
 			compatibilityBetweenMotherboardAndDesktopCaseScore = 3;
@@ -224,13 +213,15 @@ public class CompauterPartCompatibilityCheck {
 		Boolean check = false;
 		double compatibilityBetweenDesktopCaseAndPowerScore = 0;
 		int desktopCasePowerLength = Integer.parseInt(String.valueOf(map.get("DESKTOP_CASE_POWER_LENGTH")));
+		String desktopCasePowerStandard = String.valueOf(map.get(" DESKTOP_CASE_POWER_STANDARD"));
 		int powerDepth = Integer.parseInt(String.valueOf(map.get("POWER_DEPTH")));
+		String powerCategoryName = String.valueOf(map.get("POWER_CATEGORY_NAME"));
 		// 차이 계산
 		double difference = desktopCasePowerLength - powerDepth;
 		// 10% 기준 계산
 		double threshold = 0.1 * powerDepth;
 
-		if (desktopCasePowerLength >= powerDepth) {
+		if (desktopCasePowerLength >= powerDepth && desktopCasePowerStandard.equals(powerCategoryName)) {
 			check = true;
 			if (difference >= threshold) { // true: 10% 이상 차이나면 충분
 				compatibilityBetweenDesktopCaseAndPowerScore = 3;
@@ -247,7 +238,7 @@ public class CompauterPartCompatibilityCheck {
 
 	private static HashMap<String, Object> checkCompatibilityBetweenDesktopCaseAndGpu(HashMap<String, Object> map) {
 		Boolean check = false;
-		double compatibilityBetweenDesktopCaseAndGpuScore = 0;
+		double compatibilityBetweenDesktopCaseAndPowerScore = 0;
 		int desktopCaseVgaLength = Integer.parseInt(String.valueOf(map.get("DESKTOP_CASE_VGA_LENGTH"))); // 320mm
 		int gpuWidth = Integer.parseInt(String.valueOf(map.get("GPU_WIDTH"))); // 300mm
 		// 차이 계산
@@ -256,23 +247,23 @@ public class CompauterPartCompatibilityCheck {
 		double threshold = 0.1 * gpuWidth;
 		if (desktopCaseVgaLength >= gpuWidth) {
 			check = true;
-			compatibilityBetweenDesktopCaseAndGpuScore = 1;
+			compatibilityBetweenDesktopCaseAndPowerScore = 1;
 			if (difference >= threshold) { // 10프로 이상 차이
-				compatibilityBetweenDesktopCaseAndGpuScore = 3;
+				compatibilityBetweenDesktopCaseAndPowerScore = 3;
 			}
 			if (threshold > difference && difference >= 0) {
-				compatibilityBetweenDesktopCaseAndGpuScore = 2;
+				compatibilityBetweenDesktopCaseAndPowerScore = 2;
 
 			}
 		}
-		map.put("compatibilityBetweenDesktopCaseAndGpuScore", compatibilityBetweenDesktopCaseAndGpuScore);
-		map.put("compatibilityBetweenDesktopCaseAndGpu", check);
+		map.put("compatibilityBetweenDesktopCaseAndPowerScore", compatibilityBetweenDesktopCaseAndPowerScore);
+		map.put("compatibilityBetweenDesktopCaseAndPower", check);
 		return map;
 	};
 
 	private static HashMap<String, Object> checkCompatibilityBetweenPowerAndGpu(HashMap<String, Object> map) {
 		Boolean check = false;
-		double compatibilityBetweenPowerAndGpuScore = 0;
+		double compatibilityBetweenDesktopCaseAndPowerScore = 0;
 		int powerCapacity = Integer.parseInt(String.valueOf(map.get("POWER_CAPACITY")));
 		int gpuRecommendedPower = Integer.parseInt(String.valueOf(map.get("GPU_RECOMMENDED_POWER")));
 		int cpuTdp = Integer.parseInt(String.valueOf(map.get("CPU_TDP")));
@@ -284,80 +275,39 @@ public class CompauterPartCompatibilityCheck {
 
 		if (powerCapacity >= gpuRecommendedPower + cpuTdp) {
 			check = true;
-			compatibilityBetweenPowerAndGpuScore = 1;
+			compatibilityBetweenDesktopCaseAndPowerScore = 1;
 			if (difference >= tenPercentThreshold) {
-				compatibilityBetweenPowerAndGpuScore = 2;
+				compatibilityBetweenDesktopCaseAndPowerScore = 2;
 
 			}
 			if (difference >= twentyPercentthreshold) {
-				compatibilityBetweenPowerAndGpuScore = 3;
+				compatibilityBetweenDesktopCaseAndPowerScore = 3;
 
 			}
 		}
-		map.put("compatibilityBetweenPowerAndGpuScore", compatibilityBetweenPowerAndGpuScore);
-		map.put("compatibilityBetweenPowerAndGpu", check);
+		map.put("compatibilityBetweenDesktopCaseAndPowerScore", compatibilityBetweenDesktopCaseAndPowerScore);
+		map.put("compatibilityBetweenDesktopCaseAndPower", check);
 		return map;
 	};
-
+	
 	private static HashMap<String, Object> checkGraphicsAvailability(HashMap<String, Object> map) {
-		// 로직 구현
+	    // 로직 구현
 		boolean checkGraphicsAvailability = false;
 		int cpuIntegratedGraphics = Integer.parseInt(String.valueOf(map.get("CPU_INTEGRATED_GRAPHICS")));
-		if (map.get("GPU_IDX") != null) {
-			if (cpuIntegratedGraphics == 1) {
-				checkGraphicsAvailability = true;
+		if(map.get("GPU_IDX") != null) {
+			if(cpuIntegratedGraphics == 1) {
+				checkGraphicsAvailability = true; 
 			}
-		}
-		;
-		if (map.get("GPU_IDX") == null) {
-			if (cpuIntegratedGraphics == 0) {
+		};
+		if(map.get("GPU_IDX") == null) {
+			if(cpuIntegratedGraphics == 0) {
 				checkGraphicsAvailability = false;
-			}
-
-		}
-
-		return map;
+			};
+		};
+		
+		
+	    return map;
 	}
 
-	private static HashMap<String, Object> checkCompatibilityBetweenCpuAndGpu(HashMap<String, Object> map) {
-		double compatibilityBetweenCpuAndGpuScore = 0;
-		String cpu1 = "INTEL";
-		String cpu2 = "AMD";
-		String gpu1 = "NVDIA";
-		String gpu2 = "AMD";
-		if (map.get("CPU").equals(cpu1)) {
-			if (map.get("GPU").equals(gpu1)) {
-				compatibilityBetweenCpuAndGpuScore = 3;
-			}
-			if (map.get("GPU").equals(gpu2)) {
-				compatibilityBetweenCpuAndGpuScore = 2;
-			}
-		}
-		if (map.get("CPU").equals(cpu2)) {
-			if (map.get("GPU").equals(gpu1)) {
-				compatibilityBetweenCpuAndGpuScore = 2;
-			}
-			if (map.get("GPU").equals(gpu2)) {
-				compatibilityBetweenCpuAndGpuScore = 3;
-			}
-		}
-		map.put("compatibilityBetweenCpuAndGpuScore", compatibilityBetweenCpuAndGpuScore);
-		return map;
-	};
-
-	public static int extractNumbers(String input) {
-		// 정규 표현식으로 숫자만 찾기
-		Pattern pattern = Pattern.compile("\\d+");
-		Matcher matcher = pattern.matcher(input);
-
-		// 숫자를 찾은 결과를 StringBuilder에 추가
-		StringBuilder numbers = new StringBuilder();
-		while (matcher.find()) {
-			numbers.append(matcher.group());
-		}
-		int result = Integer.parseInt(String.valueOf(numbers));
-		// return numbers.toString(); // 숫자를 문자열로 반환
-		return result;
-	}
 
 }

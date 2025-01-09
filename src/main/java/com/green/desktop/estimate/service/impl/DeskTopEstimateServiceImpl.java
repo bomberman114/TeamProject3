@@ -1,13 +1,14 @@
 package com.green.desktop.estimate.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.green.computer.part.compatibility.CompauterPartCompatibilityCheck;
 import com.green.cooler.mapper.CoolerMapper;
 import com.green.cpu.mapper.CpuMapper;
 import com.green.desktop.estimate.service.DeskTopEstimateService;
@@ -55,22 +56,70 @@ public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
 	private ProductMapper productMapper;
 
 	@Override
-	public HashMap<String, Object> compauterPartCompatibilityCheck(HashMap<String, Object> map) {
-		map = CompauterPartCompatibilityCheck.compauterPartCompatibilityCheck(map);
-
-		return map;
+	public List<HashMap<String, Object>> getProductResultList(HashMap<String, Object> map) {
+		List<HashMap<String, Object>> productList = productMapper.getProductResultList(map);
+		for (int i = 0; i < productList.size(); i++) {
+			String productSfileName = String.valueOf(productList.get(i).get("PRODUCT_SFILE_NAME"));
+			FileImage fileImage = new FileImage();
+			productSfileName = fileImage.fileNemeReplace(productSfileName);
+			productList.get(i).put("PRODUCT_SFILE_NAME", productSfileName);
+		}
+		return productList;
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getProductResultList(HashMap<String, Object> map) {
-		List<HashMap<String, Object>> productResultList = productMapper.getProductResultList(map);
-		for (int i = 0; i < productResultList.size(); i++) {
-			String productSfileName = String.valueOf(productResultList.get(i).get("PRODUCT_SFILE_NAME"));
-			FileImage fileImage = new FileImage();
-			productSfileName = fileImage.fileNemeReplace(productSfileName);
-			productResultList.get(i).put("PRODUCT_SFILE_NAME", productSfileName);
+	public List<HashMap<String, Object>> getdeskTopEstimateProductFilterList(HashMap<String, Object> map) {
+		List<HashMap<String, Object>> deskTopEstimateProductFilterList = productMapper
+				.getdeskTopEstimateProductFilterList(map);
+		// 결과를 저장할 List 생성
+		List<HashMap<String, Object>> groupedResults = new ArrayList<>();
+		System.out.println(deskTopEstimateProductFilterList);
+		// 그룹화 로직
+		for (HashMap<String, Object> item : deskTopEstimateProductFilterList) {
+			int idx = Integer.parseInt(String.valueOf(item.get("CATEGORY_ATTRIBUTE_IDX")));
+			String category = String.valueOf(item.get("CATEGORY_ATTRIBUTE_NAME"));
+			int valueIdx = Integer.parseInt(String.valueOf(item.get("CATEGORY_ATTRIBUTE_VALUE_IDX")));
+			String value = String.valueOf(item.get("CATEGORY_ATTRIBUTE_VALUE_NAME"));
+
+			// 해당 카테고리가 이미 존재하는지 확인
+			HashMap<String, Object> existingCategory = findCategory(groupedResults, category);
+			if (existingCategory == null) {
+				// 없다면 새로 추가
+				existingCategory = new HashMap<>();
+				existingCategory.put("CATEGORY_ATTRIBUTE_IDX", idx);
+				existingCategory.put("CATEGORY_ATTRIBUTE_NAME", category);
+				existingCategory.put("items", new ArrayList<Map<String, Object>>());
+				groupedResults.add(existingCategory);
+			}
+
+			// 아이템 추가
+			List<Map<String, Object>> items = (List<Map<String, Object>>) existingCategory.get("items");
+			items.add(createValueMap(value, valueIdx));
 		}
-		return productResultList;
+
+		// 결과 출력
+		System.out.println(groupedResults);
+		return groupedResults;
+	}
+
+	private static Map<String, Object> createValueMap(String value, int idx) {
+		Map<String, Object> valueMap = new HashMap<>();
+		valueMap.put("CATEGORY_ATTRIBUTE_VALUE_NAME", value);
+		valueMap.put("CATEGORY_ATTRIBUTE_VALUE_IDX", idx);
+		return valueMap;
+	}
+
+	// 카테고리를 찾는 메서드
+	private static HashMap<String, Object> findCategory(List<HashMap<String, Object>> groupedResults, String category) {
+		for (HashMap<String, Object> cat : groupedResults) {
+			System.out.println(cat.get("category"));
+			System.out.println(cat);
+			System.out.println(category);
+			if (cat.get("CATEGORY_ATTRIBUTE_NAME").equals(category)) {
+				return cat;
+			}
+		}
+		return null;
 	}
 
 }

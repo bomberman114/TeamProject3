@@ -1,16 +1,27 @@
 package com.green.common.service.impl;
 
+import java.sql.Clob;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.common.mapper.DetailSearchMapper;
 import com.green.common.service.DetailSearchService;
+import com.green.paging.vo.Pagination;
+import com.green.paging.vo.PagingResponse;
+import com.green.paging.vo.SearchVo;
+import com.green.util.ClobUtils;
 
 @Service
 public class DetailSearchServiceImpl implements DetailSearchService{
@@ -20,9 +31,7 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 
 	@Override
 	public List<HashMap<String, Object>> getAttributeListByCategoryIdx(String categoryIdx) {
-	    if(categoryIdx.equals("2") || categoryIdx.equals("3")) {
-	        categoryIdx = null;
-	    }
+	    if(categoryIdx.equals("2") || categoryIdx.equals("3")) {categoryIdx = null;}
 	        List<HashMap<String, Object>> categoryAttributeList = detailSearchMapper.getAttributeListByCategoryIdx(categoryIdx);
 	        Map<Integer, HashMap<HashMap<String, Object>, List<HashMap<String, Object>>>> groupedData = new HashMap<>();
 	        
@@ -57,10 +66,69 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 	            
 	            result.add(groupMap);
 	        }
-	        System.out.println(result);
 
 		    return result;
+	}
 
+	@Override
+	public HashMap<String, Object> getProductPagingFilterList(@RequestParam HashMap<String, Object> requestBody) {
+		HashMap<String, Object> res = new HashMap<>();
+		int  productCount  = detailSearchMapper.getProductCount(requestBody);
+		
+		
+	    int nowpage = 1; // 기본값 설정
+	    if (requestBody.get("nowpage") != null) {
+	        try {
+	            nowpage = Integer.parseInt(String.valueOf(requestBody.get("nowpage")));
+	        } catch (NumberFormatException e) {
+	            // 로그 기록 또는 에러 처리
+	            // 기본값 1을 유지
+	        }
+	    }
+		
+	    // 페이징을 위한 초기 설정
+	    SearchVo searchVo = new SearchVo();
+	    searchVo.setPage(nowpage);      // 현재 페이지 정보
+	    searchVo.setRecordSize(5);      // 페이지당 20개
+	    searchVo.setPageSize(5);        // paging.jsp에 출력할 페이지번호수
+	    
+	    
+	    Pagination pagination = new Pagination(productCount, searchVo);
+		
+	    PagingResponse<HashMap<String, Object>> response = null;
+	    if( productCount < 1 ) { // 현재 조회한 자료가 없다면
+	    	response = new PagingResponse<>(
+	    		Collections.emptyList(), null);}  
+	    
+	    
+	    // Pagination 설정
+	    int offset	   = searchVo.getOffset();
+	    int recordSize = searchVo.getRecordSize();
+
+    	String selectedFilters = String.valueOf(requestBody.get("selectedFilters"));
+    	selectedFilters = selectedFilters.replace("[", "").replace("]", "").trim();
+    	requestBody.put("selectedFilters", selectedFilters);
+        System.out.println(requestBody);
+	    
+	    List<HashMap<String, Object>> list = detailSearchMapper.getProductPagingFilterList(offset,recordSize,requestBody);
+
+	
+    	list = ClobUtils.processClobData(list);
+
+    	
+	    System.out.println(list);
+	    
+
+        
+
+    	
+	    response = new PagingResponse<>(list, pagination);
+	
+		res.put("response", response);
+		res.put("searchedCount", productCount);
+		res.put("nowpage", nowpage);
+		res.put("searchVo", searchVo);
+		return res;
 	}
 
 	

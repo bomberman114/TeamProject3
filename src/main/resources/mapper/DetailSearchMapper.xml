@@ -10,6 +10,92 @@
         AND CA.CATEGORY_IDX = #{categoryIdx}
     </if>
 </select>
+<select id="getProductCount">
+    SELECT COUNT(*)
+    FROM   PRODUCT
+    <where>
+        <if test="requestBody.categoryIdx != null and requestBody.categoryIdx!= ''">
+        	AND  CATEGORY_IDX = #{requestBody.categoryIdx}
+        </if>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+            AND (REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
+            OR REGEXP_LIKE(PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+        </if> 
+    </where>
+	    <choose>
+        <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
+            AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
+        </when>
+				<when test="requestBody.manufacture != null and requestBody.manufacture != ''">
+				   AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*'))
+				</when>
+      </choose>
+	    <choose>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND PRICE &gt;= #{requestBody.lowestPrice} AND PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+		        AND PRICE &gt;= #{requestBody.lowestPrice}
+		    </when>
+		    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+	</choose>
+</select>
+
+<select id="getProductPagingFilterList">
+SELECT DISTINCT P.PRODUCT_IDX,
+       P.PRODUCT_NAME,
+       TO_CHAR(P.PRODUCT_DESCRIPTION) PRODUCT_DESCRIPTION,
+       P.PRICE,
+       P.CATEGORY_IDX,
+       TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
+       PI.PRODUCT_SFILE_NAME,
+       cpu.product_benchmark_score AS CPU_BENCH,
+       gpu.product_benchmark_score AS GPU_BENCH,
+       REGEXP_SUBSTR(cav.category_attribute_value_name, '[0-9]+') AS RAM_BENCH,
+       cav.category_attribute_value_name
+FROM   PRODUCT P
+    LEFT JOIN PRODUCT_BENCHMARK_SCORE  CPU ON P.PRODUCT_IDX = CPU.PRODUCT_IDX AND CPU.CATEGORY_IDX = 5
+    LEFT JOIN PRODUCT_BENCHMARK_SCORE  GPU ON P.PRODUCT_IDX = GPU.PRODUCT_IDX AND GPU.CATEGORY_IDX = 8
+    JOIN PRODUCT_ATTRIBUTE RAM ON P.PRODUCT_IDX = RAM.PRODUCT_IDX
+    JOIN PRODUCT_IMAGE PI ON P.PRODUCT_IDX = PI.PRODUCT_IDX
+    JOIN CATEGORY_ATTRIBUTE_VALUE CAV ON RAM.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
+   	 <where>
+        <if test="requestBody.categoryIdx != null and requestBody.categoryIdx!= ''">
+        	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
+        </if>
+        <if test="requestBody.selectedFilters != null and requestBody.selectedFilters != ''">
+            AND RAM.CATEGORY_ATTRIBUTE_VALUE_IDX IN (${requestBody.selectedFilters})
+        </if> 
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+            AND (REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
+            OR REGEXP_LIKE(P.PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+        </if> 
+    </where>
+	<choose>
+	    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+	        AND P.PRICE &gt;= #{requestBody.lowestPrice} AND P.PRICE &lt;= #{requestBody.highestPrice}
+	    </when>
+	    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+	        AND P.PRICE &gt;= #{requestBody.lowestPrice}
+	    </when>
+	    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+	        AND P.PRICE &lt;= #{requestBody.highestPrice}
+	    </when>
+	</choose>
+    <if test="requestBody.sortType == 'highestPrice'">
+    	ORDER BY P.PRICE DESC
+    </if>        
+    <if test="requestBody.sortType == 'lowestPrice'">
+    	ORDER BY P.PRICE ASC
+    </if>        
+    <if test="requestBody.sortType == 'recent'">
+    	ORDER BY P.CREATED_AT DESC
+    </if>        
+    OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
+</select>
+
 
 </mapper>
 

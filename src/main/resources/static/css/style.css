@@ -81,7 +81,12 @@ header {
   font-weight : 300;
   background: #fff;
   box-shadow : 0 2px 4px rgba(0,0,0,0.08);
-}
+  
+   & a{
+    display : block;
+    width : 100%;
+    height: 100%}
+  }
 
 .header__category-3depth li:hover{
 	color : var(--main-color);

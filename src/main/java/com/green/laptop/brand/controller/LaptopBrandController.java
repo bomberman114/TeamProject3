@@ -32,7 +32,6 @@ public class LaptopBrandController {
     @RequestMapping("/BrandExplain")    
     @ResponseBody
     public List<HashMap<String, Object>> brandExplain(@RequestParam HashMap<String,Object> map ) {
-    	map.put("BRAND_MANUFACTURER_IDX", 7);
     	List<HashMap<String, Object>> brandExplainList = laptopBrandService.brandExplainList(map);
     	System.out.println(brandExplainList);
        return brandExplainList;

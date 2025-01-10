@@ -67,7 +67,7 @@ public class DeskTopEstimateController {
 		ModelAndView mv = new ModelAndView();
 //		List<HashMap<String, Object>> deskTopEstimateCpuFilterList = cpuMapper.getdeskTopEstimateCpuFilterList();
 //		List<HashMap<String, Object>> cpuResultList = deskTopEstimateService.getCpuResultList(); 
-		mv.setViewName("/deskTopEstimate/deskTopEstimateForm");
+		mv.setViewName("deskTopEstimate/deskTopEstimateForm");
 		return mv;
 		
 	};

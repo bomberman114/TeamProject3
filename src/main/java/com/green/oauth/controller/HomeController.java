@@ -48,8 +48,8 @@ public class HomeController {
             mv.addObject(errorMessage, errorMessage);
             session.removeAttribute("errorMessage");
         }
-        List<HashMap<String, Object>> productList = homeMapper.findProduct();
-        CrwllingProductFilter.cpuAttribute(productList);
+        //List<HashMap<String, Object>> productList = homeMapper.findProduct();
+        //CrwllingProductFilter.cpuAttribute(productList);
         mv.setViewName("home");
         return mv;
     }

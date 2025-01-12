@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.green.crolling.vo.CrollingImgVo;
+import com.green.crawling.vo.CrawlingImgVo;
 
 
 

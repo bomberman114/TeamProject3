@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.green.crolling.vo.CrollingImgVo;
+import com.green.crawling.vo.CrawlingImgVo;
 
 @Mapper
 public interface QuickFinderMapper {
@@ -25,7 +25,7 @@ public interface QuickFinderMapper {
 
 	void postTestPurposeImg(String manufactureIdx);
 
-	void saveTestPurposeImg(CrollingImgVo crollingImgVo);
+	void saveTestPurposeImg(CrawlingImgVo crollingImgVo);
 
 
 }

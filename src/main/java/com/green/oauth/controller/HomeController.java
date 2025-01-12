@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.green.oauth.mapper.HomeMapper;
+import com.green.util.CrwllingProductFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -47,6 +48,8 @@ public class HomeController {
             mv.addObject(errorMessage, errorMessage);
             session.removeAttribute("errorMessage");
         }
+        List<HashMap<String, Object>> productList = homeMapper.findProduct();
+        CrwllingProductFilter.cpuAttribute(productList);
         mv.setViewName("home");
         return mv;
     }

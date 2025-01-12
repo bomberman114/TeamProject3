@@ -99,10 +99,9 @@
 			</div>
 			<div class="quick-finder-search-container">
 				<ul>
-					<li class="list-filter-active" data-sortType="">인기상품순</li>
+					<li class="list-filter-active" data-sortType="">신상품순</li>
 					<li data-sortType="lowestPrice">낮은가격순</li>
 					<li data-sortType="highestPrice">높은가격순</li>
-					<li data-sortType="recent">신상품순</li>
 				</ul>
 				<div class="quick-finder-search-list"></div>
 			</div>
@@ -434,7 +433,7 @@
     		  $prevBtn.style.display = 'none'
     	  }else{
     		  $prevBtn.style.display = 'block'
-    			  $nextBtn.style.display = 'block' 
+    			$nextBtn.style.display = 'block' 
     	  }
       }
       

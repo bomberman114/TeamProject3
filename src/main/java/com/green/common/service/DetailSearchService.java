@@ -11,6 +11,12 @@ public interface DetailSearchService {
 
 	HashMap<String, Object> getProductPagingFilterList(HashMap<String, Object> requestBody);
 
+	List<HashMap<String, Object>> getParentCategoryList(String categoryIdx);
+
+	boolean findChildCategoryByCategoryIdx(String categoryIdx);
+
+	HashMap<String, Object> findFirstChildCategoryByCategoryIdx(String categoryIdx);
+
 
 
 }

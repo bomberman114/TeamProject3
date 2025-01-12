@@ -12,4 +12,6 @@ public interface HomeMapper {
 
 	List<HashMap<String, Object>> findByCategoryIdxOffset(HashMap<String, Object> product);
 
+	List<HashMap<String, Object>> findProduct();
+
 }

@@ -1,4 +1,4 @@
-package com.green.crolling.controller;
+package com.green.crawling.controller;
 
 import java.util.HashMap;
 
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.green.crolling.service.CrollingService;
+import com.green.crawling.service.CrawlingService;
 
 
 @Controller
-public class CrollingController {
+public class CrawlingController {
 	
 	@Autowired
-	private CrollingService crollingService;
+	private CrawlingService crollingService;
 	
 	@CrossOrigin
 	@PostMapping("/products")

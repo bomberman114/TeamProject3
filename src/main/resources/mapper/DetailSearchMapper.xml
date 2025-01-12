@@ -11,36 +11,37 @@
     </if>
 </select>
 <select id="getProductCount">
-    SELECT COUNT(*)
-    FROM   PRODUCT
+		 SELECT COUNT(DISTINCT P.PRODUCT_IDX)
+		 FROM   PRODUCT P LEFT JOIN PRODUCT_ATTRIBUTE PA ON P.PRODUCT_IDX = PA.PRODUCT_IDX
     <where>
         <if test="requestBody.categoryIdx != null and requestBody.categoryIdx!= ''">
-        	AND  CATEGORY_IDX = #{requestBody.categoryIdx}
+        	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
         </if>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-            AND (REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
-            OR REGEXP_LIKE(PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+					AND (REGEXP_LIKE(UPPER(P.PRODUCT_NAME), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))) 
+					OR  REGEXP_LIKE(UPPER(P.PRODUCT_DESCRIPTION), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))))
         </if> 
     </where>
 	    <choose>
-        <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
-            AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
-        </when>
-				<when test="requestBody.manufacture != null and requestBody.manufacture != ''">
-				   AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*'))
-				</when>
-      </choose>
-	    <choose>
 		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
-		        AND PRICE &gt;= #{requestBody.lowestPrice} AND PRICE &lt;= #{requestBody.highestPrice}
+		        AND P.PRICE &gt;= #{requestBody.lowestPrice} AND P.PRICE &lt;= #{requestBody.highestPrice}
 		    </when>
 		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
-		        AND PRICE &gt;= #{requestBody.lowestPrice}
+		        AND P.PRICE &gt;= #{requestBody.lowestPrice}
 		    </when>
 		    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
-		        AND PRICE &lt;= #{requestBody.highestPrice}
+		        AND P.PRICE &lt;= #{requestBody.highestPrice}
 		    </when>
 	</choose>
+    <if test="requestBody.sortType == 'highestPrice'">
+    	ORDER BY P.PRICE DESC
+    </if>        
+    <if test="requestBody.sortType == 'lowestPrice'">
+    	ORDER BY P.PRICE ASC
+    </if>        
+    <if test="requestBody.sortType != null and requestBody.sortType == ''">
+    	ORDER BY P.CREATED_AT DESC
+    </if>    
 </select>
 
 <select id="getProductPagingFilterList">
@@ -51,26 +52,23 @@ SELECT DISTINCT P.PRODUCT_IDX,
        P.CATEGORY_IDX,
        TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
        PI.PRODUCT_SFILE_NAME,
-       cpu.product_benchmark_score AS CPU_BENCH,
-       gpu.product_benchmark_score AS GPU_BENCH,
-       REGEXP_SUBSTR(cav.category_attribute_value_name, '[0-9]+') AS RAM_BENCH,
-       cav.category_attribute_value_name
+       ATTRIBUTE_VALUES
 FROM   PRODUCT P
-    LEFT JOIN PRODUCT_BENCHMARK_SCORE  CPU ON P.PRODUCT_IDX = CPU.PRODUCT_IDX AND CPU.CATEGORY_IDX = 5
-    LEFT JOIN PRODUCT_BENCHMARK_SCORE  GPU ON P.PRODUCT_IDX = GPU.PRODUCT_IDX AND GPU.CATEGORY_IDX = 8
-    JOIN PRODUCT_ATTRIBUTE RAM ON P.PRODUCT_IDX = RAM.PRODUCT_IDX
     JOIN PRODUCT_IMAGE PI ON P.PRODUCT_IDX = PI.PRODUCT_IDX
-    JOIN CATEGORY_ATTRIBUTE_VALUE CAV ON RAM.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
+    LEFT JOIN (
+		  SELECT DISTINCT PRODUCT_IDX,
+		           LISTAGG(DISTINCT category_attribute_value_idx, ', ') 
+		           WITHIN GROUP (ORDER BY category_attribute_value_idx) AS attribute_values
+		    FROM product_attribute 
+		    GROUP BY PRODUCT_IDX
+		) ATTRIBUT_VALUE ON P.product_idx = ATTRIBUT_VALUE.PRODUCT_IDX
    	 <where>
         <if test="requestBody.categoryIdx != null and requestBody.categoryIdx!= ''">
         	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
         </if>
-        <if test="requestBody.selectedFilters != null and requestBody.selectedFilters != ''">
-            AND RAM.CATEGORY_ATTRIBUTE_VALUE_IDX IN (${requestBody.selectedFilters})
-        </if> 
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-            AND (REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
-            OR REGEXP_LIKE(P.PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+					AND (REGEXP_LIKE(UPPER(P.PRODUCT_NAME), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))) 
+					OR  REGEXP_LIKE(UPPER(P.PRODUCT_DESCRIPTION), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))))
         </if> 
     </where>
 	<choose>
@@ -92,8 +90,30 @@ FROM   PRODUCT P
     </if>        
     <if test="requestBody.sortType == 'recent'">
     	ORDER BY P.CREATED_AT DESC
-    </if>        
-    OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
+    </if>            
+    <if test="offset != 0 and recordSize != 0" >
+    	OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
+    </if>          
+</select>
+
+<select id="findParentIdxAndDepthByCategoryIdx">
+	SELECT *
+	FROM   CATEGORY
+	WHERE  CATEGORY_IDX = ${categoryIdx}
+</select>
+
+<select id="findCategoryListByParentIdxAndDepth">
+	SELECT *
+	FROM   CATEGORY
+	WHERE  DEPTH = #{arg1}
+	<if test="arg0 != 'null'"></if>
+	AND PARENT_CATEGORY_IDX = #{arg0}  
+</select>
+
+<select id="findChildCategoryByCategoryIdx">
+	SELECT *
+	FROM   CATEGORY
+	WHERE  PARENT_CATEGORY_IDX = ${categoryIdx}
 </select>
 
 

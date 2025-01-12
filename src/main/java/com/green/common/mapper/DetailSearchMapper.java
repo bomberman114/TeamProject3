@@ -22,5 +22,13 @@ public interface DetailSearchMapper {
 
 	List<HashMap<String, Object>> getFilteredProductList(int offset, int recordSize,
 			@Param("requestBody") HashMap<String, Object> requestBody, List<String> userFilter);
+
+
+	List<HashMap<String, Object>> findCategoryListByParentIdxAndDepth(String findedParentIdx, Integer findedDepth);
+
+	HashMap<String, Object> findParentIdxAndDepthByCategoryIdx(Integer cateIdx);
+
+	List<HashMap<String, Object>> findChildCategoryByCategoryIdx(String categoryIdx);
+
 	
 	}

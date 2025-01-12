@@ -30,8 +30,8 @@
             </otherwise>
         </choose>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-            AND (REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
-            OR REGEXP_LIKE(PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+					AND (REGEXP_LIKE(UPPER(P.PRODUCT_NAME), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))) 
+					OR  REGEXP_LIKE(UPPER(P.PRODUCT_DESCRIPTION), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))))
         </if> 
     </where>
 	    <choose>
@@ -82,8 +82,8 @@
             </otherwise>
         </choose>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-            AND (REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.listSearch}, ' ', '\s*')) 
-            OR REGEXP_LIKE(P.PRODUCT_DESCRIPTION, REPLACE(#{requestBody.listSearch}, ' ', '\s*')))
+					AND (REGEXP_LIKE(UPPER(P.PRODUCT_NAME), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))) 
+					OR  REGEXP_LIKE(UPPER(P.PRODUCT_DESCRIPTION), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))))
         </if> 
     </where>
     <choose>
@@ -111,9 +111,9 @@
     <if test="requestBody.sortType == 'lowestPrice'">
     	ORDER BY P.PRICE ASC
     </if>        
-    <if test="requestBody.sortType == 'recent'">
+    <if test="requestBody.sortType != null and requestBody.sortType == ''">
     	ORDER BY P.CREATED_AT DESC
-    </if>        
+    </if>      
     OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
 </select>
 

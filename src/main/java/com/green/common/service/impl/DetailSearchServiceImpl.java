@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.common.mapper.DetailSearchMapper;
@@ -73,8 +75,44 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 	@Override
 	public HashMap<String, Object> getProductPagingFilterList(@RequestParam HashMap<String, Object> requestBody) {
 		HashMap<String, Object> res = new HashMap<>();
-		int  productCount  = detailSearchMapper.getProductCount(requestBody);
+	    List<HashMap<String, Object>> list = detailSearchMapper.getProductPagingFilterList(0,0,requestBody);
 		
+		if(((List<HashMap<String, Object>>) requestBody.get("selectedFilters")).size() > 0) {
+    	String selectedFilters = String.valueOf(requestBody.get("selectedFilters"));
+    	System.out.println("값있으요" + requestBody.get("selectedFilters"));
+    	
+    	selectedFilters = selectedFilters.replace("[", "").replace("]", "").trim();
+    	List<Integer> filtersList = Arrays.stream(selectedFilters.split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    	
+    	List<HashMap<String, Object>> attributeFilterProductList = new ArrayList<>();
+    	
+    	for (HashMap<String, Object> product : list) {
+    	    String attributeString = String.valueOf(product.get("ATTRIBUTE_VALUES"));
+    	    if (attributeString != null && !attributeString.equals("null")) {
+    	        attributeString = attributeString.replace("[", "").replace("]", "").trim();
+    	        Set<Integer> productAttributeSet = Arrays.stream(attributeString.split(","))
+    	                .map(String::trim)
+    	                .map(Integer::parseInt)
+    	                .collect(Collectors.toSet());
+    	        
+    	        Set<Integer> userSelectSet = new HashSet<>(filtersList);
+    	        
+    	        // 사용자 선택 값이 모두 제품 속성에 포함되는지 확인
+    	        boolean allUserSelectionsIncluded = productAttributeSet.containsAll(userSelectSet);
+    	        
+    	        if (allUserSelectionsIncluded) {
+    	            attributeFilterProductList.add(product);
+    	        }
+    	    }
+    	}
+
+    	System.out.println("attributeFilterProductList : " + attributeFilterProductList );
+    	list = attributeFilterProductList;
+		}
+		int  productCount  = list.size();
 		
 	    int nowpage = 1; // 기본값 설정
 	    if (requestBody.get("nowpage") != null) {
@@ -104,98 +142,62 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 	    // Pagination 설정
 	    int offset	   = searchVo.getOffset();
 	    int recordSize = searchVo.getRecordSize();
-
-    	String selectedFilters = String.valueOf(requestBody.get("selectedFilters"));
-    	selectedFilters = selectedFilters.replace("[", "").replace("]", "").trim();
-    	requestBody.put("selectedFilters", selectedFilters);
-        System.out.println(requestBody);
-	    
-	    List<HashMap<String, Object>> list = detailSearchMapper.getProductPagingFilterList(offset,recordSize,requestBody);
-
 	
-    	list = ClobUtils.processClobData(list);
-
-    	
-	    System.out.println(list);
-	    
-
-        
-
-    	
-	    response = new PagingResponse<>(list, pagination);
+	    // 필터링된 리스트에서 현재 페이지에 해당하는 부분만 추출
+	    List<HashMap<String, Object>> pagedList;
+	    if (offset < list.size()) {
+		        pagedList = list.subList(offset, Math.min(offset + recordSize, list.size()));
+		    } else {
+		        pagedList = Collections.emptyList();
+		    }
 	
-		res.put("response", response);
-		res.put("searchedCount", productCount);
-		res.put("nowpage", nowpage);
-		res.put("searchVo", searchVo);
-		return res;
-	}
-
+		    pagedList = ClobUtils.processClobData(pagedList);
 	
+		    response = new PagingResponse<>(pagedList, pagination);
+		
+			res.put("response", response);
+			res.put("searchedCount", productCount);
+			res.put("nowpage", nowpage);
+			res.put("searchVo", searchVo);
+			return res;
+		}
 
-	/*
 	@Override
-	public HashMap<String, Object> getProductPagingList(@RequestParam HashMap<String, Object> requestBody) {
-		
-		HashMap<String, Object> res = new HashMap<>();
-		
-		int  productCount  = quickFinderMapper.getProductCount(requestBody);
-		
-	    PagingResponse<HashMap<String, Object>> response = null;
-	    if( productCount < 1 ) { // 현재 조회한 자료가 없다면
-	    	response = new PagingResponse<>(
-	    		Collections.emptyList(), null);}
-	    
-	    int nowpage = 1; // 기본값 설정
-	    if (requestBody.get("nowpage") != null) {
-	        try {
-	            nowpage = Integer.parseInt(String.valueOf(requestBody.get("nowpage")));
-	        } catch (NumberFormatException e) {
-	            // 로그 기록 또는 에러 처리
-	            // 기본값 1을 유지
-	        }
-	    }
-	    
-
-	    // 페이징을 위한 초기 설정
-	    SearchVo searchVo = new SearchVo();
-	    searchVo.setPage(nowpage);      // 현재 페이지 정보
-	    searchVo.setRecordSize(5);      // 페이지당 20개
-	    searchVo.setPageSize(5);        // paging.jsp에 출력할 페이지번호수
-	    
-	    // Pagination 설정
-	    Pagination pagination = new Pagination(productCount, searchVo);
-	    int 	offset		= searchVo.getOffset();
-	    int		recordSize	= searchVo.getRecordSize();
-    	List<HashMap<String, Object>> list = quickFinderMapper.getProductPagingList(offset,recordSize,requestBody);
-    	
-    	String clobKey = "PRODUCT_DESCRIPTION";
-
-    	list = list.stream().map(item -> {
-    	    Object value = item.get(clobKey);
-    	    if (value instanceof Clob) {
-    	        try {
-    	            String clobString = ClobUtils.clobToString((Clob) value);
-    	            item.put(clobKey, clobString);
-    	        } catch (Exception e) {
-    	            // 예외 처리
-    	            e.printStackTrace(); // 또는 로깅
-    	        }
-    	    }
-    	    return item;
-    	}).collect(Collectors.toList());
-
-    	
-	    response = new PagingResponse<>(list, pagination);
-	
-		res.put("response", response);
-		res.put("searchedCount", productCount);
-		res.put("nowpage", nowpage);
-		res.put("searchVo", searchVo);
-		return res;
+	public List<HashMap<String, Object>> getParentCategoryList(String categoryIdx) {
+		Integer cateIdx = Integer.parseInt(categoryIdx);
+		HashMap<String, Object> findedParentIdxAndDepth = detailSearchMapper.findParentIdxAndDepthByCategoryIdx(cateIdx);
+		List<HashMap<String, Object>> list = new ArrayList<>();
+		String findedParentIdx =  String.valueOf(findedParentIdxAndDepth.get("PARENT_CATEGORY_IDX"));
+		Integer findedDepth     =  Integer.parseInt(String.valueOf(findedParentIdxAndDepth.get("DEPTH")));
+		if(findedDepth != null) {
+			for (int i = findedDepth; i >= 0 ; i--) {
+				HashMap<String, Object> map = new HashMap<>();
+				List<HashMap<String, Object>> findedCategoryList = detailSearchMapper.findCategoryListByParentIdxAndDepth(findedParentIdx,i);   //같은 딥스에서 값 찾고
+				map.put("depth",i);
+				map.put("categoryList",findedCategoryList);
+				list.add(0,map);
+				findedParentIdxAndDepth = detailSearchMapper.findParentIdxAndDepthByCategoryIdx(Integer.parseInt(findedParentIdx));				//부모를 찾고	
+				if(findedParentIdxAndDepth.get("PARENT_CATEGORY_IDX") != null){
+					findedParentIdx =  String.valueOf(findedParentIdxAndDepth.get("PARENT_CATEGORY_IDX"));					                     
+				}else { 
+					break;
+				}
+			}
+		}
+		System.out.println(list);
+		return list;
 	}
 
+	@Override
+	public boolean findChildCategoryByCategoryIdx(String categoryIdx) {
+		List<HashMap<String, Object>> list = detailSearchMapper.findChildCategoryByCategoryIdx(categoryIdx);
+		return list.size() > 0;
+	}
 
-*/
-
+	@Override
+	public HashMap<String, Object> findFirstChildCategoryByCategoryIdx(String categoryIdx) {
+		List<HashMap<String, Object>> list = detailSearchMapper.findChildCategoryByCategoryIdx(categoryIdx);
+		return list.get(0);
+	}
 }
+

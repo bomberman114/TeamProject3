@@ -11,12 +11,12 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
-import com.green.crolling.vo.CrollingImgVo;
+import com.green.crawling.vo.CrawlingImgVo;
 
-public class CrollingUtil {
+public class CrawlingUtil {
 
     // 다나와 크롤링 이미지 다운로드,저장
-    public static CrollingImgVo downloadAndSaveImage(String imgUrl, String uploadPath) {
+    public static CrawlingImgVo downloadAndSaveImage(String imgUrl, String uploadPath) {
 
             try {
                 String modifiedUrl = imgUrl.replace("shrink=130:130", "shrink=500:500");
@@ -29,7 +29,7 @@ public class CrollingUtil {
 
                 ImageIO.write(image, "jpg", new File(savePath));
 
-                CrollingImgVo imgVo = new CrollingImgVo(0, 0, fileName, ".jpg", folderPath + File.separator + fileName);
+                CrawlingImgVo imgVo = new CrawlingImgVo(0, 0, fileName, ".jpg", folderPath + File.separator + fileName);
                 
 
                 System.out.println("Image saved: " + savePath);
@@ -56,8 +56,8 @@ public class CrollingUtil {
     }
 
     // Delete company images
-    public static void deleteCompanyImage(String uploadPath, List<CrollingImgVo> fileList) {
-        deleteImages(uploadPath, fileList, CrollingImgVo::getProduct_sfile_name);
+    public static void deleteCompanyImage(String uploadPath, List<CrawlingImgVo> fileList) {
+        deleteImages(uploadPath, fileList, CrawlingImgVo::getProduct_sfile_name);
     }
 
     // Generic method to delete images

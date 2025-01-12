@@ -1,8 +1,8 @@
-package com.green.crolling.service;
+package com.green.crawling.service;
 
 import java.util.HashMap;
 
-public interface CrollingService {
+public interface CrawlingService {
 
 	void DownloadAndSaveImg(HashMap<String, Object> map);
 

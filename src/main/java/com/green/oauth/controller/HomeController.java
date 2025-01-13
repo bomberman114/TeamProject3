@@ -5,15 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.green.oauth.mapper.HomeMapper;
-import com.green.util.CrwllingProductFilter;
+import com.green.util.CrwllingCPUFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class HomeController {
@@ -53,5 +57,17 @@ public class HomeController {
         mv.setViewName("home");
         return mv;
     }
+    
+    @PostMapping("/dSearch/postSearchList")
+    public ResponseEntity<HashMap<String, Object>> postSearchList(@RequestBody HashMap<String, Object> requestbody) {
+    	HashMap<String, Object> res = new HashMap<>(); 
+    	String keyword = String.valueOf(requestbody.get("keyword"));
+        List<HashMap<String, Object>> appliProduct = homeMapper.findSearchProduct(keyword);
+        System.out.println(appliProduct);
+        res.put("appliProduct", appliProduct);
+        
+        return ResponseEntity.ok(res);
+    }
+    
 }
 

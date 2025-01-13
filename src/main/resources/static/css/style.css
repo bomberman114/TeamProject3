@@ -291,7 +291,7 @@ footer {
   right: 40px;
   bottom: 40px;
   border-radius: 30px;
-  border: solid 1px #767676;
+  border: solid 1px var(--main-color);
   cursor: pointer;
 }
 
@@ -1294,6 +1294,41 @@ footer {
   color: #767676;
   margin-bottom: 40px;
 }
+
+.dSearch-title{
+	margin-top: 40px;
+}
+.dSearch-container{
+	margin-bottom : 40px;
+	
+ & ul{
+	  display : flex;
+		flex-wrap : wrap;
+		border : solid 1px #ccc;
+		& li{
+			flex-basis : 0;
+			min-width : calc(100% / 4);
+			display: flex;
+			padding : 20px 0;
+			justify-content: center;
+			align-items: center;
+			color : #555;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		
+		& li.categoryActive{
+			color : var(--main-color);
+			border : solid 1px var(--main-color);
+			font-weight: 500;
+		}
+	}
+	
+}
+
+
+
+
 
 .brand-box {
   display: flex;

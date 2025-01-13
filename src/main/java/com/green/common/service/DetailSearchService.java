@@ -17,6 +17,8 @@ public interface DetailSearchService {
 
 	HashMap<String, Object> findFirstChildCategoryByCategoryIdx(String categoryIdx);
 
+	void getSearchedProductList(String keyword, ModelAndView mv);
+
 
 
 }

@@ -45,4 +45,12 @@ public class DetailSearchController {
 		HashMap<String, Object> res = detailSearchService.getProductPagingFilterList(requestBody);	
 		return ResponseEntity.ok(res);
 	}
+	
+	@GetMapping("/dSearch")
+	public ModelAndView dSearch(@RequestParam (value = "keyword" , required=false)String keyword) {
+		ModelAndView mv = new ModelAndView();
+		detailSearchService.getSearchedProductList(keyword, mv);
+		mv.setViewName("detailSearch/detailSearch");
+		return mv;
+	}
 }

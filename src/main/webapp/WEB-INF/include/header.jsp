@@ -36,7 +36,7 @@
 			  <div class="recent-list">
 			    <p>
 				  <span>최근 검색</span>
-				  <button class="recnet-remove-all" onclick="removeRecentAll()">전체삭제</button>
+				  <button class="recnet-remove-all">전체삭제</button>
 				</p>
 				<ul></ul>
 		      </div>

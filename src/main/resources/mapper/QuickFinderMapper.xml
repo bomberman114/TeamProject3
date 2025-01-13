@@ -19,7 +19,7 @@
 
 <select id="getProductCount">
     SELECT COUNT(*)
-    FROM   PRODUCT
+    FROM   PRODUCT P LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
     <where>
         <choose>
             <when test="requestBody.computerType == null or requestBody.computerType == ''">
@@ -30,8 +30,8 @@
             </otherwise>
         </choose>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-					AND (REGEXP_LIKE(UPPER(P.PRODUCT_NAME), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))) 
-					OR  REGEXP_LIKE(UPPER(P.PRODUCT_DESCRIPTION), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))))
+					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
         </if> 
     </where>
 	    <choose>
@@ -72,6 +72,7 @@
 			LEFT JOIN PRODUCT_ATTRIBUTE        RAM ON P.PRODUCT_IDX = RAM.PRODUCT_IDX
 			LEFT JOIN PRODUCT_IMAGE            PI  ON P.PRODUCT_IDX = PI.PRODUCT_IDX
 			LEFT JOIN CATEGORY_ATTRIBUTE_VALUE CAV ON RAM.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
+		  LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
     <where>
         <choose>
             <when test="requestBody.computerType == null or requestBody.computerType == ''">
@@ -82,8 +83,9 @@
             </otherwise>
         </choose>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-					AND (REGEXP_LIKE(UPPER(P.PRODUCT_NAME), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))) 
-					OR  REGEXP_LIKE(UPPER(P.PRODUCT_DESCRIPTION), UPPER(REPLACE(#{requestBody.listSearch}, ' ', '\s*'))))
+					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR PRODUCT_NAME LIKE '%'|| #{requestBody.listSearch} ||'%'
         </if> 
     </where>
     <choose>

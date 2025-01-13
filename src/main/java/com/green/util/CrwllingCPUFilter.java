@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 import com.green.crawling.mapper.CrawlingMapper;
 
 @Component
-public class CrwllingProductFilter {
+public class CrwllingCPUFilter {
 	
 	private static CrawlingMapper crawlingMapper;
 
 	@Autowired
 	public void setCrawlingMapper(CrawlingMapper mapper) {
-	    CrwllingProductFilter.crawlingMapper = mapper;
+	    CrwllingCPUFilter.crawlingMapper = mapper;
 	}
     
     public static void cpuAttribute(List<HashMap<String, Object>> list) {
@@ -28,7 +28,7 @@ public class CrwllingProductFilter {
         
         HashMap<String, HashSet<String>> attributeSets = new HashMap<>();
         String[] attributes = {"manufacturer", "tdp", "memory", "graphics", "cores", "threads", 
-                               "baseClock", "maxClock", "process", "l2Cache", "l3Cache", "socket"};
+                               "baseClock", "maxClock", "process", "l2Cache", "l3Cache", "socket","codeName"};
         
         for (String attr : attributes) {
             attributeSets.put(attr, new HashSet<>());
@@ -45,13 +45,17 @@ public class CrwllingProductFilter {
         Pattern processPattern = Pattern.compile("([\\d]+)nm");
         Pattern l2CachePattern = Pattern.compile("L2 캐시:\\s*([^/\\n]+)MB");
         Pattern l3CachePattern = Pattern.compile("L3 캐시:\\s*([^/\\n]+)MB");
+        Pattern codeNamePattern = Pattern.compile("(코어\\s*(?:울트라9|i\\d+)|라이젠\\d+)", Pattern.CASE_INSENSITIVE);
+
 
         for (HashMap<String, Object> product : crollingItemList) {
             String categoryIdx = String.valueOf(product.get("CATEGORY_IDX"));
             String option = String.valueOf(product.get("PRODUCT_DESCRIPTION"));
+            String productName = String.valueOf(product.get("PRODUCT_NAME"));
             int productIdx = Integer.parseInt(String.valueOf(product.get("PRODUCT_IDX")));
             int attrType = 0;
             int attrVal = 0;
+            
             if (categoryIdx.equals("5")) {
                 HashMap<String, String> cpuAttributes = new HashMap<>();
                 
@@ -87,10 +91,17 @@ public class CrwllingProductFilter {
                     	attrVal = 32;
                     	crawlingMapper.saveAttr(productIdx,attrType,attrVal);
                     }
-                    
-                    
                 }
+                    
+                    
+                 
+                
+                    Matcher codeNameMatcher = codeNamePattern.matcher(productName);
+                	if (codeNameMatcher.find()) {
+                		cpuAttributes.put("codeName", codeNameMatcher.group());
+                	}
 
+                    
                 // 다른 속성들 추출
                 extractAttribute(memoryPattern, option, "memory", cpuAttributes);
                 extractAttribute(graphicsPattern, option, "graphics", cpuAttributes);
@@ -104,6 +115,7 @@ public class CrwllingProductFilter {
 
                 // 소켓 타입
                 cpuAttributes.put("socket", option.split("/")[0]);
+                
 
                 // 속성 셋에 추가
                 for (String attr : attributes) {
@@ -149,6 +161,50 @@ public class CrwllingProductFilter {
                 	attrVal = 31;
                 	crawlingMapper.saveAttr(productIdx,attrType,attrVal);
                 }
+                
+                attrType = 5;
+                String codeName = String.valueOf(cpuAttributes.get("codeName"));
+                	switch (codeName) {
+					case "코어 울트라9": {
+						attrVal = 9;
+                		crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+                		break;
+					}
+					case "코어i9": {
+						attrVal = 10;
+						crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+						break;
+					}
+					case "코어i7": {
+						attrVal = 11;
+						crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+						break;
+					}
+					case "코어i5": {
+						attrVal = 487;
+						crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+						break;
+					}
+					case "코어i3": {
+						attrVal = 489;
+						crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+						break;
+					}
+					case "라이젠9": {
+						attrVal = 490;
+						crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+						break;
+					}
+					case "라이젠7": {
+						attrVal = 491;
+						crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+						break;
+					}
+					default:
+						attrVal = 492;
+                		crawlingMapper.saveAttr(productIdx,attrType,attrVal);
+                		break;
+					}
                 
                 attrType = 6;
                 int core = Integer.parseInt(cpuAttributes.get("cores"));
@@ -389,7 +445,11 @@ public class CrwllingProductFilter {
                         	attrVal = 484;
                           	crawlingMapper.saveAttr(productIdx,attrType,attrVal);
                          }
+                         
+                
+                
             }
+            
 
         }
 

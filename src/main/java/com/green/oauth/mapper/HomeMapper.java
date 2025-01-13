@@ -14,4 +14,6 @@ public interface HomeMapper {
 
 	List<HashMap<String, Object>> findProduct();
 
+	List<HashMap<String, Object>> findSearchProduct(String keyword);
+
 }

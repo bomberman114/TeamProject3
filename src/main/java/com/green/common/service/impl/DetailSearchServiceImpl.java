@@ -1,12 +1,10 @@
 package com.green.common.service.impl;
 
-import java.sql.Clob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,8 +13,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.green.common.mapper.DetailSearchMapper;
 import com.green.common.service.DetailSearchService;
@@ -76,10 +74,8 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 	public HashMap<String, Object> getProductPagingFilterList(@RequestParam HashMap<String, Object> requestBody) {
 		HashMap<String, Object> res = new HashMap<>();
 	    List<HashMap<String, Object>> list = detailSearchMapper.getProductPagingFilterList(0,0,requestBody);
-		
 		if(((List<HashMap<String, Object>>) requestBody.get("selectedFilters")).size() > 0) {
     	String selectedFilters = String.valueOf(requestBody.get("selectedFilters"));
-    	System.out.println("값있으요" + requestBody.get("selectedFilters"));
     	
     	selectedFilters = selectedFilters.replace("[", "").replace("]", "").trim();
     	List<Integer> filtersList = Arrays.stream(selectedFilters.split(","))
@@ -108,6 +104,7 @@ public class DetailSearchServiceImpl implements DetailSearchService{
     	        }
     	    }
     	}
+    	System.out.println("!" + list);
 
     	System.out.println("attributeFilterProductList : " + attributeFilterProductList );
     	list = attributeFilterProductList;
@@ -184,7 +181,6 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 				}
 			}
 		}
-		System.out.println(list);
 		return list;
 	}
 
@@ -198,6 +194,43 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 	public HashMap<String, Object> findFirstChildCategoryByCategoryIdx(String categoryIdx) {
 		List<HashMap<String, Object>> list = detailSearchMapper.findChildCategoryByCategoryIdx(categoryIdx);
 		return list.get(0);
+	}
+
+	@Override
+	public void getSearchedProductList(String keyword, ModelAndView mv) {
+		List<HashMap<String, Object>> list = detailSearchMapper.getSearchedProductList(keyword);
+		HashSet<HashMap<String, Object>> categoryList = new HashSet<>();
+		for(HashMap<String, Object> product : list) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("cateIdx",Integer.parseInt(String.valueOf(product.get("CATEGORY_IDX"))));
+			map.put("cateName",String.valueOf(product.get("CATEGORY_NAME")));
+			categoryList.add(map);
+		}
+		List<HashMap<String, Object>> eachCategory = new ArrayList<>();
+		for(HashMap<String, Object> category : categoryList) {
+			List<HashMap<String, Object>> appliList = new ArrayList<>();
+			for(HashMap<String, Object> product : list) {
+				
+				if(Integer.parseInt(String.valueOf(category.get("cateIdx"))) == Integer.parseInt(String.valueOf(product.get("CATEGORY_IDX")))) {
+					appliList.add(product);		
+				}			
+			}
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("category", category);
+			map.put("categorySize", appliList.size());
+			eachCategory.add(map);
+		}
+		
+		eachCategory.sort((o1, o2) -> {
+		    HashMap<String, Object> category1 = (HashMap<String, Object>) o1.get("category");
+		    HashMap<String, Object> category2 = (HashMap<String, Object>) o2.get("category");
+		    return ((Integer) category1.get("cateIdx")).compareTo((Integer) category2.get("cateIdx"));
+		});
+		
+		mv.addObject("allProductCount",list.size());
+		mv.addObject("eachCategory",eachCategory);
+		mv.addObject("keyword",keyword);
+		mv.addObject("productList",list);
 	}
 }
 

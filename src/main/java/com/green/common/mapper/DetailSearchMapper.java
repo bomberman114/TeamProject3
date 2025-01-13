@@ -30,5 +30,7 @@ public interface DetailSearchMapper {
 
 	List<HashMap<String, Object>> findChildCategoryByCategoryIdx(String categoryIdx);
 
+	List<HashMap<String, Object>> getSearchedProductList(String keyword);
+
 	
 	}

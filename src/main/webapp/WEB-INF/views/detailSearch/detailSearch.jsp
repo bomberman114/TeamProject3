@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,86 +8,24 @@
 <title>상세검색</title>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="/js/searchHistory.js" defer></script>
+<style type="text/css">
+</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/include/header.jsp"%>
 	<main class="detail-search">
+	<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 		<div class="inner">
-			<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
-			<ul class="dir-list">
-				<li>홈</li>
-				<c:forEach var="categoryList" items="${parentCategoryList}" varStatus="outerStatus">
-				    <li>
-				        <select class="category-select">
-				            <c:forEach var="category" items="${categoryList.categoryList}">
-				                <c:set var="isSelected" value="false" />
-				                <c:if test="${outerStatus.index == 0}">
-				                    <c:forEach var="innerCategory" items="${parentCategoryList[1].categoryList}">
-				                        <c:if test="${innerCategory.PARENT_CATEGORY_IDX == category.CATEGORY_IDX}">
-				                            <c:set var="isSelected" value="true" />
-				                        </c:if>
-				                    </c:forEach>
-				                </c:if>
-				                <option value="${category.CATEGORY_IDX}" 
-				                        ${isSelected ? 'selected="selected"' : ''}
-				                        ${categoryIdx eq category.CATEGORY_IDX ? 'selected="selected"' : ''}>
-				                    ${category.CATEGORY_NAME}
-				                </option>
-				            </c:forEach>
-				        </select>
-				    </li>
-				</c:forEach>
-			</ul>
-			<div class="detail-search-title">상세검색</div>
-			<div class="detail-search-container">
-				<table>
-				<c:forEach var="attribute" items="${categoryAttribueList}" varStatus="status">
-						<c:if test="${status.index eq 7 }">
-							<tr>
-							<td>가격</td>
-							<td class="price-filter">
-								<input type="text" maxlength="11" name="lowestPrice" />~ <input type="text" maxlength="11" name="highestPrice" />
-								<button class="detailSearch-price-filter-btn">검색</button>
-							</td>
-						</tr>
-						</c:if>
-				    <tr>
-				        <td>
-				            <c:forEach var="entry" items="${attribute}">
-				                <c:if test="${entry.key != 'Group'}">
-				                    ${entry.key}
-				                </c:if>
-				            </c:forEach>
-				        </td>
-				        <td>
-							<c:forEach var="entry" items="${attribute}">
-							    <c:if test="${entry.key != 'Group'}">
-							        <c:set var="itemCount" value="0" />
-							        <ul>
-							            <c:forEach var="attributeValue" items="${entry.value}" varStatus="status">
-							                    <li>
-							                        <input type="checkbox" name="${entry.key}" id="${entry.key}_${attributeValue.attribute_value_idx}" value="${attributeValue.attribute_value_idx}">
-							                        <label for="${entry.key}_${attributeValue.attribute_value_idx}">${attributeValue.attribute_value_name}</label>
-							                    </li>
-							                <c:set var="itemCount" value="${itemCount + 1}"/>
-							            </c:forEach>
-							        </ul>
-							        <c:if test="${itemCount > 5}">
-							            <button class="filter-val-all" data-overflowcount="${itemCount - 5}">${itemCount - 5}개+</button>
-							        </c:if>
-							    </c:if>
-							</c:forEach>
-				        </td>
-				    </tr>
-				</c:forEach>
-				</table>
+			<div class="detail-search-title dSearch-title">상품검색</div>
+			<div class="dSearch-container">
+				<ul>
+					<li class="categoryActive">전체 (${allProductCount})</li>
+					<c:forEach var="category" items="${eachCategory}">
+						<li data-cateidx="${category.category.cateIdx}">${category.category.cateName}(${category.categorySize})</li>
+					</c:forEach>
+				</ul>
 			</div>
-			<p class="detailSearch-option-all-open-btn">옵션 전체보기</p>
 			<div class="quick-finder-search-title">
 				<h3>
 					조회상품(<span>##</span>)
@@ -107,6 +44,7 @@
 				<div class="quick-finder-search-list"></div>
 			</div>
 			<div class="paging-container"></div>
+			</div>
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	
@@ -115,51 +53,42 @@
     let selectedFilters = []; 
     let lowestPrice = null;
     let highestPrice = null; 
-    let listSearch = null; 
+    let listSearch = null;
+    let userSearched = "${keyword}"
     let sortType = null; 
     let nowpage = null;
     let categoryIdx = "${categoryIdx}"
     let isOptionOpen = false;
     
+    if(userSearched){
+    	document.querySelector("input[name='search']").value = userSearched;
+    }
+    
     const $scrollTopBtn = document.querySelector(".scroll-top-btn");
     $scrollTopBtn.addEventListener("click", () => {
         window.scroll({ top: 0, behavior: "smooth" });
     });
-    window.addEventListener("scroll", () => {
-      	if(window.scrollY > 0){
-    		$scrollTopBtn.style.opacity = "1"
-    		$scrollTopBtn.style.pointerEvents = "auto";
-    	}else{
-    		$scrollTopBtn.style.opacity = "0"
-        $scrollTopBtn.style.pointerEvents = "none";
-    	}
-});
-
-    
-    const encodedString = encodeURIComponent("영웅컴퓨터 영웅 875 게이밍울트라560X (16GB, M.2 256GB)");
-    console.log(encodedString)
 	
-    getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage)
+    window.addEventListener("scroll", () => {
+          	if(window.scrollY > 0){
+        		$scrollTopBtn.style.opacity = "1"
+        		$scrollTopBtn.style.pointerEvents = "auto";
+        	}else{
+        		$scrollTopBtn.style.opacity = "0"
+            $scrollTopBtn.style.pointerEvents = "none";
+        	}
+    });
     
-    filterAllBtnHeightCalc();
     
-    function filterAllBtnHeightCalc(){
-    	if(isOptionOpen != true){
-    	      const $filterContainer = document.querySelector(".detail-search-container");
-    	        let height = 0;
-    	        for(let i = 0; i < 8 ; i++){
-    	        	height += $filterContainer.querySelectorAll("tr")[i].clientHeight + 1
-    	        }
-    			$filterContainer.style.height =  height + "px"; 
-    	}
-  
-    }
+    
+    
+    getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage,userSearched)
 
      document.addEventListener("click",(e)=>{
     	  const clicked = e.target	
     	  if(clicked.matches(".paging-li")){
     		  nowpage = clicked.textContent;
-    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage)
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage,userSearched)
     		  window.scrollTo(0, 700)
     	  }
     	  if(clicked.matches(".list-search-btn")){
@@ -168,17 +97,17 @@
     	  }
     	  if(clicked.matches(".paging-next-btn")){
     		  nowpage = clicked.dataset.nowpage;
-    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage)
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage,userSearched)
     		}
     	  if(clicked.matches(".paging-prev-btn")){
     		  nowpage = clicked.dataset.nowpage;
-    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage)
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage,userSearched)
     	  }
     	  if(clicked.matches(".quick-finder-search-container li")){
     		  sortType = clicked.dataset.sorttype;
     		  document.querySelectorAll(".quick-finder-search-container li").forEach(li=>li.className = "")
     		  clicked.className = "list-filter-active"
-    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1)
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
     	  }
     	  if(clicked.matches(".detailSearch-option-all-open-btn")){
     		  const $filterContainer = document.querySelector(".detail-search-container");
@@ -195,22 +124,26 @@
     	  if(clicked.matches(".detailSearch-price-filter-btn")){
     		  lowestPrice = document.querySelector("input[name='lowestPrice']").value.replaceAll(",","")
     		  highestPrice = document.querySelector("input[name='highestPrice']").value.replaceAll(",","")
-    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1)
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
     	  }
     	  if(clicked.matches(".filter-val-all")){
-    		
-			console.dir(clicked.previousElementSibling)
-			if(clicked.previousElementSibling.style.display != "grid"){
-				clicked.previousElementSibling.style.display = "grid";
-				clicked.previousElementSibling.style.gridTemplateColumns = "repeat(5, 1fr)";
-				clicked.textContent = "닫기";
-			}else{
-				clicked.previousElementSibling.style.display = "flex";
-				clicked.previousElementSibling.style.gridTemplateColumns = "none";
-				clicked.textContent = clicked.dataset.overflowcount + "개+";
-			}
-			
-			filterAllBtnHeightCalc()
+					if(clicked.previousElementSibling.style.display != "grid"){
+						clicked.previousElementSibling.style.display = "grid";
+						clicked.previousElementSibling.style.gridTemplateColumns = "repeat(5, 1fr)";
+						clicked.textContent = "닫기";
+					}else{
+						clicked.previousElementSibling.style.display = "flex";
+						clicked.previousElementSibling.style.gridTemplateColumns = "none";
+						clicked.textContent = clicked.dataset.overflowcount + "개+";
+					}
+				filterAllBtnHeightCalc()
+    	  }
+    	  if(clicked.matches(".dSearch-container ul li")){
+    		  document.querySelectorAll(".dSearch-container ul li").forEach(li=>li.className = "")
+    		  clicked.className = "categoryActive"
+    		  categoryIdx = clicked.dataset.cateidx;
+    		  listSearch = "${keyword}"
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
     	  }
       })
       
@@ -218,7 +151,7 @@
 	    	if(e.target.matches("input[type='checkbox']")){
 	    		const inputChecked = document.querySelectorAll("input:checked")
 	    		selectedFilters = Array.from(inputChecked).map(input=>input.value);
-	    		getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1)
+	    		getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
 	    	}
 	    	if(e.target.matches(".list-search")){
 	    		listSearch = e.target.value;
@@ -231,7 +164,7 @@
        document.querySelector(".list-search").addEventListener("keyup",(e)=>{
  			   if(e.keyCode == 13 ){
  	    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
- 		    		getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1)
+ 		    		getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
  			   }
  		   })
       
@@ -266,7 +199,7 @@
       
     
 		async function getProductPagingFilterList(
-			categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage
+			categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage,userSearched
    		 ){
 	    const res = await fetch("/DetailSearch/getProductPagingFilterList", {
        method: "POST",
@@ -278,7 +211,8 @@
        	highestPrice     : highestPrice,
        	listSearch       : listSearch,
        	sortType         : sortType,
-       	nowpage          : nowpage})
+       	nowpage          : nowpage,
+       	userSearch       : userSearched})
 	    });
 
      if (!res.ok) {
@@ -289,7 +223,8 @@
      document.querySelector(".quick-finder-search-title span").textContent = result.response.pagination.totalRecordCount
      createPagingList(result)
      createProductList(result.response.list)
-   
+     console.log(result)
+
    	return result.purposeList;
 	}
 	

@@ -87,6 +87,7 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     font-weight: bold;
+    min-height: calc(2 * 1.5em);
 }
 .select-field {
 	width: 80px;

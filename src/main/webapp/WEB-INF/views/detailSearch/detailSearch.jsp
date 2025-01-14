@@ -142,6 +142,7 @@
     		  categoryIdx = clicked.dataset.cateidx;
     		  userSearched = "${keyword}"
     		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
+    		  getCateogryList(listSearch,userSearched)
     	  }
       })
       
@@ -222,7 +223,8 @@
       obj.eachCategory.forEach(list=>{
     	  let li = document.createElement("li")
     	  if(categoryIdx == list.category.cateIdx){  		  
-	    		li.className = "categoryActive"    		
+	    		li.className = "categoryActive" 
+	    		allLi.className = ""  
     	  }
     	  li.dataset.cateidx =  list.category.cateIdx
     	  li.textContent = list.category.cateName + "(" + list.categorySize + ")" 

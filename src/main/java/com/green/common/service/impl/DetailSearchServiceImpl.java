@@ -36,6 +36,7 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 	        Map<Integer, HashMap<HashMap<String, Object>, List<HashMap<String, Object>>>> groupedData = new HashMap<>();
 	        
 	        for (HashMap<String, Object> row : categoryAttributeList) {
+	        	System.out.println(row);
 	        	int group = ((Number) row.get("CATEGORY_ATTRIBUTE_IDX")).intValue();
 	        	HashMap<String, Object> attribute =  new HashMap<>();
 	        	attribute.put("attribute_idx",Integer.parseInt(String.valueOf(row.get("CATEGORY_ATTRIBUTE_IDX"))));

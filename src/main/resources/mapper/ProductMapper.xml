@@ -167,18 +167,6 @@ SELECT
 FROM
     CATEGORY
 WHERE 
-	CATEGORY_IDX = #{category}
-</select>
-
-<select id="getCategoryMap">
-SELECT
-    CATEGORY_IDX,
-    CATEGORY_NAME,
-    PARENT_CATEGORY_IDX,
-    DEPTH
-FROM
-    CATEGORY
-WHERE 
    CATEGORY_IDX = #{category}
 </select>
 

@@ -60,7 +60,6 @@ dependencies {
   
   implementation 'org.springframework.boot:spring-boot-starter-cache'
 
-  
   // Jsoup HTML 파서
   implementation 'org.jsoup:jsoup:1.18.3'
 

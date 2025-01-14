@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -298,6 +297,7 @@ public class DeskTopEstimateController {
 		return mv;
 	};
 
+/*
 	private static String extractLengthInfo(String input) {
 		String[] parts = input.split("/");
 
@@ -319,7 +319,7 @@ public class DeskTopEstimateController {
             e.printStackTrace();
          }
       }
-
+*/
 
 	@RequestMapping("/DeskTopEstimateFiler")
 	@ResponseBody

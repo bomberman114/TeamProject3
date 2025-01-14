@@ -32,22 +32,23 @@
     <c:if test="${totalPages > 0}">
 
         <c:if test="${currentPage > 1}">
-            <a href="?page=${currentPage - 10 > 0 ? currentPage - 10 : 1}&size=${size}">이전</a>
+            <a href="?page=${currentPage - 10 > 0 ? currentPage - 10 : 1}&size=${size}&type=${selectedType}">이전</a>
         </c:if>
 	
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="?page=${i}&size=${size}" class="active">${i}</a>
+                    <a href="?page=${i}&size=${size}&type=${selectedType}" class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="?page=${i}&size=${size}">${i}</a>
+                    <a href="?page=${i}&size=${size}&type=${selectedType}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
 
         <c:if test="${currentPage < totalPages}">
-            <a href="?page=${currentPage + 10 > totalPages ? totalPages : currentPage + 10}&size=${size}">다음</a>
+            <a href="?page=${currentPage + 10 > totalPages ? totalPages : currentPage + 10}&size=${size}&type=${selectedType}">다음</a>
         </c:if>
+        
     </c:if>
 </div>

@@ -14,9 +14,6 @@
 
 <title>조립앨범 게시글 상세페이지</title>
 <style>
-.inner {
-	margin-top: 40px; 
-}
 .cm-nav {
     min-width: 390px; /* 고정된 너비 */  
     margin-left: 20px;
@@ -40,11 +37,15 @@
     
     .login {
     	border-radius: 5px;
-    	background: #ccc;
+    	background: #1A3D91;
     	text-align: center;
     	padding: 10px;
     	margin-top: 10px;
     	margin-bottom: 10px;
+    	
+    	a {
+    		color: white;
+    	}
     }
 }
 .div1 {
@@ -67,8 +68,6 @@
 }
 .content {
 	min-height: 200px; /* 최소 높이 설정 */
-    max-height: 300px; /* 최대 높이 설정 (원하는 높이로 조정 가능) */
-    overflow-y: auto; /* 세로 방향으로 스크롤 가능 */
     padding: 10px; /* 내부 여백 추가 (선택 사항) */
     box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
 }
@@ -152,7 +151,7 @@ textarea {
 <%@include file="/WEB-INF/include/header.jsp"%>
 
 <div class="inner">  
-  <div style="display: flex;">      
+    <div style="display: flex; margin-top:40px; ">      
     <div style="width: 790px;">
 
       <div class="div1">
@@ -243,7 +242,7 @@ textarea {
         <div style="font-weight: bold; margin-bottom: 10px;" >댓글: ${vo.total_answers}개</div>
         <div>
           <c:forEach var="answer" items="${answerList}">
-            <div style="display: flex; align-items: flex-start; padding-top: 5px; padding-bottom: 5px;border-bottom: 1px solid #ddd;">
+            <div style="display: flex; align-items: flex-start; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #ddd;">
               <img src="/images/icon/header-icon/icon-btn.png" alt="프로필" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
               <div>  
                 <span style="font-weight: bold;">${answer.user_nickname}</span>
@@ -260,29 +259,15 @@ textarea {
       	<div>
       	  <input type="hidden" name="user_idx" value="${sessionScope.user.user_idx}">
       	  <input type="hidden" name="community_idx" value="${vo.community_idx}">
-      	  <textarea name="community_answer_content"></textarea>
+      	  <textarea name="community_answer_content" id="community_answer_content"></textarea>
       	</div>
       	<div style="text-align: right;">
       	  <input type="submit" class="answerbtn" value="댓글작성" >
       	</div>
       </form>
       </div>
-      
-      <div>
-      	<div class="content">
-		  <c:forEach var="album" items="${albumList}" >
-		  <div class="box">
-			<div class="box-img"><a href="/Community/Albumview?community_idx=${album.community_idx}"><img src="/images/${album.community_sfile_name}"></a></div>
-			<div class="box-title"><a href="/Community/Albumview?community_idx=${album.community_idx}">${album.community_title}</a></div>
-			<div class="box-nickname">${album.user_nickname}</div>
-			<div style="text-align: right;">👁️‍🗨️ ${album.community_views} | 💬 ${album.total_answers}</div>
-		  </div>
-		  </c:forEach>
-		</div>		
-      </div>
-    
+
     </div>
-    
     
     <div class="cm-nav">
       <div class="border">
@@ -313,17 +298,20 @@ textarea {
 
 <%@include file="/WEB-INF/include/footer.jsp"%>
 <script>
-function sortAlbums() {
-    const sort       = document.getElementById("sort").value;
-    const search     = document.getElementById("search").value; 
-    const searchtext = document.getElementById("searchtext").value; 
-    window.location.href = "/Community/Albumlist?sort=" + sort + "&search=" + search + "&searchtext=" + searchtext;
-}
-
-function searchAlbums() {
-    const search = document.getElementById("search").value;
-    window.location.href = "/Community/Albumlist?search=" + search;
-}
+//유효성 검사
+const formEl = document.querySelector('form');
+formEl.onsubmit = function(event) {
+	const community_answer_contentEl   = document.querySelector('#community_answer_content');
+	
+	if(community_answer_contentEl.value.trim() == '') {
+		alert('댓글을 입력하세요.')
+		community_answer_contentEl.focus();
+		event.preventDefault();
+		return false;
+	}
+	return true;
+};
 </script>
+
 </body>
 </html>

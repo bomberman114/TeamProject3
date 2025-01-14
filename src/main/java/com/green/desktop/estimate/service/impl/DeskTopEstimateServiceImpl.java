@@ -29,6 +29,7 @@ import com.green.ssd.mapper.SsdMapper;
 @Service("DeskTopEstimateService")
 public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
 
+
 	@Autowired
 	private CpuMapper cpuMapper;
 
@@ -120,6 +121,7 @@ public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
 		}
 		return null;
 	}
+
 
 	@Override
 	public HashMap<String, Object> compauterPartCompatibilityCheck(HashMap<String, Object> map) {

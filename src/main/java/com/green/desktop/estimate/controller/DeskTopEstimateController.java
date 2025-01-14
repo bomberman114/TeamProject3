@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,35 +40,36 @@ import com.green.ssd.mapper.SsdMapper;
 public class DeskTopEstimateController {
 // PC 견적
 
-	@Autowired
-	private DeskTopEstimateService deskTopEstimateService;
+   @Autowired
+   private DeskTopEstimateService deskTopEstimateService;
 
-	@Autowired
-	private CpuMapper cpuMapper;
+   @Autowired
+   private CpuMapper cpuMapper;
 
-	@Autowired
-	private GpuMapper gpuMapper;
+   @Autowired
+   private GpuMapper gpuMapper;
 
-	@Autowired
-	private RamMapper ramMapper;
+   @Autowired
+   private RamMapper ramMapper;
 
-	@Autowired
-	private SsdMapper ssdMapper;
+   @Autowired
+   private SsdMapper ssdMapper;
 
-	@Autowired
-	private CoolerMapper coolerMapper;
+   @Autowired
+   private CoolerMapper coolerMapper;
 
-	@Autowired
-	private DesktopCaseMapper desktopCaseMapper;
+   @Autowired
+   private DesktopCaseMapper desktopCaseMapper;
 
-	@Autowired
-	private PowerMapper powerMapper;
+   @Autowired
+   private PowerMapper powerMapper;
 
-	@Autowired
-	private HddMapper hddMapper;
+   @Autowired
+   private HddMapper hddMapper;
 
-	@Autowired
-	private MotherboardMapper motherboardMapper;
+   @Autowired
+   private MotherboardMapper motherboardMapper;
+
 
 	@Autowired
 	private ProductMapper productMapper;
@@ -299,23 +301,25 @@ public class DeskTopEstimateController {
 	private static String extractLengthInfo(String input) {
 		String[] parts = input.split("/");
 
-		for (String part : parts) {
-			if (part.contains("정격출력")) {
-				return part.trim();
-			}
-		}
 
-		return null; // 길이 정보를 찾지 못했을 경우
-	}
+      // allValuesString은 JSON 문자열입니다.
+      String allValuesString = (String) map.get("allValuesString");
 
-	private static double extractLength(String lengthInfo) {
-		String[] parts = lengthInfo.split(":");
-		if (parts.length > 1) {
-			String lengthStr = parts[1].trim();
-			return Double.parseDouble(lengthStr.replace("W", "").trim());
-		}
-		return 0; // 길이를 찾지 못했을 경우
-	}
+      // JSON 문자열을 Map으로 변환
+      Map<String, Object> allValues = null;
+      if (allValuesString != null) {
+
+         try {
+            allValues = objectMapper.readValue(allValuesString, Map.class);
+         } catch (JsonMappingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
+      }
+
 
 	@RequestMapping("/DeskTopEstimateFiler")
 	@ResponseBody
@@ -476,5 +480,6 @@ public class DeskTopEstimateController {
 		System.out.println(map);
 		return map;
 	}
+
 
 }

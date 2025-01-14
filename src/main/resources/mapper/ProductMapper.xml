@@ -44,6 +44,7 @@ ON
     P.PRODUCT_IDX = PA.PRODUCT_IDX
 WHERE
     P.CATEGORY_IDX  = #{category}
+
    
 GROUP BY 
     P.PRODUCT_IDX,
@@ -87,6 +88,7 @@ ON
     P.PRODUCT_IDX = PA.PRODUCT_IDX
 WHERE
     P.CATEGORY_IDX  = #{category}
+
  <if test="categoryAttributeIdxs != null ">    
 AND
     PA.CATEGORY_ATTRIBUTE_IDX IN
@@ -153,6 +155,7 @@ AND
 </if>
 
 
+
 </select>
 
 <select id="getCategoryMap">
@@ -165,6 +168,18 @@ FROM
     CATEGORY
 WHERE 
 	CATEGORY_IDX = #{category}
+</select>
+
+<select id="getCategoryMap">
+SELECT
+    CATEGORY_IDX,
+    CATEGORY_NAME,
+    PARENT_CATEGORY_IDX,
+    DEPTH
+FROM
+    CATEGORY
+WHERE 
+   CATEGORY_IDX = #{category}
 </select>
 
 <select id="getcategoryAttributeList">
@@ -218,7 +233,9 @@ JOIN
 ON
     PA.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
 WHERE 
+
 	   P.PRODUCT_IDX IN
+
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
            #{ productIdxList }
@@ -245,6 +262,7 @@ ORDER BY
     P.CATEGORY_IDX,
     PI. PRODUCT_SFILE_NAME,
     C.CATEGORY_NAME
+
    
 FROM
     PRODUCT  P
@@ -252,12 +270,14 @@ JOIN
     PRODUCT_IMAGE  PI
 ON
     P.PRODUCT_IDX = PI.PRODUCT_IDX
+
 JOIN
     CATEGORY  C
 ON
     P.CATEGORY_IDX = C.CATEGORY_IDX
 WHERE 
 	   P.PRODUCT_IDX IN
+
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
            #{ productIdxList }
@@ -271,6 +291,7 @@ GROUP BY
     P.CATEGORY_IDX,
     PI. PRODUCT_SFILE_NAME,
     C.CATEGORY_NAME
+
 ORDER BY 
      P.PRODUCT_IDX ASC
 

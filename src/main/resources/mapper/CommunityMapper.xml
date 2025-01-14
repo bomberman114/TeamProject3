@@ -209,6 +209,13 @@
    ORDER BY CA.COMMUNITY_ANSWER_REGDATE DESC
   </select> 
   
+  <!-- 커뮤니티_조립앨범_조회수 -->
+  <update id="plusviews">
+   UPDATE COMMUNITY
+   SET    COMMUNITY_VIEWS = COMMUNITY_VIEWS+1
+   WHERE  COMMUNITY_IDX = #{community_idx}
+  </update>
+  
   <!-- 커뮤니티_조립앨범_게시글 댓글 등록 -->
   <insert id="insertanswer">
   INSERT INTO COMMUNITY_ANSWER

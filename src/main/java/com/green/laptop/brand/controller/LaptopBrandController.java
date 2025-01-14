@@ -32,8 +32,10 @@ public class LaptopBrandController {
     @RequestMapping("/BrandExplain")    
     @ResponseBody
     public List<HashMap<String, Object>> brandExplain(@RequestParam HashMap<String,Object> map ) {
-       List<HashMap<String, Object>> brandExplainList = laptopBrandService.brandExplainList(map);
-       System.out.println(brandExplainList);
+
+    	List<HashMap<String, Object>> brandExplainList = laptopBrandService.brandExplainList(map);
+    	System.out.println(brandExplainList);
+
        return brandExplainList;
        
        

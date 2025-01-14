@@ -27,16 +27,13 @@
 				<div class="dim-next dim"></div>
 				<div class="carousel-container">
 					<div class="carousel-slide">
-						<div>aa</div>
+						<div><a href="/dSearch?keyword=9800x3d"><img src="/images/carousel/maincarasel1.png"></a></div>
 					</div>
 					<div class="carousel-slide">
-						<div>bb</div>
+						<div><a href="/dSearch?keyword=인텔 울트라"><img src="/images/carousel/maincarasel2.png"></a></div>
 					</div>
 					<div class="carousel-slide">
-						<div>cc</div>
-					</div>
-					<div class="carousel-slide">
-						<div>dd</div>
+						<div><a href="/QuickFinder"><img src="/images/carousel/maincarasel3.png"></a></div>
 					</div>
 				</div>
 				<button class="carousel-button prev">
@@ -205,10 +202,9 @@ const $scrollTopBtn = document.querySelector(".scroll-top-btn");
     });
     
     
-$scrollTopBtn.addEventListener("click", () => {
-    window.scroll({ top: 0, behavior: "smooth" });
-});
-
-
+		$scrollTopBtn.addEventListener("click", () => {
+		    window.scroll({ top: 0, behavior: "smooth" });
+		});
     </script>
+    </body>
 </html>

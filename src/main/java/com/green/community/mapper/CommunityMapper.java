@@ -57,4 +57,6 @@ public interface CommunityMapper {
 
 	void deleteimage(CommunityVo communityVo);
 
+	void plusviews(CommunityVo communityVo);
+
 }

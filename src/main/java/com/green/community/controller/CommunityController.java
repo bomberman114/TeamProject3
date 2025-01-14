@@ -147,10 +147,14 @@ public class CommunityController {
 	// Community/Albumview (게시글 상세보기)
 	@RequestMapping("/Albumview")
 	public ModelAndView albumview(
+			CommunityVo communityVo,
 			@RequestParam("community_idx") int community_idx,
 			@RequestParam("user_idx") int user_idx
 			) {
-	    // 게시글 정보
+		//조회수 증가
+		communityMapper.plusviews(communityVo);
+
+		// 게시글 정보
 		CommunityVo vo = communityMapper.getinfo(community_idx, user_idx);
 		
 		// 스펙 정보
@@ -162,7 +166,9 @@ public class CommunityController {
 		// 조립앨범 BEST List
 		List<CommunityVo> albumbestList = communityMapper.getalbumbestList();
 		
+		
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("communityVo", communityVo);
 		mv.addObject("community_idx", community_idx);
 		mv.addObject("user_idx", user_idx);
 		mv.addObject("vo", vo);

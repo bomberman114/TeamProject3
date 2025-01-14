@@ -76,12 +76,15 @@ tr {
 }
 .logo {
 	display: flex;
-	gap: 20px;
-	width: 50px;
+	align-items: center;
+	justify-content: center;
+	width: 150px;
 	height: 50px;
-	line-height: 50px;
-	background: #ccc;
-	text-align: center;
+}
+.logo img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;  /* 이미지 비율을 유지하며 네모에 맞게 잘라냄 */
 }
 .cs-impormation {
 	display: flex;
@@ -110,8 +113,8 @@ tr {
   
       <div class="notice-title">${vo.notice_title}</div>
       <div class="cs-impormation">
-        <div class="logo">로고</div>
-        <div class="impormation-detail">*** 고객센터<br>${vo.notice_regdate}</div>
+        <div class="logo"><img src="/images/logo/logo.svg"></div>
+        <div class="impormation-detail">찾았닷컴 고객센터<br>${vo.notice_regdate}</div>
       </div>
       <!-- 구분선 추가 -->
       <hr style="border: 1px solid #ccc; margin: 20px 0;">

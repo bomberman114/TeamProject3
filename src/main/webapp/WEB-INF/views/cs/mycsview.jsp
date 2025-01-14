@@ -107,12 +107,15 @@ tr {
 }
 .logo {
 	display: flex;
-	gap: 10px;
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	background: #ccc;
-	text-align: center;
+	align-items: center;
+	justify-content: center;
+	width: 150px;
+	height: 28px;
+}
+.logo img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;  /* 이미지 비율을 유지하며 네모에 맞게 잘라냄 */
 }
 .regdate {
 	margin-top: 10px;
@@ -123,6 +126,7 @@ tr {
 	margin-left: 20px;
 	border: 1px solid black;
 	height: 250px;
+	width: 95%;
 	
 	div {
 		padding: 10px;
@@ -168,8 +172,8 @@ tr {
            
            <div class="flex">
              <div class="alphabet">A.</div>
-             <div class="logo">로고
-               <div>*** 고객센터</div>
+             <div class="logo"><img src="/images/logo/logo.svg"></div>
+               <div>찾았닷컴 고객센터</div>
              </div>
            </div>
            <div class="regdate">${aw.customer_service_answer_regdate}</div>

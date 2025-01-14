@@ -37,43 +37,5 @@ public interface CsMapper {
 	CsVo getminfo(int user_idx);
 
 	void insertcsImage(HashMap<String, Object> map);
-	
-	List<CsVo> getnoticeList(
-			@Param("start") int start, 
-			@Param("size") int size
-			);
-
-	List<CsVo> getaskList(
-			@Param("start") int start, 
-			@Param("size") int size
-			);
-
-
-	List<CsVo> getmacsList(
-			@Param("start") int start, 
-			@Param("size") int size
-			);
-	
-	int getcountaskList();
-
-	int getcountmacsList();
-
-	int getcountnoticeList();
-
-	void insertask(CsVo csVo);
-
-	void updateask(CsVo csVo);
-
-	CsVo selectask(int idx);
-
-	void deleteAsk(int idx);
-
-	CsVo selectnotice(int idx);
-
-	void updatenotice(CsVo csVo);
-
-	void deletenotice(int idx);
-
-	void insertnotice(CsVo csVo);
 
 }

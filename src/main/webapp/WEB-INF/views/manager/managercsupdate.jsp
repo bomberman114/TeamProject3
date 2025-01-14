@@ -91,12 +91,12 @@ button:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
             </li>
             <li>
-                <a href="/Cs/ManagerCsList">문의내역</a>
-                <a href="/Cs/ManagerNoticeList">공지사항</a>
-                <a href="/Cs/ManagerAsklist">자주 묻는 질문</a>
+                <a href="/Manager/ManagerCsList" style="background-color: #CCC">문의내역</a>
+                <a href="/Manager/ManagerNoticeList">공지사항</a>
+                <a href="/Manager/ManagerAsklist">자주 묻는 질문</a>
             </li>    
             <li>
                 <a href="#" style="font-size: 18px; font-weight: bold;">상품 및 카테고리 관리</a>
@@ -109,56 +109,46 @@ button:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
                 <div class="dropdown-menu">
-                    <a href="/Cs/ManagerBoardList">자유게시판</a>
-                    <a href="/Cs/ManagerAlbumList">조립앨범</a>
-                    <a href="/Cs/ManagerMarketList">장터</a>
+                    <a href="/Manager/ManagerBoardList">자유게시판</a>
+                    <a href="/Manager/ManagerAlbumList">조립앨범</a>
+                    <a href="/Manager/ManagerMarketList">장터</a>
                 </div>
             </li>
         </ul>
     </div>
     
     <div style="flex: 1; margin: 30px; padding: 30px; border: 1px solid #ddd; border-radius: 10px;">
-    <form action="/Cs/ManagerAskUpdate" method="POST" style="margin-bottom: 20px; ">
-        <input type="hidden" name="customer_service_idx" value="${csVo.customer_service_idx}" />
+    <form action="/Manager/ManagerCsUpdate" method="POST" style="margin-bottom: 20px; ">
+        <input type="hidden" name="customer_service_idx" value="${ManagerVo.customer_service_idx}" />
 
         <div style="padding-bottom: 20px; border-bottom: 1px solid black;">
-            <label for="customer_service_type">[질문 유형 선택]</label>
-            <div id="customer_service_type" style="display: flex; gap: 10px; font-size: 18px;">
-                <label>
-                    <input type="radio" name="customer_service_type" value="회원" 
-                        <c:if test="${csVo.customer_service_type == '회원'}">checked</c:if> required> 회원
-                </label>
-                <label>
-                    <input type="radio" name="customer_service_type" value="PC견적" 
-                        <c:if test="${csVo.customer_service_type == 'PC견적'}">checked</c:if> required> PC견적
-                </label>
-                <label>
-                    <input type="radio" name="customer_service_type" value="브랜드관" 
-                        <c:if test="${csVo.customer_service_type == '브랜드관'}">checked</c:if> required> 브랜드관
-                </label>
-                <label>
-                    <input type="radio" name="customer_service_type" value="커뮤니티" 
-                        <c:if test="${csVo.customer_service_type == '커뮤니티'}">checked</c:if> required> 커뮤니티
-                </label>
-                <label>
-                    <input type="radio" name="customer_service_type" value="광고" 
-                        <c:if test="${csVo.customer_service_type == '광고'}">checked</c:if> required> 광고
-                </label>
-            </div>
-        </div>
+		    
+		    <div style="font-size: 20px;
+		    font-weight: bold;
+		    margin-bottom: 10px;
+		    display: block;">[질문 유형]
+		    </div>
+			
+			<div id="customer_service_type" style="font-size: 18px;
+		    font-weight: bold;
+		    margin-bottom: 10px;
+		    display: block;">
+		        : ${ManagerVo.customer_service_type}
+		    </div>
+		</div>
 
         <div style="padding-bottom: 20px; border-bottom: 1px solid black; margin-top: 20px;">
             <label for="customer_service_title">[Q.]</label>
-            <textarea id="customer_service_title" name="customer_service_title">${csVo.customer_service_title}</textarea>
+            <textarea id="customer_service_title" name="customer_service_title">${ManagerVo.customer_service_title}</textarea>
 
             <label for="customer_service_content" style="margin-top: 20px;">[A.]</label>
-            <textarea id="customer_service_content" name="customer_service_content">${csVo.customer_service_content}</textarea>
+            <textarea id="customer_service_content" name="customer_service_content">${ManagerVo.customer_service_content}</textarea>
         </div>
 
         <div style="display: flex; justify-content: center; gap: 20px; padding-top: 20px;">
-            <button type="button" onclick="location.href='/Cs/ManagerAsklist'">목록</button>
+            <button type="button" onclick="location.href='/Manager/ManagerCsList'">목록</button>
             <button type="submit">저장</button>
         </div>
     </form>

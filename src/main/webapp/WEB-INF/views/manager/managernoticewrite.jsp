@@ -65,13 +65,16 @@ label {
     margin-bottom: 10px;
     display: block;
 }
-textarea {
+textarea, input[type="text"] {
     font-size: 18px;
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
     resize: none;
+}
+
+textarea {
     height: 150px;
 }
 
@@ -95,12 +98,12 @@ button:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
             </li>
             <li>
-                <a href="/Cs/ManagerCsList">문의내역</a>
-                <a href="/Cs/ManagerNoticeList">공지사항</a>
-                <a href="/Cs/ManagerAsklist">자주 묻는 질문</a>
+                <a href="/Manager/ManagerCsList">문의내역</a>
+                <a href="/Manager/ManagerNoticeList" style="background-color: #CCC">공지사항</a>
+                <a href="/Manager/ManagerAsklist">자주 묻는 질문</a>
             </li>    
             <li>
                 <a href="#" style="font-size: 18px; font-weight: bold;">상품 및 카테고리 관리</a>
@@ -113,18 +116,18 @@ button:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
                 <div class="dropdown-menu">
-                    <a href="/Cs/ManagerBoardList">자유게시판</a>
-                    <a href="/Cs/ManagerAlbumList">조립앨범</a>
-                    <a href="/Cs/ManagerMarketList">장터</a>
+                    <a href="/Manager/ManagerBoardList">자유게시판</a>
+                    <a href="/Manager/ManagerAlbumList">조립앨범</a>
+                    <a href="/Manager/ManagerMarketList">장터</a>
                 </div>
             </li>
         </ul>
     </div>
     
     <div style="flex: 1; margin: 30px;">
-        <form action="/Cs/ManagerNotieWrite" method="POST">
+        <form action="/Manager/ManagerNotieWrite" method="POST">
             
             <div style="padding-bottom: 20px; border-bottom: 1px solid black;">
             <label for="notice_type">[공지 유형 선택]</label>
@@ -154,14 +157,14 @@ button:hover {
 		
 		<div style="padding-bottom: 20px; border-bottom: 1px solid black; margin-top: 20px;">
             <label for="notice_title">[제목]</label>
-            <textarea id="notice_title" name="notice_title">${csVo.notice_title}</textarea>
+            <input type="text" id="notice_title" name="notice_title" value="${csVo.notice_title}" />
 
             <label for="notice_content" style="margin-top: 20px;">[내용]</label>
             <textarea id="notice_content" name="notice_content">${csVo.notice_content}</textarea>
         </div>
 
         <div style="display: flex; justify-content: center; gap: 20px; padding-top: 20px;">
-            <button type="button" onclick="location.href='/Cs/ManagerNoticeList'">목록</button>
+            <button type="button" onclick="location.href='/Manager/ManagerNoticeList'">목록</button>
             <button type="submit">저장</button>
         </div>
         

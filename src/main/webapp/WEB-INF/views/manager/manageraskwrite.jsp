@@ -95,12 +95,12 @@ button:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
             </li>
             <li>
-                <a href="/Cs/ManagerCsList">문의내역</a>
-                <a href="/Cs/ManagerNoticeList">공지사항</a>
-                <a href="/Cs/ManagerAsklist">자주 묻는 질문</a>
+                <a href="/Manager/ManagerCsList">문의내역</a>
+                <a href="/Manager/ManagerNoticeList">공지사항</a>
+                <a href="/Manager/ManagerAsklist" style="background-color: #CCC">자주 묻는 질문</a>
             </li>    
             <li>
                 <a href="#" style="font-size: 18px; font-weight: bold;">상품 및 카테고리 관리</a>
@@ -113,21 +113,21 @@ button:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
                 <div class="dropdown-menu">
-                    <a href="/Cs/ManagerBoardList">자유게시판</a>
-                    <a href="/Cs/ManagerAlbumList">조립앨범</a>
-                    <a href="/Cs/ManagerMarketList">장터</a>
+                    <a href="/Manager/ManagerBoardList">자유게시판</a>
+                    <a href="/Manager/ManagerAlbumList">조립앨범</a>
+                    <a href="/Manager/ManagerMarketList">장터</a>
                 </div>
             </li>
         </ul>
     </div>
     
     <div style="flex: 1; margin: 30px;">
-        <form action="/Cs/ManagerAskWrite" method="POST">
+        <form action="/Manager/ManagerAskWrite" method="POST">
             
             <div style="padding-bottom: 20px; border-bottom: 1px solid black;">
-                <label for="customer_service_type">질문 유형 선택</label>
+                <label for="customer_service_type">[질문 유형 선택]</label>
                 <div id="customer_service_type" style="display: flex; gap: 10px; font-size: 18px;">
                     <label><input type="radio" name="customer_service_type" value="회원" required> 회원</label>
                     <label><input type="radio" name="customer_service_type" value="PC견적"> PC견적</label>
@@ -150,7 +150,7 @@ button:hover {
 
             
             <div style="display: flex; justify-content: center; gap: 20px; padding-top: 20px;">
-                <button type="button" onclick="location.href='/Cs/ManagerAsklist'">목록</button>
+                <button type="button" onclick="location.href='/Manager/ManagerAsklist'">목록</button>
                 <button type="submit">저장</button>
             </div>
         </form>

@@ -19,7 +19,8 @@ public class CrollingUtil {
     public static CrollingImgVo downloadAndSaveImage(String imgUrl, String uploadPath) {
 
             try {
-                URL url = new URL("https:" + imgUrl);
+                String modifiedUrl = imgUrl.replace("shrink=130:130", "shrink=500:500");
+                URL url = new URL("https:" + modifiedUrl);
                 BufferedImage image = ImageIO.read(url);
 
                 String fileName = UUID.randomUUID().toString() + ".jpg";

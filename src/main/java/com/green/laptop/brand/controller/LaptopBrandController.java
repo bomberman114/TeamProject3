@@ -16,11 +16,11 @@ import com.green.laptop.brand.service.LaptopBrandService;
 @RequestMapping("/LaptopBrand")
 public class LaptopBrandController {
     
-	@Autowired
-	private LaptopBrandService laptopBrandService;
-	
+   @Autowired
+   private LaptopBrandService laptopBrandService;
+   
     
-	@RequestMapping("/Brand")
+   @RequestMapping("/Brand")
     public ModelAndView brand() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("Brand/laptopBrand");
@@ -32,12 +32,11 @@ public class LaptopBrandController {
     @RequestMapping("/BrandExplain")    
     @ResponseBody
     public List<HashMap<String, Object>> brandExplain(@RequestParam HashMap<String,Object> map ) {
-    	map.put("BRAND_MANUFACTURER_IDX", 7);
-    	List<HashMap<String, Object>> brandExplainList = laptopBrandService.brandExplainList(map);
-    	System.out.println(brandExplainList);
+       List<HashMap<String, Object>> brandExplainList = laptopBrandService.brandExplainList(map);
+       System.out.println(brandExplainList);
        return brandExplainList;
-    	
-    	
+       
+       
     }
  }
 

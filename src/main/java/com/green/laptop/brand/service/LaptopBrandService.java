@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface LaptopBrandService {
 
-	List<HashMap<String, Object>> brandExplainList(HashMap<String, Object> map);
+   List<HashMap<String, Object>> brandExplainList(HashMap<String, Object> map);
 
 }

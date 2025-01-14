@@ -20,9 +20,7 @@ public class QuickFinderController {
 	private QuickFinderService quickFinderService;
 	
 	@GetMapping("/QuickFinder")
-	public String quickFinder(@RequestParam(value="nowpage", 
-		    required = false, defaultValue="1") int nowpage) {
-
+	public String quickFinder() {
 		return "quickFinder/quickFinderList";
 	}
 

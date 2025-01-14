@@ -65,19 +65,19 @@ a {
 @font-face {
   font-family: "Pretendard";
   font-weight: 300;
-  src: url(/font/Pretendard-Regular.woff);
+  src: url(/font/Pretendard-Regular.woff) format('font-woff');
 }
 
 @font-face {
   font-family: "Pretendard";
   font-weight: 500;
-  src: url(/font/Pretendard-Medium.woff);
+  src: url(/font/Pretendard-Medium.woff) format('font-woff');
 }
 
 @font-face {
   font-family: "Pretendard";
   font-weight: 700;
-  src: url(/font/Pretendard-Bold.woff);
+  src: url(/font/Pretendard-Bold.woff) format('font-woff');
 }
 
 /* 공용 */

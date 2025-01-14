@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+   uri="http://www.springframework.org/security/tags"%>
 <header>
 	<div class="inner header__inner">
 		<ul>
@@ -51,43 +51,43 @@
 					<li><a href="/Cs/Cslist">고객센터</a></li>
 					<li><a href="/Manager/ManagerCsList">관리자</a></li>
 
-				</ul>
-			</div>
-			<c:choose>
-				<c:when test="${empty sessionScope.user}">
-					<ul class="header__utill">
-						<li><a href="/loginForm"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심</a></li>
-						<li class="header__utill-login-btn"><a href="/loginForm">
-								<img src="/images/icon/header-icon/user.png" alt="로그인" />
-								로그인
-						</a>
-							<ul>
-								<li><a href="/loginForm">로그인</a></li>
-								<li><a href="/registerForm">회원가입</a></li>
-								<li><a href="#">마이페이지</a></li>
-							</ul></li>
-					</ul>
-				</c:when>
-				<c:when test="${not empty sessionScope.user}">
-					<ul class="header__utill">
-						<li><a href="#"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심
-						</a></li>
-						<li class="header__utill-login-btn">
-							<a>
-								<img src="/images/icon/header-icon/user.png" alt="유저메뉴" />
-								${sessionScope.user.user_nickname}
-							</a>
-							<ul>
-								<li><a href="#">마이페이지</a></li>
-								<li><a href="#">회원정보수정</a></li>
-								<li><a href="/logout">로그아웃</a></li>
-							</ul>
-						</li>
-					</ul>
-				</c:when>
-			</c:choose>
-		</div>
-	</div>
+            </ul>
+         </div>
+         <c:choose>
+            <c:when test="${empty sessionScope.user}">
+               <ul class="header__utill">
+                  <li><a href="/loginForm"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심</a></li>
+                  <li class="header__utill-login-btn"><a href="/loginForm">
+                        <img src="/images/icon/header-icon/user.png" alt="로그인" />
+                        로그인
+                  </a>
+                     <ul>
+                        <li><a href="/loginForm">로그인</a></li>
+                        <li><a href="/registerForm">회원가입</a></li>
+                        <li><a href="#">마이페이지</a></li>
+                     </ul></li>
+               </ul>
+            </c:when>
+            <c:when test="${not empty sessionScope.user}">
+               <ul class="header__utill">
+                  <li><a href="#"><img src="/images/icon/header-icon/heart.png" alt="관심제품">관심
+                  </a></li>
+                  <li class="header__utill-login-btn">
+                     <a>
+                        <img src="/images/icon/header-icon/user.png" alt="유저메뉴" />
+                        ${sessionScope.user.user_nickname}
+                     </a>
+                     <ul>
+                        <li><a href="#">마이페이지</a></li>
+                        <li><a href="#">회원정보수정</a></li>
+                        <li><a href="/logout">로그아웃</a></li>
+                     </ul>
+                  </li>
+               </ul>
+            </c:when>
+         </c:choose>
+      </div>
+   </div>
 </header>
 
 

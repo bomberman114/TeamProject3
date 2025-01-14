@@ -128,14 +128,13 @@ public class FileImage {
 			return folderPath;
 		}
 		
-		// 파일경로바꾸기
-		public String fileNemeReplace(String fileName) {
-			fileName = fileName.replace("\\", "/");
-			String path = "/img/commonImage/";
-			fileName = path + fileName;
-			return fileName;
-		}
-		
+	      // 파일경로바꾸기
+	      public String fileNemeReplace(String fileName) {
+	         fileName = fileName.replace("\\", "/");
+	         String path = "/images/product/";
+	         fileName = path + fileName;
+	         return fileName;
+	      }
 		// 실제 물리파일 삭제 : 여러파일 삭제
 		/*
 		public static void deleteCompanyImage(

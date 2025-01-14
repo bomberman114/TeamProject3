@@ -365,8 +365,8 @@
         function updateCategoryHeader(categoryMap, count) {
             const headerElement = document.querySelector('.desk-filters h3');
             if (headerElement) { // headerElement가 존재하는지 확인
-                headerElement.innerHTML = "<span><strong>" + categoryMap.CATEGORY_NAME + "</strong> 상품 개수 : <strong>" + count + "개</strong></span>" +
-                    "<button class='show-all-btn' onclick='toggleAll(this)' style='border: none; background-color: #1A3D91; color: #ffffff; margin-left: auto;'>옵션 전체보기</button>";
+                headerElement.innerHTML = "<span style='font-weight:bold;'>" + categoryMap.CATEGORY_NAME + " 상품 개수 : " + count + "개</span>" +
+                    "<button class='show-all-btn' onclick='toggleAll(this)' style='border: none; background-color: #1A3D91; font-weight:bold; color: #ffffff; margin-left: auto;'>옵션 전체보기</button>";
             }
         }
         
@@ -423,11 +423,11 @@
                         "<div class='product-description'>" +
                             "<h4 style='font-weight: bold; margin-left: 20px;'>" + product.PRODUCT_NAME + "</h4>" +
                             "<p style='color: #767676; font-size: 14px; max-width: 492px; margin-left: 20px;'>" + product.PRODUCT_DESCRIPTION + "</p>" +
-                            "<p style='color: #767676; margin-left: 20px;'>등록일 : " + new Date(product.CREATED_AT).toLocaleDateString() + "</p>" +
+                            "<p style='color: #767676; margin-left: 20px; font-weight:bold;'>등록일 : " + new Date(product.CREATED_AT).toLocaleDateString() + "</p>" +
                         "</div>" +
                         "<div class='price-container'>" +
-                            "<p class='price' style='font-weight: 20px; color: #333333; margin-right: 5px;'>" + product.PRICE.toLocaleString() + "원</p>" +
-                            "<button class='add-btn' data-idx='" + product.PRODUCT_IDX + "' data-category='" + product.CATEGORY_IDX + "' style='height: 42px; width: 78px; color: #767676; border: #cccccc; font-weight: bold;'>담기</button>" +
+                            "<p class='price' style='font-weight: 20px; color: #333333; font-weight:bold; margin-right: 5px;'>" + product.PRICE.toLocaleString() + "원</p>" +
+                            "<button class='add-btn' data-idx='" + product.PRODUCT_IDX + "' data-category='" + product.CATEGORY_IDX + "' style='height: 42px; width: 78px; border: #cccccc; font-size:15px; font-weight: bold;'>담기</button>" +
                         "</div>" +
                     "</div>";
                 productListContainer.innerHTML += productHTML;
@@ -466,7 +466,7 @@
                             cancelButton = document.createElement('button');
                             cancelButton.className = 'cancel-btn';
                             cancelButton.textContent = '취소';
-                            cancelButton.style = 'height: 42px; width: 78px; color: #ff0000; border: #cccccc; font-weight: bold; margin-left: 5px; background-color: #FFBEBE;'; // 배경색 변경
+                            cancelButton.style = 'height: 42px; width: 78px; color: #2A2A2A; border: #cccccc; font-weight: bold; margin-left: 5px; background-color: #1A3D91;'; // 배경색 변경
                             hiddenContent.appendChild(cancelButton); // hidden-content에 추가
                         }
 
@@ -597,7 +597,6 @@
                 });
             }
         };
-        
      // DOMContentLoaded 이벤트를 사용하여 DOM이 완전히 로드된 후 실행
         document.addEventListener('DOMContentLoaded', function() {
             // 모든 .DeskTopEstimateCategory 요소를 찾기
@@ -612,25 +611,30 @@
                     // 모든 .desktop-mini 요소의 배경색 초기화
                     document.querySelectorAll('.desktop-mini').forEach(function(mini) {
                         mini.style.backgroundColor = '#ffffff'; // 기본 배경색으로 초기화
+                        mini.style.color = '#000000'; // 기본 글자색으로 초기화
+                        
                         // 취소 버튼도 제거하고 색상 초기화
                         const hiddenContent = mini.closest('a').querySelector('.hidden-content');
                         if (hiddenContent) {
                             const cancelButton = hiddenContent.querySelector('.cancel-btn');
                             if (cancelButton) {
                                 cancelButton.style.backgroundColor = '#ffffff'; // 취소 버튼 색상 초기화
+                                cancelButton.style.color = '#333333'; // 취소 버튼 글자색 초기화 (변경 후)
                             }
                         }
                     });
                     
-                    // 클릭한 카테고리의 배경색 변경
+                    // 클릭한 카테고리의 배경색 및 글자색 변경
                     const selectedMini = this.querySelector('.desktop-mini');
-                    selectedMini.style.backgroundColor = '#FFBEBE'; // 클릭한 요소의 배경색 변경
+                    selectedMini.style.backgroundColor = '#1A3D91'; // 클릭한 요소의 배경색 변경
+                    selectedMini.style.color = '#FFFFFF'; // 클릭한 요소의 글자색 변경
 
                     // 취소 버튼 색상 변경
                     const hiddenContent = selectedMini.closest('a').querySelector('.hidden-content');
                     const cancelButton = hiddenContent.querySelector('.cancel-btn');
                     if (cancelButton) {
-                        cancelButton.style.backgroundColor = '#FFBEBE'; // 취소 버튼 색상 변경
+                        cancelButton.style.backgroundColor = '#1A3D91'; // 취소 버튼 색상 변경
+                        cancelButton.style.color = '#FFFFFF'; // 취소 버튼 글자색 변경
                     }
 
                     // AJAX 호출
@@ -638,21 +642,26 @@
                 });
             });
 
-         // 페이지 로드 시 CPU 카테고리의 배경색 변경
+            // 페이지 로드 시 CPU 카테고리의 배경색 및 글자색 변경
             const cpuCategory = document.querySelector('.DeskTopEstimateCategory[href*="category=5"] .desktop-mini'); // CPU 카테고리 선택
             if (cpuCategory) {
-                cpuCategory.style.backgroundColor = '#FFBEBE'; // 배경색 설정
+                cpuCategory.style.backgroundColor = '#1A3D91'; // 배경색 설정
+                cpuCategory.style.color = '#FFFFFF'; // 글자색 설정
 
                 // CPU 카테고리의 취소 버튼 색상도 변경
                 const hiddenContent = cpuCategory.closest('a').querySelector('.hidden-content');
                 const cancelButton = hiddenContent.querySelector('.cancel-btn');
                 if (cancelButton) {
-                    cancelButton.style.backgroundColor = '#FFBEBE'; // 취소 버튼 색상 변경
+                    cancelButton.style.backgroundColor = '#1A3D91'; // 취소 버튼 색상 변경
+                    cancelButton.style.color = '#FFFFFF'; // 취소 버튼 글자색 변경
                 }
             }
-        });
-     
 
+            // 초기 "담기" 버튼 클릭 시 취소 버튼 글자색 설정
+            document.querySelectorAll('.cancel-btn').forEach(function(cancelButton) {
+                cancelButton.style.color = '#FFFFFF'; // 초기 글자색 설정
+            });
+        });
         
         function addCheckboxListeners(categoryMap) {
       // 각 체크박스에 change 이벤트 리스너 추가
@@ -742,7 +751,7 @@
 </head>
 <body>
    <%@include file="/WEB-INF/include/header.jsp"%>
-   <main class="desktopestimate-main" style="max-width: 1300px; margin: 0 auto; height: auto;">
+   <main class="desktopestimate-main" style="max-width: 1280px; margin: 0 auto; height: auto;">
       <section class="content">
          <h1 style="font-size: 24px; color: #333333; margin-bottom: 10px; font-weight: bold;">PC 견적</h1>
          <div class="desk-search-bar">
@@ -751,7 +760,7 @@
          </div>
 
          <div class="desk-filters">
-            <h3 style="padding-left: 40px; color: #ffffff; line-height: 60px; background-color: #1A3D91; height: 60px; width: 788px; display: flex; justify-content: space-between; align-items: center;"></h3>
+            <h3 style="padding-left: 15px; color: #ffffff; line-height: 60px; background-color: #1A3D91; height: 60px; width: 788px; display: flex; justify-content: space-between; align-items: center;"></h3>
             <div id="desktopPartFillter"></div>
             <!-- 필터 리스트가 동적으로 추가될 부분 -->
          </div>
@@ -829,7 +838,7 @@
          <div class="under-specs">
             <p class="under-under">
                총#개 품목선택 &nbsp;
-               <button style="background-color: #ffffff; margin-right: 15px; border: none;">전체 삭제</button>
+               <button style="background-color: #ffffff; margin-right: 15px; border: none; padding: 5px 10px; font-weight: bold;">전체 삭제</button>
             </p>
             <div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
                <p class="amount" style="margin-right: auto;">총 합계 금액</p>

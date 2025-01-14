@@ -4,52 +4,52 @@
 <%@ taglib prefix="sec"
    uri="http://www.springframework.org/security/tags"%>
 <header>
-	<div class="inner header__inner">
-		<ul>
-			<li class="header__category-btn"><img
-				src="/images/icon/header-icon/category-btn.png" alt="카테고리 버튼" />
-				카테고리
-				<ul class="header__category-2depth">
-					<li><a href="/DetailSearch">PC</a></li>
-					<li><a href="/DetailSearch">노트북</a></li>
-					<li>주요부품
-						<ul class="header__category-3depth">
-							<li><a href="/DetailSearch">CPU</a></li>
-							<li><a href="/DetailSearch">메인보드</a></li>
-							<li><a href="/DetailSearch">메모리</a></li>
-						</ul>
-					</li>
-					<li><a href="/DetailSearch">주변기기</a></li>
-				</ul></li>
-		</ul>
-		<div class="header__content">
-			<div class="header__logo-gnb-contaienr">
-				<div class="logo-searchbar">
-					<h1>
-						<a href="/"><img src="/images/logo/logo.svg" alt="찾았닷컴 로고"></a>
-					</h1>
-					<div class="header-nav">
-						<div class="search-div">
-							<input type="text" name="search" placeholder="검색어를 입력해주세요."
-								autocomplete="off" />
-							<div class="recent-list">
-								<p>
-									<span>최근 검색</span>
-									<button class="recnet-remove-all" onclick="removeRecentAll()">
-										전체삭제</button>
-								</p>
-								<ul></ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<ul class="header__gnb">
-					<li><a href="/QuickFinder">간편검색</a></li>
-					<li><a href="/DeskTopEstimate/DeskTopEstimateForm"">PC견적</a></li>
-					<li><a href="/LaptopBrand/Brand">브랜드관</a></li>
-					<li><a href="/Community/Albumlist">커뮤니티</a></li>
-					<li><a href="/Cs/Cslist">고객센터</a></li>
-					<li><a href="/Manager/ManagerCsList">관리자</a></li>
+   <div class="inner header__inner">
+      <ul>
+         <li class="header__category-btn"><img
+            src="/images/icon/header-icon/category-btn.png" alt="카테고리 버튼" />
+            카테고리
+            <ul class="header__category-2depth">
+               <li><a href="/DetailSearch">PC</a></li>
+               <li><a href="/DetailSearch">노트북</a></li>
+               <li>주요부품
+                  <ul class="header__category-3depth">
+                     <li><a href="/DetailSearch">CPU</a></li>
+                     <li><a href="/DetailSearch">메인보드</a></li>
+                     <li><a href="/DetailSearch">메모리</a></li>
+                  </ul>
+               </li>
+               <li><a href="/DetailSearch">주변기기</a></li>
+            </ul></li>
+      </ul>
+      <div class="header__content">
+         <div class="header__logo-gnb-contaienr">
+            <div class="logo-searchbar">
+               <h1>
+                  <a href="/"><img src="/images/logo/logo.svg" alt="찾았닷컴 로고"></a>
+               </h1>
+               <div class="header-nav">
+                  <div class="search-div">
+                     <input type="text" name="search" placeholder="검색어를 입력해주세요."
+                        autocomplete="off" />
+                     <div class="recent-list">
+                        <p>
+                           <span>최근 검색</span>
+                           <button class="recnet-remove-all" onclick="removeRecentAll()">
+                              전체삭제</button>
+                        </p>
+                        <ul></ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <ul class="header__gnb">
+               <li><a href="/QuickFinder">간편검색</a></li>
+               <li><a href="/DeskTopEstimate/DeskTopEstimateForm"">PC견적</a></li>
+               <li><a href="/LaptopBrand/Brand">브랜드관</a></li>
+               <li><a href="/Community/Albumlist">커뮤니티</a></li>
+               <li><a href="/Cs/Cslist">고객센터</a></li>
+               <li><a href="/Manager/ManagerCsList">관리자</a></li>
 
             </ul>
          </div>

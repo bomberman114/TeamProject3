@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 
-<title>고객센터 관리</title>
+<title>커뮤니티 관리</title>
 <style>
 .cs-nav {
     max-width: 200px;
@@ -93,12 +93,12 @@ tbody tr:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
-            </li>
-            <li>
-                <a href="/Cs/ManagerCsList">문의내역</a>
-                <a href="/Cs/ManagerNoticeList">공지사항</a>
-                <a href="/Cs/ManagerAsklist" style="background-color: #CCC">자주 묻는 질문</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <div class="dropdown-menu">
+                    <a href="/Manager/ManagerCsList">문의내역</a>
+                    <a href="/Manager/ManagerNoticeList">공지사항</a>
+                    <a href="/Manager/ManagerAsklist">자주 묻는 질문</a>
+                </div>
             </li>	
             <li>
                 <a href="#" style="font-size: 18px; font-weight: bold;">상품 및 카테고리 관리</a>
@@ -111,12 +111,12 @@ tbody tr:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
-                <div class="dropdown-menu">
-                    <a href="/Cs/ManagerBoardList">자유게시판</a>
-                    <a href="/Cs/ManagerAlbumList">조립앨범</a>
-                    <a href="/Cs/ManagerMarketList">장터</a>
-                </div>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+            </li>
+            <li>
+                <a href="/Manager/ManagerBoardList" style="background-color: #CCC">자유게시판</a>
+                <a href="/Manager/ManagerAlbumList">조립앨범</a>
+                <a href="/Manager/ManagerMarketList">장터</a>
             </li>
         </ul>
     </div>
@@ -124,46 +124,41 @@ tbody tr:hover {
     <div style="flex: 1; margin: 30px;">
         <table>
             <colgroup>
-                <col style="width: 20%;">
-                <col style="width: 50%;">
-                <col style="width: 20%;">
-                <col style="width: 10%;">
+                <col style="width: 15%;">
+                <col style="width: 15%;">
+                <col style="width: 25%;">
+                <col style="width: 15%;">
+                <col style="width: 15%;">
+                <col style="width: 15%;">
             </colgroup>
             <thead>
                 <tr class="title">
-				    <td colspan="4" style="text-align: center; position: relative;">자주묻는질문
-				    <button style="position: absolute; right: 10px; padding: 10px; background-color: #fff; font-size: 15px; cursor: pointer;" 
-				            onclick="location.href='/Cs/ManagerAskWriteForm'">질문 추가</button>
-				    </td>
-				</tr>
+                    <td colspan="6">자유게시판</td>
+                </tr>
                 <tr>
+                    <th>추천</th>
                     <th>분류</th>
-                    <th>질문</th>
+                    <th>제목</th>
+                    <th>닉네임</th>
+                    <th>조회수</th>
                     <th>작성일</th>
-                    <th>삭제</th>
                 </tr>
             </thead>
-            <tbody>
-                <c:forEach var="ask" items="${askList}">
-				    <tr onclick="location.href='/Cs/ManagerAskUpdateForm?customer_service_idx=${ask.customer_service_idx}'" style="cursor: pointer;">
-				        <td>[${ask.customer_service_type}]</td>
-				        <td>${ask.customer_service_title}</td>
-				        <td>${ask.customer_service_regdate}</td>
-				        <td>
-				            <form action="/Cs/ManagerAskDelete" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="margin: 0;">
-				                <input type="hidden" name="customer_service_idx" value="${ask.customer_service_idx}" />
-				                <button type="submit" style="border: none; cursor: pointer; background: none;" onclick="event.stopPropagation();">X</button>
-				            </form>
-				        </td>
-				    </tr>
-				</c:forEach>
-            </tbody>
-        </table>	      
-        <%@include file="/WEB-INF/include/pagination.jsp"%>
+            <%-- <tbody>
+                <c:forEach var="" items="">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </c:forEach>
+            </tbody> --%>
+        </table>
     </div>
 </div>
-
-
 
 <%@include file="/WEB-INF/include/footer.jsp"%>
 <script>

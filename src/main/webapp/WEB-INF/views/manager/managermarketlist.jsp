@@ -79,6 +79,7 @@ tr {
     padding: 20px 0;
     border-left: none;
     border-right: none;
+    border-bottom: none;
 }
 tbody tr:hover {
     background-color: #f1f1f1;
@@ -93,13 +94,13 @@ tbody tr:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
                 <div class="dropdown-menu">
-                    <a href="/Cs/ManagerCsList">문의내역</a>
-                    <a href="/Cs/ManagerNoticeList">공지사항</a>
-                    <a href="/Cs/ManagerAsklist">자주 묻는 질문</a>
+                    <a href="/Manager/ManagerCsList">문의내역</a>
+                    <a href="/Manager/ManagerNoticeList">공지사항</a>
+                    <a href="/Manager/ManagerAsklist">자주 묻는 질문</a>
                 </div>
-            </li>	
+            </li>
             <li>
                 <a href="#" style="font-size: 18px; font-weight: bold;">상품 및 카테고리 관리</a>
                 <div class="dropdown-menu">
@@ -111,51 +112,23 @@ tbody tr:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="background-color: #CCC">자유게시판</a>
-                <a href="/Cs/ManagerAlbumList">조립앨범</a>
-                <a href="/Cs/ManagerMarketList">장터</a>
+                <a href="/Manager/ManagerBoardList">자유게시판</a>
+                <a href="/Manager/ManagerAlbumList">조립앨범</a>
+                <a href="/Manager/ManagerMarketList" style="background-color: #CCC">장터</a>
             </li>
         </ul>
     </div>
 
     <div style="flex: 1; margin: 30px;">
         <table>
-            <colgroup>
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-                <col style="width: 25%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-            </colgroup>
             <thead>
                 <tr class="title">
-                    <td colspan="6">자유게시판</td>
-                </tr>
-                <tr>
-                    <th>추천</th>
-                    <th>분류</th>
-                    <th>제목</th>
-                    <th>닉네임</th>
-                    <th>조회수</th>
-                    <th>작성일</th>
+                    <td>장터</td>
                 </tr>
             </thead>
-            <%-- <tbody>
-                <c:forEach var="" items="">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </c:forEach>
-            </tbody> --%>
         </table>
     </div>
 </div>

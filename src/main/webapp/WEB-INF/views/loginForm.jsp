@@ -68,7 +68,6 @@
 	  
 	  try {
 	    const isExist = await isUserExist($form[0].value, $form[1].value);
-	    console.log(isExist)
 	    if (isExist) {
 	      e.target.submit();
 	    } else {
@@ -95,8 +94,6 @@
 	    }
 	    return await res.json();
 	}
-
-
 			
 	    // 입력 비밀번호 확인
       const $hiddenBtn = document.querySelector(".hidden-btn");

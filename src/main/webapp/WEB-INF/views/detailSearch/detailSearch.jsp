@@ -19,12 +19,9 @@
 		<div class="inner">
 			<div class="detail-search-title dSearch-title">상품검색</div>
 			<div class="dSearch-container">
-				<ul>
-					<li class="categoryActive">전체 (${allProductCount})</li>
 					<c:forEach var="category" items="${eachCategory}">
 						<li data-cateidx="${category.category.cateIdx}">${category.category.cateName}(${category.categorySize})</li>
 					</c:forEach>
-				</ul>
 			</div>
 			<div class="quick-finder-search-title">
 				<h3>
@@ -57,7 +54,7 @@
     let userSearched = "${keyword}"
     let sortType = null; 
     let nowpage = null;
-    let categoryIdx = "${categoryIdx}"
+    let categoryIdx = null
     let isOptionOpen = false;
     
     if(userSearched){
@@ -139,25 +136,18 @@
 				filterAllBtnHeightCalc()
     	  }
     	  if(clicked.matches(".dSearch-container ul li")){
+    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
     		  document.querySelectorAll(".dSearch-container ul li").forEach(li=>li.className = "")
     		  clicked.className = "categoryActive"
     		  categoryIdx = clicked.dataset.cateidx;
-    		  listSearch = "${keyword}"
+    		  userSearched = "${keyword}"
     		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
     	  }
       })
       
       document.addEventListener("change",(e)=>{
-	    	if(e.target.matches("input[type='checkbox']")){
-	    		const inputChecked = document.querySelectorAll("input:checked")
-	    		selectedFilters = Array.from(inputChecked).map(input=>input.value);
-	    		getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
-	    	}
 	    	if(e.target.matches(".list-search")){
 	    		listSearch = e.target.value;
-	    	}
-	    	if(e.target.matches(".category-select")){
-	    		location.href = "DetailSearch?category=" + e.target.value
 	    	}
       })
 
@@ -165,6 +155,7 @@
  			   if(e.keyCode == 13 ){
  	    		  listSearch = document.querySelector(".list-search").value.toUpperCase();
  		    		getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
+ 		    		getCateogryList(listSearch,userSearched)
  			   }
  		   })
       
@@ -196,7 +187,52 @@
 			    }
 			});
  		   
-      
+    getCateogryList(listSearch,userSearched)
+    
+    
+		async function getCateogryList(listSearch,userSearched){
+	    const res = await fetch("/dSearch/getCateogryList", {
+       method: "POST",
+       headers: {"Content-Type": "application/json",},
+       body: JSON.stringify({ 
+       	listSearch       : listSearch,
+       	userSearch       : userSearched})
+	    });
+
+     if (!res.ok) {
+       throw new Error(`HTTP error status: ${res.status}`);
+     }
+
+     const result = await res.json();
+     console.log(result)
+     createCategoryList(result);
+     
+   	return result.purposeList;
+	}
+	
+    function createCategoryList(obj){
+    	document.querySelector(".dSearch-container").innerHTML = "";
+    	const ul    = document.createElement("ul")
+    	const allLi = document.createElement("li")
+    	if(categoryIdx == null || obj == null){
+    		allLi.className = "categoryActive"    		
+    	}
+    	allLi.textContent = "전체 (" + obj.allProductCount +")"
+    	ul.append(allLi)
+      obj.eachCategory.forEach(list=>{
+    	  let li = document.createElement("li")
+    	  if(categoryIdx == list.category.cateIdx){  		  
+	    		li.className = "categoryActive"    		
+    	  }
+    	  li.dataset.cateidx =  list.category.cateIdx
+    	  li.textContent = list.category.cateName + "(" + list.categorySize + ")" 
+    	  ul.append(li)
+      })
+    	
+    	document.querySelector(".dSearch-container").append(ul)
+    }
+    
+    
     
 		async function getProductPagingFilterList(
 			categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage,userSearched
@@ -205,7 +241,7 @@
        method: "POST",
        headers: {"Content-Type": "application/json",},
        body: JSON.stringify({ 
-    	categoryIdx      : categoryIdx,
+    	  categoryIdx      : categoryIdx,
        	selectedFilters  : selectedFilters,
        	lowestPrice      : lowestPrice,
        	highestPrice     : highestPrice,
@@ -239,6 +275,7 @@
    	    itemLeftDiv.className     = "quick-searched-item-left";
    	    const itemLeftImgDiv      = document.createElement("div");
    	    itemLeftImgDiv.className  = "quick-searched-item-img";
+   	     itemLeftImgDiv.dataset.pname = item.PRODUCT_NAME;
    	    const itemLeftInfoDiv     = document.createElement("div");
    	    itemLeftInfoDiv.className = "quick-searched-item-info";
    	    const itemLeftUtilUl      = document.createElement("ul");
@@ -256,15 +293,17 @@
    	    productTitleDiv.append(productTitleP);
    	    productTitleDiv.append(productSpectDiv);
    	    itemLeftInfoDiv.append(productTitleDiv);
-
-   	    const createAtLi    = document.createElement("li");
-   	    const bookMarkLi    = document.createElement("li");
-   	    const bookMarkLiImg = document.createElement("div");
-
-   	    createAtLi.textContent = item.CREATED_AT;
-   	    bookMarkLi.textContent = "관심";
-
-   	    bookMarkLi.append(bookMarkLiImg);
+	
+		    const createAtLi        = document.createElement("li");
+		    const bookMarkLi        = document.createElement("li");
+		    const bookMarkLiImg     = document.createElement("img");
+		    bookMarkLiImg.className = "bookmark-img"
+		    bookMarkLiImg.src       = "/images/icon/common-icon/heart-76767-14.png"
+		    
+		    createAtLi.textContent = item.CREATED_AT;
+		    bookMarkLi.textContent = "관심";
+	
+		    bookMarkLi.append(bookMarkLiImg);
 
    	    itemLeftUtilUl.append(createAtLi);
    	    itemLeftUtilUl.append(bookMarkLi);

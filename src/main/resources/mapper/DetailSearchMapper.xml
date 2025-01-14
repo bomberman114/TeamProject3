@@ -18,12 +18,13 @@
         	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
         </if>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
-					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i'))
         </if> 
         <if test="requestBody.userSearch != null and requestBody.userSearch != ''">
-					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
-					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+          AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i'))
+					OR PRODUCT_NAME = REPLACE(#{requestBody.userSearch},'%20',' ')
         </if> 
     </where>
 	    <choose>
@@ -72,12 +73,12 @@ FROM   PRODUCT P
         	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
         </if>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
-					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i'))
         </if> 
         <if test="requestBody.userSearch != null and requestBody.userSearch != ''">
-          AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
-					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+          AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i'))
 					OR PRODUCT_NAME = REPLACE(#{requestBody.userSearch},'%20',' ')
         </if> 
         
@@ -128,15 +129,20 @@ FROM   PRODUCT P
 </select>
 
 <select id="getSearchedProductList">
-	SELECT *
+	SELECT P.CATEGORY_IDX,
+	       C.CATEGORY_NAME 
 	FROM   PRODUCT P LEFT JOIN CATEGORY C ON P.CATEGORY_IDX = C.CATEGORY_IDX
 	                 LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
 	WHERE 1 = 1	
-  <if test="keyword != null and keyword != ''">
-		AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{keyword}), ' ', ''),  'i')
-		OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{keyword}), ' ', ''),  'i')
-		OR  PRODUCT_NAME = REPLACE(#{keyword},'%20',' ')
-  </if> 
+   <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+		AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+		OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i'))
+   </if> 
+   <if test="requestBody.userSearch != null and requestBody.userSearch != ''">
+    AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+		OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i'))
+		OR  PRODUCT_NAME = REPLACE(#{requestBody.userSearch},'%20',' ')
+   </if> 
 </select>
 
 

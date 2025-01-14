@@ -81,7 +81,10 @@ public class SecurityConfig {
             .exceptionHandling(exceptionHandling -> exceptionHandling
                 .accessDeniedHandler(deniedHandler))               // 접근 거부 시(403에러) 처리할 핸들러 설정
             .sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));  // 세션 생성 정책 설정(필요하면 생)
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // 세션 생성 정책 설정(필요하면 생)
+            .headers(headers -> headers
+                    .frameOptions(frameOptions -> frameOptions.disable())
+            	    );
         return http.build();
     }
 

@@ -196,9 +196,12 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 		return list.get(0);
 	}
 
+
 	@Override
-	public void getSearchedProductList(String keyword, ModelAndView mv) {
-		List<HashMap<String, Object>> list = detailSearchMapper.getSearchedProductList(keyword);
+	public HashMap<String, Object> getSearchedProductList(HashMap<String, Object> requestBody) {
+		HashMap<String, Object> res = new HashMap<>();
+		System.out.println(requestBody);
+		List<HashMap<String, Object>> list = detailSearchMapper.getSearchedProductList(requestBody);
 		HashSet<HashMap<String, Object>> categoryList = new HashSet<>();
 		for(HashMap<String, Object> product : list) {
 			HashMap<String, Object> map = new HashMap<>();
@@ -227,10 +230,9 @@ public class DetailSearchServiceImpl implements DetailSearchService{
 		    return ((Integer) category1.get("cateIdx")).compareTo((Integer) category2.get("cateIdx"));
 		});
 		
-		mv.addObject("allProductCount",list.size());
-		mv.addObject("eachCategory",eachCategory);
-		mv.addObject("keyword",keyword);
-		mv.addObject("productList",list);
+		res.put("allProductCount",list.size());
+		res.put("eachCategory",eachCategory);
+		return res;
 	}
 }
 

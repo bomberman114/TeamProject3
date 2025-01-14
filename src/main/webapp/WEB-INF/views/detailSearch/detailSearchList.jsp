@@ -21,7 +21,7 @@
 		<div class="inner">
 			<img class="scroll-top-btn" src="/images/icon/common-icon/scroll-top-btn.png" alt="위로가기">
 			<ul class="dir-list">
-				<li>홈</li>
+				<li><a href="/">홈</a></li>
 				<c:forEach var="categoryList" items="${parentCategoryList}" varStatus="outerStatus">
 				    <li>
 				        <select class="category-select">
@@ -109,17 +109,16 @@
 			<div class="paging-container"></div>
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
-	
 	<script>
 	
     let selectedFilters = []; 
-    let lowestPrice = null;
-    let highestPrice = null; 
-    let listSearch = null; 
-    let sortType = null; 
-    let nowpage = null;
-    let categoryIdx = "${categoryIdx}"
-    let isOptionOpen = false;
+    let lowestPrice     = null;
+    let highestPrice    = null; 
+    let listSearch      = null; 
+    let sortType        = null; 
+    let nowpage         = null;
+    let categoryIdx     = "${categoryIdx}"
+    let isOptionOpen    = false;
     
     const $scrollTopBtn = document.querySelector(".scroll-top-btn");
     $scrollTopBtn.addEventListener("click", () => {
@@ -134,10 +133,6 @@
         $scrollTopBtn.style.pointerEvents = "none";
     	}
 });
-
-    
-    const encodedString = encodeURIComponent("영웅컴퓨터 영웅 875 게이밍울트라560X (16GB, M.2 256GB)");
-    console.log(encodedString)
 	
     getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,nowpage)
     
@@ -198,19 +193,16 @@
     		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1)
     	  }
     	  if(clicked.matches(".filter-val-all")){
-    		
-			console.dir(clicked.previousElementSibling)
-			if(clicked.previousElementSibling.style.display != "grid"){
-				clicked.previousElementSibling.style.display = "grid";
-				clicked.previousElementSibling.style.gridTemplateColumns = "repeat(5, 1fr)";
-				clicked.textContent = "닫기";
-			}else{
-				clicked.previousElementSibling.style.display = "flex";
-				clicked.previousElementSibling.style.gridTemplateColumns = "none";
-				clicked.textContent = clicked.dataset.overflowcount + "개+";
-			}
-			
-			filterAllBtnHeightCalc()
+					if(clicked.previousElementSibling.style.display != "grid"){
+						clicked.previousElementSibling.style.display = "grid";
+						clicked.previousElementSibling.style.gridTemplateColumns = "repeat(5, 1fr)";
+						clicked.textContent = "닫기";
+					}else{
+						clicked.previousElementSibling.style.display = "flex";
+						clicked.previousElementSibling.style.gridTemplateColumns = "none";
+						clicked.textContent = clicked.dataset.overflowcount + "개+";
+					}
+				filterAllBtnHeightCalc()
     	  }
       })
       
@@ -226,6 +218,32 @@
 	    	if(e.target.matches(".category-select")){
 	    		location.href = "DetailSearch?category=" + e.target.value
 	    	}
+	    	if (e.target.closest("input[name='제조사']")) {
+	    		  const allLabels = document.querySelectorAll("td:last-child label");
+	    		  let filterLabels = [];
+	    		  
+	    		  if (e.target.checked) {
+	    		    if (e.target.nextElementSibling.textContent == "INTEL") {
+	    		      filterLabels.push(...Array.from(allLabels).filter(label => label.textContent.includes("AMD")));
+	    		      filterLabels.push(...Array.from(allLabels).filter(label => label.textContent.includes("라이젠")));
+	    		    } else if(e.target.nextElementSibling.textContent == "AMD") {
+	    		    	filterLabels.push(...Array.from(allLabels).filter(label => label.textContent.includes("인텔")));
+	    		    	filterLabels.push(...Array.from(allLabels).filter(label => label.textContent.startsWith("코어")));
+	    		    }
+	    		    filterLabels.forEach(label => {
+	    		      if (label.previousElementSibling.name != "제조사") {
+	    		        label.previousElementSibling.disabled = true;
+	    		      }
+	    		    });
+	    		  } else {
+	    		    // 선택 해제 시 모든 체크박스의 disabled 상태를 해제
+	    		    allLabels.forEach(label => {
+	    		      if (label.previousElementSibling.name != "제조사") {
+	    		        label.previousElementSibling.disabled = false;
+	    		      }
+	    		    });
+	    		  }
+	    		}
       })
 
        document.querySelector(".list-search").addEventListener("keyup",(e)=>{
@@ -287,8 +305,14 @@
 
      const result = await res.json();
      document.querySelector(".quick-finder-search-title span").textContent = result.response.pagination.totalRecordCount
-     createPagingList(result)
-     createProductList(result.response.list)
+     if(result.response.list.length > 0){
+	     createPagingList(result)
+	     createProductList(result.response.list)    	 
+     }else{
+    	 document.querySelector(".quick-finder-search-list").innerHTML = "<div class='exception-title'>조건에 맞는 상품이 없습니다. 다시 선택해주세요.</div>"
+    	 document.querySelector(".paging-container").innerHTML = ""
+    	 alert("조건에 맞는 상품이 없습니다.")
+     }
    
    	return result.purposeList;
 	}
@@ -298,20 +322,21 @@
    	 $itemList.innerHTML = "";
 		  if(list){
    	  list.forEach(item => {
-   	    const itemDiv             = document.createElement("div");
-   	    itemDiv.className         = "quick-finder-search-item";
-   	    const itemLeftDiv         = document.createElement("div");
-   	    itemLeftDiv.className     = "quick-searched-item-left";
-   	    const itemLeftImgDiv      = document.createElement("div");
-   	    itemLeftImgDiv.className  = "quick-searched-item-img";
-   	    const itemLeftInfoDiv     = document.createElement("div");
-   	    itemLeftInfoDiv.className = "quick-searched-item-info";
-   	    const itemLeftUtilUl      = document.createElement("ul");
-   	    itemLeftUtilUl.className  = "quick-searched-item-util";
-   	    const itemLeftUtilbookmarkDiv     = document.createElement("div");
-   	    itemLeftUtilbookmarkDiv.className = "product-bookmark";
-   	    const itemRightDiv                = document.createElement("div");
-   	    itemRightDiv.className            = "quick-searched-item-right";
+   		 const itemDiv             = document.createElement("div");
+ 	    itemDiv.className         = "quick-finder-search-item";
+ 	    const itemLeftDiv         = document.createElement("div");
+ 	    itemLeftDiv.className     = "quick-searched-item-left";
+ 	    const itemLeftImgDiv      = document.createElement("div");
+ 	    itemLeftImgDiv.className  = "quick-searched-item-img";
+ 	     itemLeftImgDiv.dataset.pname = item.PRODUCT_NAME;
+ 	    const itemLeftInfoDiv     = document.createElement("div");
+ 	    itemLeftInfoDiv.className = "quick-searched-item-info";
+ 	    const itemLeftUtilUl      = document.createElement("ul");
+ 	    itemLeftUtilUl.className  = "quick-searched-item-util";
+ 	    const itemLeftUtilbookmarkDiv     = document.createElement("div");
+ 	    itemLeftUtilbookmarkDiv.className = "product-bookmark";
+ 	    const itemRightDiv                = document.createElement("div");
+ 	    itemRightDiv.className            = "quick-searched-item-right";
 
    	    const productTitleDiv       = document.createElement("div");
    	    const productTitleP         = document.createElement("p");
@@ -322,14 +347,16 @@
    	    productTitleDiv.append(productSpectDiv);
    	    itemLeftInfoDiv.append(productTitleDiv);
 
-   	    const createAtLi    = document.createElement("li");
-   	    const bookMarkLi    = document.createElement("li");
-   	    const bookMarkLiImg = document.createElement("div");
-
-   	    createAtLi.textContent = item.CREATED_AT;
-   	    bookMarkLi.textContent = "관심";
-
-   	    bookMarkLi.append(bookMarkLiImg);
+		    const createAtLi        = document.createElement("li");
+		    const bookMarkLi        = document.createElement("li");
+		    const bookMarkLiImg     = document.createElement("img");
+		    bookMarkLiImg.className = "bookmark-img"
+		    bookMarkLiImg.src       = "/images/icon/common-icon/heart-76767-14.png"
+		    
+		    createAtLi.textContent = item.CREATED_AT;
+		    bookMarkLi.textContent = "관심";
+	
+		    bookMarkLi.append(bookMarkLiImg);
 
    	    itemLeftUtilUl.append(createAtLi);
    	    itemLeftUtilUl.append(bookMarkLi);

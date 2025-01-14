@@ -49,8 +49,14 @@ public class DetailSearchController {
 	@GetMapping("/dSearch")
 	public ModelAndView dSearch(@RequestParam (value = "keyword" , required=false)String keyword) {
 		ModelAndView mv = new ModelAndView();
-		detailSearchService.getSearchedProductList(keyword, mv);
+		mv.addObject("keyword",keyword);
 		mv.setViewName("detailSearch/detailSearch");
 		return mv;
+	}
+	
+	@PostMapping("/dSearch/getCateogryList")
+	public ResponseEntity<HashMap<String, Object>> getCateogryList(@RequestBody HashMap<String, Object> requestBody){
+		HashMap<String, Object> res = detailSearchService.getSearchedProductList(requestBody);	
+		return ResponseEntity.ok(res);
 	}
 }

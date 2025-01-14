@@ -92,14 +92,10 @@ public class CrwllingCPUFilter {
                     	crawlingMapper.saveAttr(productIdx,attrType,attrVal);
                     }
                 }
-                    
-                    
-                 
-                
-                    Matcher codeNameMatcher = codeNamePattern.matcher(productName);
-                	if (codeNameMatcher.find()) {
-                		cpuAttributes.put("codeName", codeNameMatcher.group());
-                	}
+                Matcher codeNameMatcher = codeNamePattern.matcher(productName);
+            	if (codeNameMatcher.find()) {
+            		cpuAttributes.put("codeName", codeNameMatcher.group());
+            	}
 
                     
                 // 다른 속성들 추출

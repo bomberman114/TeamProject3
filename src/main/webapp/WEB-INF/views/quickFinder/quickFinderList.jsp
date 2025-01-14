@@ -494,20 +494,22 @@
     	 $itemList.innerHTML = "";
 		  if(list){
     	  list.forEach(item => {
-    	    const itemDiv             = document.createElement("div");
-    	    itemDiv.className         = "quick-finder-search-item";
-    	    const itemLeftDiv         = document.createElement("div");
-    	    itemLeftDiv.className     = "quick-searched-item-left";
-    	    const itemLeftImgDiv      = document.createElement("div");
-    	    itemLeftImgDiv.className  = "quick-searched-item-img";
-    	    const itemLeftInfoDiv     = document.createElement("div");
-    	    itemLeftInfoDiv.className = "quick-searched-item-info";
-    	    const itemLeftUtilUl      = document.createElement("ul");
-    	    itemLeftUtilUl.className  = "quick-searched-item-util";
-    	    const itemLeftUtilbookmarkDiv     = document.createElement("div");
-    	    itemLeftUtilbookmarkDiv.className = "product-bookmark";
-    	    const itemRightDiv                = document.createElement("div");
-    	    itemRightDiv.className            = "quick-searched-item-right";
+    		  const itemDiv             = document.createElement("div");
+ 	   	    itemDiv.className         = "quick-finder-search-item";
+ 	   	    const itemLeftDiv         = document.createElement("div");
+ 	   	    itemLeftDiv.className     = "quick-searched-item-left";
+ 	   	    const itemLeftImgDiv      = document.createElement("div");
+ 	   	    itemLeftImgDiv.className  = "quick-searched-item-img";
+ 	   	    itemLeftImgDiv.dataset.pname = item.PRODUCT_NAME;
+ 	   	    const itemLeftInfoDiv     = document.createElement("div");
+ 	   	    itemLeftInfoDiv.className = "quick-searched-item-info";
+ 	   	    const itemLeftUtilUl      = document.createElement("ul");
+ 	   	    itemLeftUtilUl.className  = "quick-searched-item-util";
+ 	   	    const itemLeftUtilbookmarkDiv     = document.createElement("div");
+ 	   	    itemLeftUtilbookmarkDiv.className = "product-bookmark";
+ 	   	    const itemRightDiv                = document.createElement("div");
+ 	   	    itemRightDiv.className            = "quick-searched-item-right";
+
 
     	    const productTitleDiv       = document.createElement("div");
     	    const productTitleP         = document.createElement("p");
@@ -518,10 +520,12 @@
     	    productTitleDiv.append(productSpectDiv);
     	    itemLeftInfoDiv.append(productTitleDiv);
 
-    	    const createAtLi    = document.createElement("li");
-    	    const bookMarkLi    = document.createElement("li");
-    	    const bookMarkLiImg = document.createElement("div");
-
+    	    const createAtLi        = document.createElement("li");
+    	    const bookMarkLi        = document.createElement("li");
+    	    const bookMarkLiImg     = document.createElement("img");
+    	    bookMarkLiImg.className = "bookmark-img"
+    	    bookMarkLiImg.src       = "/images/icon/common-icon/heart-76767-14.png"
+    	    
     	    createAtLi.textContent = item.CREATED_AT;
     	    bookMarkLi.textContent = "관심";
 

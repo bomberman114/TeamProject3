@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="/css/style.css" />
 <script src="/js/searchHistory.js" defer></script>
 <script src="/js/mainCarousel.js" defer></script>
-<style type="text/css">
-</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/include/header.jsp"%>
@@ -103,7 +101,7 @@
 								<h3>${productListAll.categoryName}</h3>
 								<div class="box-best-item-list">
 									<c:forEach var="productList" items="${productListAll.productList}">
-										<div class="box-best-item">
+										<div class="box-best-item" data-pname="${productList.PRODUCT_NAME}">
 											<div class="box-best-item-img"><img src="/images/product/${productList.PRODUCT_SFILE_NAME}"></div>
 											<div class="box-best-item-title">${productList.PRODUCT_NAME}</div>
 											<div class="box-best-item-price"><fmt:formatNumber value="${productList.PRICE}" type="number" pattern="#,###" />원</div>
@@ -119,6 +117,7 @@
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	<script>
+
     let brandCarouselIdx = 0;
 
     const $brandCarouselContainer = document.querySelector(".brand-carousel-container");

@@ -23,7 +23,7 @@ document.addEventListener("click", (e) => {
 			
 	}
 	// 검색인풋 이외에 클릭하면 클래스 제거
-	if (!clicked.closest(".search-div") && !clicked.closest(".recent-remove") && recentHistory.length == 0) {
+	if (!clicked.closest(".search-div") && !clicked.closest(".recent-remove")) {
 		$searchDiv.classList.remove("recent");
 	}
 	if(e.target.matches(".recnet-remove-all")){
@@ -34,9 +34,13 @@ document.addEventListener("click", (e) => {
 		$searchDiv.classList.remove("recent");
 	}
 	if(e.target.matches(".recent-list ul li a")){
+		
+	
+	}
+	if(e.target.matches(".pname-dSearch")){
 		e.preventDefault();
 		saveRecent(e.target.textContent)
-		console.log(e.target.textContent)
+		displayRecent()
 		window.location = e.target.href;
 	}
 	
@@ -125,6 +129,7 @@ async function userSearch(keyword) {
         result.appliProduct.forEach((item, index) => {
 						const li = document.createElement("li");
 						const a  = document.createElement("a");
+						a.className = "pname-dSearch"
 						a.textContent = item.PRODUCT_NAME
 						a.href = "/dSearch?keyword=" + item.PRODUCT_NAME
 						li.append(a)
@@ -136,4 +141,63 @@ async function userSearch(keyword) {
     console.log(result);
     return result.purposeList;
 }
+
+  	document.addEventListener("click",(e)=>{
+  		if(e.target.closest(".box-best-item")){
+  			const pName = e.target.parentElement.parentElement.dataset.pname
+  			const encodedpName = "https://search.danawa.com/dsearch.php?query=" +  encodeURIComponent(pName);
+		    danawaRedirect(encodedpName)
+  		}
+  		if(e.target.closest(".quick-searched-item-img")){
+  			const pName = e.target.parentElement.dataset.pname
+  			const encodedpName = "https://search.danawa.com/dsearch.php?query=" +  encodeURIComponent(pName);
+		    danawaRedirect(encodedpName)
+  		}
+  		if(e.target.matches(".quick-searched-item-info p")){
+  			const pName = e.target.textContent
+  			const encodedpName = "https://search.danawa.com/dsearch.php?query=" +  encodeURIComponent(pName);
+		    danawaRedirect(encodedpName)
+  		}
+  	})
+  
+		async function danawaRedirect(href) {
+		  showLoadingIndicator(); // 로딩 표시 함수
+		  try {
+		    const response = await fetch('/productRedirect', {
+		      method: 'POST',
+		      headers: {'Content-Type': 'application/json'},
+		      body: JSON.stringify({ href: href })
+		    });
+		    const data = await response.json();
+		    console.log(data.products[0].name);
+		    window.open(data.products[0].name);
+		  } catch (error) {
+		    console.error('Error:', error);
+		  } finally {
+		    hideLoadingIndicator(); // 로딩 표시 제거 함수
+		  }
+		}
+
+  	let loadingIndicator;
+
+  	function showLoadingIndicator() {
+  	    if (!loadingIndicator) {
+  	        loadingIndicator = document.createElement("div");
+  	        loadingIndicator.className = "layerPopup";
+  	        loadingIndicator.style.display = "flex";
+
+  	        const spinner = document.createElement("div");
+  	        spinner.className = "spinner";
+
+  	        loadingIndicator.appendChild(spinner);
+  	        document.body.appendChild(loadingIndicator);
+  	    }
+  	    loadingIndicator.style.display = "flex";
+  	}
+
+  	function hideLoadingIndicator() {
+  	    if (loadingIndicator) {
+  	        loadingIndicator.style.display = "none";
+  	    }
+  	}
 

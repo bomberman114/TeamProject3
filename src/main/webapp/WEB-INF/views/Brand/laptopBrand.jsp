@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/css/style.css" />
 
     <script src="/js/searchHistory.js" defer></script>
-    <script src="/js/mainCarousel.js" defer></script>
 </head>
 <body>
     <%@include file="/WEB-INF/include/header.jsp"%>

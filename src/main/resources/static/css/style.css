@@ -3,6 +3,43 @@
   --main-color: #1a3d91; /* CSS 전역 변수 선언 */
 }
 
+/* 스니퍼 */
+/*===============================================================================*/
+.layerPopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%);
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid var(--main-color);
+  border-radius: 50%;
+  width: 240px;
+  height: 240px;
+  animation: spinner 2s linear infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+/*===============================================================================*/
+/* 스니퍼 끝 */
+
 /* 헤더 */
 /*===============================================================================*/
 header {
@@ -271,11 +308,118 @@ header {
 /*===============================================================================*/
 
 footer {
-  margin-top: 200px;
-  height: 200px;
-  background: #ccc;
-  text-align: center;
-  line-height: 200px;
+  font-size: 12px;
+  background: #fafafa;
+  margin-top: 40px;
+
+  & .footer-top {
+    border-bottom: solid 1px #d9d9d9;
+  }
+
+  & .footer-top .inner {
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  & .footer-top ul {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 17px;
+    font-size: 14px;
+
+    & li {
+      white-space: nowrap;
+      position: relative;
+    }
+  }
+
+  & .footer-top ul li::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 8px;
+    content: "";
+    background: #ccc;
+  }
+
+  & .footer-top ul li:last-child::after {
+    display: none;
+  }
+
+  & .footer-bold {
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  & .footer-info {
+    margin: 18px 0 32px 0;
+
+    & li:last-child span {
+      margin: 4px;
+    }
+  }
+  & .footer-info li:not(:first-child) {
+    margin-bottom: 4px;
+  }
+
+  & .footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  & .contact p {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  & .contact ul:first-of-type {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 4px 12px;
+  }
+
+  & .contact ul:last-of-type {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .contact ul:last-of-type li a {
+    display: block;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+
+  & .contact-btn li {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  & .email-q {
+    background: url("../images/main/footer-info-next.png") no-repeat right
+      center;
+    width: 90px;
+  }
+
+  & .email-q a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /*===============================================================================*/
@@ -291,7 +435,7 @@ footer {
   right: 40px;
   bottom: 40px;
   border-radius: 30px;
-  border: solid 1px var(--main-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
@@ -489,6 +633,7 @@ footer {
 
 .box-best-item {
   overflow: hidden;
+  cursor: pointer;
 }
 
 .box-best-item-img {
@@ -659,9 +804,9 @@ footer {
   }
 
   & .google-login-btn {
-    background: #fff;
-    border: solid 1px #ccc;
-    color: #555;
+    background: #333;
+    border: none;
+    color: #fff;
     margin-bottom: 20px;
   }
 
@@ -941,6 +1086,15 @@ footer {
       flex-shrink: 0;
     }
 
+    & select {
+      -webkit-appearance: none; /* 크롬 화살표 없애기 */
+      -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
+      appearance: none; /* 화살표 없애기 */
+      background: url("/images/icon/common-icon/chevron-down-fff-20.png")
+        no-repeat right 12px center !important;
+      min-width: 100px;
+    }
+
     & input,
     select {
       padding: 14px 20px;
@@ -1088,6 +1242,7 @@ footer {
       text-align: center;
       background: #ccc;
       flex-shrink: 0;
+      cursor: pointer;
 
       & img {
         display: block;
@@ -1104,6 +1259,7 @@ footer {
         font-size: 16px;
         font-weight: 500;
         margin-bottom: 12px;
+        cursor: pointer;
       }
       & div > div {
         word-break: keep-all;
@@ -1184,23 +1340,33 @@ footer {
   display: flex;
   align-items: center;
   gap: 20px;
+  font-size: 16px;
 
   & li {
     position: relative;
+    margin: 0px 4px 10px;
   }
 
   & li::after {
     display: block;
-    content: ">";
-    right: -16px;
-    padding-left: 10px;
+    width: 20px;
+    height: 20px;
+    content: "";
+    right: 0px;
+    padding-left: 8px;
     top: 50%;
-    transform: translateY(-50%);
+    background: url("/images/icon/common-icon/chevron-left-333-20.png")
+      no-repeat center center;
+    transform: translate(100%, -50%);
     position: absolute;
   }
 
   & li:last-child::after {
     display: none;
+  }
+
+  & .category-select {
+    padding: 4px 8px;
   }
 }
 
@@ -1266,8 +1432,8 @@ footer {
 
   & .filter-val-all {
     position: absolute;
-    width : 100px;
-    text-align : right;
+    width: 100px;
+    text-align: right;
     right: 20px;
     top: 12px;
     border: none;
@@ -1284,6 +1450,15 @@ footer {
   }
 }
 
+.exception-title {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
 .detailSearch-option-all-open-btn {
   cursor: pointer;
   display: flex;
@@ -1295,40 +1470,47 @@ footer {
   margin-bottom: 40px;
 }
 
-.dSearch-title{
-	margin-top: 40px;
-}
-.dSearch-container{
-	margin-bottom : 40px;
-	
- & ul{
-	  display : flex;
-		flex-wrap : wrap;
-		border : solid 1px #ccc;
-		& li{
-			flex-basis : 0;
-			min-width : calc(100% / 4);
-			display: flex;
-			padding : 20px 0;
-			justify-content: center;
-			align-items: center;
-			color : #555;
-			font-size: 16px;
-			cursor: pointer;
-		}
-		
-		& li.categoryActive{
-			color : var(--main-color);
-			border : solid 1px var(--main-color);
-			font-weight: 500;
-		}
-	}
-	
+.price-filter input{
+	padding : 4px 8px;
 }
 
+.detailSearch-price-filter-btn{
+	background: #555;
+	color : #fff;
+	border : none;
+	padding : 4px 8px;
+	border-radius: 2px;
+}
 
+.dSearch-title {
+  margin-top: 40px;
+}
+.dSearch-container {
+  margin-bottom: 40px;
 
+  & ul {
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 1px #ccc;
+    & li {
+      flex-basis: 0;
+      min-width: calc(100% / 4);
+      display: flex;
+      padding: 20px 0;
+      justify-content: center;
+      align-items: center;
+      color: #555;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
+    & li.categoryActive {
+      color: var(--main-color);
+      border: solid 1px var(--main-color);
+      font-weight: 500;
+    }
+  }
+}
 
 .brand-box {
   display: flex;

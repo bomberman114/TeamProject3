@@ -14,9 +14,6 @@
 
 <title>커뮤니티홈</title>
 <style>
-.inner {
-	margin-top: 40px; 
-}
 .cm-nav {
     min-width: 390px; /* 고정된 너비 */  
     margin-left: 20px;
@@ -40,11 +37,15 @@
     
     .login {
     	border-radius: 5px;
-    	background: #ccc;
+    	background: #1A3D91;
     	text-align: center;
     	padding: 10px;
     	margin-top: 10px;
     	margin-bottom: 10px;
+    	
+    	a {
+    		color: white;
+    	}
     }
 }
 .title {
@@ -104,15 +105,37 @@
 }
 
 .btn-light-gray {
-    border: 1px solid #333;
+    border: 1px solid #1A3D91;
 	padding: 5px 10px;
 	text-align: center;
 }
 .btn-light-gray:hover {
 	color: white;
-    background-color: #333;
+    background-color: #1A3D91;
 }
+.paging-container {
+  margin: 20 auto 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
 
+  & li {
+    width: 32px;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #767676;
+  }
+
+  & li.paging-nowpage {
+    border: solid 1px #333;
+    border-radius: 4px;
+    color: #333;
+    font-weight: 500;
+  }
+}
 .search-container {
 	display: flex;
 	text-align: center;
@@ -133,7 +156,7 @@
 		width: 50px;
 		height: 30px;
 		border:none;
-  		background-color: #333;
+  		background-color: #1A3D91;
   		color: white;
   		cursor: pointer;
 	  	line-height: 1;
@@ -151,7 +174,7 @@
 <%@include file="/WEB-INF/include/header.jsp"%>
 
 <div class="inner">  
-  <div style="display: flex;">      
+  <div style="display: flex; margin-top:40px; ">      
     <div>
       <div>
         <div class="title">조립앨범

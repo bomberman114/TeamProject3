@@ -18,15 +18,6 @@ public interface ProductMapper {
 
    List<HashMap<String, Object>> getcategoryAttributeList(HashMap<String, Object> map);
 
-   int getProductResultListCount(HashMap<String, Object> map);
-
-   HashMap<String, Object> getCategoryMap(HashMap<String, Object> map);
-
-   List<HashMap<String, Object>> getProductList(HashMap<String, Object> map);
-
-   List<HashMap<String, Object>> getCategoryAttributeValueList(HashMap<String, Object> map);
-
-   List<HashMap<String, Object>> getDeskTopPartProductList(HashMap<String, Object> map);
 
 
 	int getProductResultListCount(HashMap<String, Object> map);

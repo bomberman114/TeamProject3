@@ -89,13 +89,17 @@ public class DeskTopEstimateController {
 			productResultList.get(i).put("CATEGORY_ATTRIBUTE_IDX", i);
 			// "인텔"이 포함되어 있는지 체크
 			
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(6)) {
-				if (productName != null && productName.contains("인텔")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 1);
+			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(16)) {
+				if (productName != null && productName.contains("ASUS")) {
+					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 56);
 					productMapper.setProductCpu(productResultList.get(i));
 				}
-				if (productName != null && productName.matches("AMD")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 2);
+				if (productName != null && productName.matches("GIGABYTE")) {
+					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 57);
+					productMapper.setProductCpu(productResultList.get(i));
+				}
+				if (productName != null && productName.matches("ASRock")) {
+					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 58);
 					productMapper.setProductCpu(productResultList.get(i));
 				}
 
@@ -292,33 +296,12 @@ public class DeskTopEstimateController {
 
 
 		}
-
-		 */
+*/
 		mv.setViewName("deskTopEstimate/deskTopEstimateForm");
 		return mv;
 	};
 
-	private static String extractLengthInfo(String input) {
-		String[] parts = input.split("/");
 
-
-      // allValuesString은 JSON 문자열입니다.
-      String allValuesString = (String) map.get("allValuesString");
-
-      // JSON 문자열을 Map으로 변환
-      Map<String, Object> allValues = null;
-      if (allValuesString != null) {
-
-         try {
-            allValues = objectMapper.readValue(allValuesString, Map.class);
-         } catch (JsonMappingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-      }
 
 
 	@RequestMapping("/DeskTopEstimateFiler")

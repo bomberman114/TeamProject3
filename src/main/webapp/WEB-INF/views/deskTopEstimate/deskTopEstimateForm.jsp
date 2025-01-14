@@ -104,19 +104,19 @@
     }
     
     function Compatibility() {
-       // 모든 hidden input 요소 선택
-       const hiddenInputs = document.querySelectorAll('.desktop-specs input[type="hidden"][name="PRODUCT_IDX"]');
+    	// 모든 hidden input 요소 선택
+    	const hiddenInputs = document.querySelectorAll('.desktop-specs input[type="hidden"][name="PRODUCT_IDX"]');
 
-       // 각 hidden input의 value를 배열에 저장
-       const productIds = Array.from(hiddenInputs).map(input => input.value);
+    	// 각 hidden input의 value를 배열에 저장
+    	const productIds = Array.from(hiddenInputs).map(input => input.value);
 
-       // 결과 출력
-       console.log("추출된 PRODUCT_IDX 값:", productIds);
-       if(productIds.length == 0){
-       alert("상품을 선택해주세요");
-       };
-       if(productIds.length > 0){
-          
+    	// 결과 출력
+    	console.log("추출된 PRODUCT_IDX 값:", productIds);
+    	if(productIds.length == 0){
+    	alert("상품을 선택해주세요");
+    	};
+    	if(productIds.length > 0){
+    		
        let url = '/DeskTopEstimate/CompauterPartCompatibilityCheck?productIdxList=' + productIds;
         fetch(url) // API 엔드포인트 확인
          .then(response => {
@@ -126,7 +126,7 @@
              return response.json();
          })
          .then(data => {
-            console.log(data);
+        	 console.log(data);
         document.getElementById('compatibility-modal').style.display = 'block'; // 모달 표시
         const compatibilityModalEl = document.getElementById('compatibility-modal');
         compatibilityModalEl.innerHTML = '';
@@ -220,7 +220,7 @@
          .catch(error => {
              console.error('문제가 발생했습니다:', error);
          });
-       };
+    	};
     }
 
     function closeModal() {
@@ -741,110 +741,110 @@
         </script>
 </head>
 <body>
-   <%@include file="/WEB-INF/include/header.jsp"%>
-   <main class="desktopestimate-main" style="max-width: 1300px; margin: 0 auto; height: auto;">
-      <section class="content">
-         <h1 style="font-size: 24px; color: #333333; margin-bottom: 10px; font-weight: bold;">PC 견적</h1>
-         <div class="desk-search-bar">
-            <input type="text" class="desk-search-bar" placeholder="상품명을 입력하세요">
-            <button style="border: none; height: 60px; width: 60px; color: #ffffff; background-color: #1A3D91;">검색</button>
-         </div>
+	<%@include file="/WEB-INF/include/header.jsp"%>
+	<main class="desktopestimate-main" style="max-width: 1300px; margin: 0 auto; height: auto;">
+		<section class="content">
+			<h1 style="font-size: 24px; color: #333333; margin-bottom: 10px; font-weight: bold;">PC 견적</h1>
+			<div class="desk-search-bar">
+				<input type="text" class="desk-search-bar" placeholder="상품명을 입력하세요">
+				<button style="border: none; height: 60px; width: 60px; color: #ffffff; background-color: #1A3D91;">검색</button>
+			</div>
 
-         <div class="desk-filters">
-            <h3 style="padding-left: 40px; color: #ffffff; line-height: 60px; background-color: #1A3D91; height: 60px; width: 788px; display: flex; justify-content: space-between; align-items: center;"></h3>
-            <div id="desktopPartFillter"></div>
-            <!-- 필터 리스트가 동적으로 추가될 부분 -->
-         </div>
+			<div class="desk-filters">
+				<h3 style="padding-left: 40px; color: #ffffff; line-height: 60px; background-color: #1A3D91; height: 60px; width: 788px; display: flex; justify-content: space-between; align-items: center;"></h3>
+				<div id="desktopPartFillter"></div>
+				<!-- 필터 리스트가 동적으로 추가될 부분 -->
+			</div>
 
 
 
-         <div class="product-list">
-            <!-- 상품 리스트가 동적으로 추가될 부분 -->
-         </div>
+			<div class="product-list">
+				<!-- 상품 리스트가 동적으로 추가될 부분 -->
+			</div>
 
-         <div class="desk-pagination">
-            <!-- 페이징이 동적으로 추가될 부분 -->
-         </div>
-      </section>
+			<div class="desk-pagination">
+				<!-- 페이징이 동적으로 추가될 부분 -->
+			</div>
+		</section>
 
-      <aside class="sidebar-right">
-         <div class="sidebar-name">PC 주요 구성</div>
-         <div class="desktop-specs">
-            <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=5"><div class="desktop-mini">
-                  CPU
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=6"><div class="desktop-mini">
-                  메인보드
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=7"><div class="desktop-mini">
-                  메모리
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=8"><div class="desktop-mini">
-                  그래픽카드
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=9"><div class="desktop-mini">
-                  SSD
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=10"><div class="desktop-mini">
-                  HDD
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=11"><div class="desktop-mini">
-                  CPU 쿨러
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=12"><div class="desktop-mini">
-                  케이스
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=13"><div class="desktop-mini">
-                  파워
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a>
-         </div>
-         <div class="under-specs">
-            <p class="under-under">
-               총#개 품목선택 &nbsp;
-               <button style="background-color: #ffffff; margin-right: 15px; border: none;">전체 삭제</button>
-            </p>
-            <div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
-               <p class="amount" style="margin-right: auto;">총 합계 금액</p>
-               <p class="total-add-price">#원</p>
-            </div>
-            <button class="desk-button" onclick="Compatibility()">호환성 체크</button>
-            <div id="compatibility-modal" class="desk-modal"></div>
-            <button class="desk-capture-button" onclick="capture()">견적 캡쳐</button>
-            
-            <div id="capture-modal" class="desk-modal">
-               
-            </div>
-      </aside>
-   </main>
-   <%@include file="/WEB-INF/include/footer.jsp"%>
+		<aside class="sidebar-right">
+			<div class="sidebar-name">PC 주요 구성</div>
+			<div class="desktop-specs">
+				<a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=5"><div class="desktop-mini">
+						CPU
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=6"><div class="desktop-mini">
+						메인보드
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=7"><div class="desktop-mini">
+						메모리
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=8"><div class="desktop-mini">
+						그래픽카드
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=9"><div class="desktop-mini">
+						SSD
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=10"><div class="desktop-mini">
+						HDD
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=11"><div class="desktop-mini">
+						CPU 쿨러
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=12"><div class="desktop-mini">
+						케이스
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=13"><div class="desktop-mini">
+						파워
+						<div class=hidden-content>
+							<p></p>
+							<span class="price"></span>
+						</div>
+					</div></a>
+			</div>
+			<div class="under-specs">
+				<p class="under-under">
+					총#개 품목선택 &nbsp;
+					<button style="background-color: #ffffff; margin-right: 15px; border: none;">전체 삭제</button>
+				</p>
+				<div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
+					<p class="amount" style="margin-right: auto;">총 합계 금액</p>
+					<p class="total-add-price">#원</p>
+				</div>
+				<button class="desk-button" onclick="Compatibility()">호환성 체크</button>
+				<div id="compatibility-modal" class="desk-modal"></div>
+				<button class="desk-capture-button" onclick="capture()">견적 캡쳐</button>
+				
+				<div id="capture-modal" class="desk-modal">
+					
+				</div>
+		</aside>
+	</main>
+	<%@include file="/WEB-INF/include/footer.jsp"%>
 </body>
 </html>
 

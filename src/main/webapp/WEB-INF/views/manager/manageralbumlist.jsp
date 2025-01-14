@@ -85,6 +85,39 @@ tbody tr:hover {
     background-color: #f1f1f1;
 }
 
+.content {
+    display: grid;
+    gap: 40px 20px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.box {
+    overflow: hidden;
+}
+
+.box-img {
+    width: 100%;
+    height: 180px;
+    background: #ccc;
+    margin-bottom: 8px;
+    position: relative;
+    
+    img {
+    	width:100%;
+    	height: 100%;
+    	object-fit: cover;
+    }
+}
+.box-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -94,11 +127,11 @@ tbody tr:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
                 <div class="dropdown-menu">
-                    <a href="/Cs/ManagerCsList">문의내역</a>
-                    <a href="/Cs/ManagerNoticeList">공지사항</a>
-                    <a href="/Cs/ManagerAsklist">자주 묻는 질문</a>
+                    <a href="/Manager/ManagerCsList">문의내역</a>
+                    <a href="/Manager/ManagerNoticeList">공지사항</a>
+                    <a href="/Manager/ManagerAsklist">자주 묻는 질문</a>
                 </div>
             </li>
             <li>
@@ -112,24 +145,35 @@ tbody tr:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList">자유게시판</a>
-                <a href="/Cs/ManagerAlbumList" style="background-color: #CCC">조립앨범</a>
-                <a href="/Cs/ManagerMarketList">장터</a>
+                <a href="/Manager/ManagerBoardList">자유게시판</a>
+                <a href="/Manager/ManagerAlbumList" style="background-color: #CCC">조립앨범</a>
+                <a href="/Manager/ManagerMarketList">장터</a>
             </li>
         </ul>
     </div>
 
     <div style="flex: 1; margin: 30px;">
-        <table>
-            <thead>
-                <tr class="title">
-                    <td>조립앨범</td>
-                </tr>
-            </thead>
-        </table>
+    	<div style="width: 100%;
+				    text-align: center;
+				    font-size: 26px;
+				    font-weight: bold;
+				    padding: 20px;
+				    border-top: 1px solid black;">
+        조립앨범
+    	</div>
+    	<div class="content">
+		  <c:forEach var="album" items="${albumList}" >
+		  <div class="box">
+			<div class="box-img"><a href="/Community/Albumview?user_idx=${sessionScope.user.user_idx}&community_idx=${album.community_idx}"><img src="/images/${album.community_sfile_name}"></a></div>
+			<div class="box-title"><a href="/Community/Albumview?user_idx=${sessionScope.user.user_idx}&community_idx=${album.community_idx}">${album.community_title}</a></div>
+			<div class="box-nickname">${album.user_nickname}</div>
+			<div style="text-align: right;">👁️‍🗨️ ${album.community_views} | 💬 ${album.total_answers}</div>
+		  </div>
+		  </c:forEach>
+		</div>
     </div>
 </div>
 

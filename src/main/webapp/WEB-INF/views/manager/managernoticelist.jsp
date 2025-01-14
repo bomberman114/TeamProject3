@@ -93,12 +93,12 @@ tbody tr:hover {
     <div class="sidebar">
         <ul>
             <li>
-                <a href="/Cs/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
+                <a href="/Manager/ManagerCsList" style="font-size: 18px; font-weight: bold;">고객센터 관리</a>
             </li>
             <li>
-                <a href="/Cs/ManagerCsList">문의내역</a>
-                <a href="/Cs/ManagerNoticeList" style="background-color: #CCC">공지사항</a>
-                <a href="/Cs/ManagerAsklist">자주 묻는 질문</a>
+                <a href="/Manager/ManagerCsList">문의내역</a>
+                <a href="/Manager/ManagerNoticeList" style="background-color: #CCC">공지사항</a>
+                <a href="/Manager/ManagerAsklist">자주 묻는 질문</a>
             </li>
             <li>
                 <a href="#" style="font-size: 18px; font-weight: bold;">상품 및 카테고리 관리</a>
@@ -111,11 +111,11 @@ tbody tr:hover {
                 </div>
             </li>
             <li>
-                <a href="/Cs/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
+                <a href="/Manager/ManagerBoardList" style="font-size: 18px; font-weight: bold;">커뮤니티 관리</a>
                 <div class="dropdown-menu">
-                    <a href="/Cs/ManagerBoardList">자유게시판</a>
-                    <a href="/Cs/ManagerAlbumList">조립앨범</a>
-                    <a href="/Cs/ManagerMarketList">장터</a>
+                    <a href="/Manager/ManagerBoardList">자유게시판</a>
+                    <a href="/Manager/ManagerAlbumList">조립앨범</a>
+                    <a href="/Manager/ManagerMarketList">장터</a>
                 </div>
             </li>
         </ul>
@@ -132,9 +132,20 @@ tbody tr:hover {
             </colgroup>
             <thead>
                 <tr class="title">
-                    <td colspan="5" style="text-align: center; position: relative;">공지사항
-                    <button style="position: absolute; right: 10px; padding: 10px; background-color: #fff; font-size: 15px; cursor: pointer;" 
-				            onclick="location.href='/Cs/ManagerNoticeWriteForm'">공지 추가</button>
+                    <td colspan="5" style="text-align: center; position: relative;">
+                    <form method="get" action="/Manager/ManagerNoticeList">
+					    <select name="type" onchange="this.form.submit()" style="position: absolute; left: 10px; font-size: 15px; cursor: pointer; padding:10px; border-radius:5px;">
+		                    <option value="">전체</option>
+		                    <c:forEach var="typeItem" items="${noticeType}">
+		                        <option value="${typeItem}" <c:if test="${typeItem == selectedType}">selected</c:if>>${typeItem}</option>
+		                    </c:forEach>
+	                	</select>
+				    	<input type="hidden" name="page" value="1">
+			            <input type="hidden" name="size" value="${size}">
+			        </form>
+				    공지사항
+	                <button style="position: absolute; right: 10px; padding: 10px; background-color: #fff; font-size: 15px; cursor: pointer; border-radius:5px;" 
+					        onclick="location.href='/Manager/ManagerNoticeWriteForm'">공지 추가</button>
 				    </td>
                 </tr>
                 <tr>
@@ -146,20 +157,31 @@ tbody tr:hover {
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="nt" items="${noticeList}">
-		          <tr onclick="location.href='/Cs/ManagerNoticeUpdateForm?notice_idx=${nt.notice_idx}'" style="cursor: pointer;">
-		            <td>[${nt.notice_type}]</td>
-		            <td>${nt.notice_title}</td>
-		            <td>${nt.notice_content}</td>
-		            <td>${nt.notice_regdate}</td>
-		            <td>
-			            <form action="/Cs/ManagerNoticeDelete" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="margin: 0;">
-			                <input type="hidden" name="notice_idx" value="${nt.notice_idx}" />
-			                <button type="submit" style="border: none; cursor: pointer; background: none;" onclick="event.stopPropagation();">X</button>
-			            </form>
-			        </td>
-		          </tr>
-		        </c:forEach>
+                <c:choose>
+                    <c:when test="${empty noticeList}">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 20px;">
+                                공지사항이 없습니다.
+                            </td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="nt" items="${noticeList}">
+                            <tr onclick="location.href='/Manager/ManagerNoticeUpdateForm?notice_idx=${nt.notice_idx}'" style="cursor: pointer;">
+                                <td>[${nt.notice_type}]</td>
+                                <td>${nt.notice_title}</td>
+                                <td>${nt.notice_content}</td>
+                                <td>${nt.notice_regdate}</td>
+                                <td>
+                                    <form action="/Manager/ManagerNoticeDelete" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="margin: 0;">
+                                        <input type="hidden" name="notice_idx" value="${nt.notice_idx}" />
+                                        <button type="submit" style="border: none; cursor: pointer; background: none;" onclick="event.stopPropagation();">X</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </tbody>
         </table>
         <%@include file="/WEB-INF/include/pagination.jsp"%>

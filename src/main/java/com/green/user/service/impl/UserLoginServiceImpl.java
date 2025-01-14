@@ -40,8 +40,6 @@ public class UserLoginServiceImpl implements UserLoginService{
 	public boolean isUserEmailDupCheck(HashMap<String, Object> map) {
 		String userEmail     = String.valueOf(map.get("user_email"));
 		String registedEmail = userMapper.isUserEmailDupCheck(userEmail);
-		System.out.println(userEmail);
-		System.out.println(registedEmail);
 		if(registedEmail != null) {
 			return true;			
 		}else {

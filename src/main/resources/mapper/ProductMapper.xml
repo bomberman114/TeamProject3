@@ -18,6 +18,50 @@ WHERE
 
 </select>
 
+<select id="getProductResultMapList">
+
+SELECT
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    P.CREATED_AT,
+    P.UPDATED_AT,
+    PI.PRODUCT_IMAGE_IDX,
+    PI.PRODUCT_IMAGE_NAME,
+    PI.PRODUCT_IMAGE_EXT,
+    PI.PRODUCT_SFILE_NAME
+FROM
+    PRODUCT  P
+JOIN
+    PRODUCT_IMAGE  PI
+ON
+    P.PRODUCT_IDX = PI.PRODUCT_IDX
+JOIN
+    PRODUCT_ATTRIBUTE  PA
+ON 
+    P.PRODUCT_IDX = PA.PRODUCT_IDX
+WHERE
+    P.CATEGORY_IDX  = #{category}
+
+   
+GROUP BY 
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION) ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    P.CREATED_AT,
+    P.UPDATED_AT,
+    PI.PRODUCT_IMAGE_IDX,
+    PI.PRODUCT_IMAGE_NAME,
+    PI.PRODUCT_IMAGE_EXT,
+    PI.PRODUCT_SFILE_NAME
+ORDER  BY   P.PRODUCT_IDX ASC
+
+</select>
+
 <select id="getProductResultList" parameterType="hashMap" resultType="hashMap">
 
 SELECT
@@ -28,36 +72,114 @@ SELECT
     P.CATEGORY_IDX,
     P.CREATED_AT,
     P.UPDATED_AT,
-    PA.PRODUCT_ATTRIBUTE_IDX,
-    PA.PRODUCT_IDX,
-    PA.CATEGORY_ATTRIBUTE_IDX,
-    PA.CATEGORY_ATTRIBUTE_VALUE_IDX,
-    PA.CUSTOM_VALUE,
-    CAV.CATEGORY_ATTRIBUTE_VALUE_IDX,
-    CAV.CATEGORY_ATTRIBUTE_IDX,
-    CAV.CATEGORY_ATTRIBUTE_VALUE_NAME,
     PI.PRODUCT_IMAGE_IDX,
     PI.PRODUCT_IMAGE_NAME,
     PI.PRODUCT_IMAGE_EXT,
     PI.PRODUCT_SFILE_NAME
 FROM
     PRODUCT  P
-LEFT JOIN
-    PRODUCT_ATTRIBUTE  PA
-ON
-    P.PRODUCT_IDX = PA.PRODUCT_IDX
-LEFT JOIN
-    CATEGORY_ATTRIBUTE_VALUE  CAV
-ON
-    PA.CATEGORY_ATTRIBUTE_IDX = CAV.CATEGORY_ATTRIBUTE_IDX
-LEFT JOIN
+JOIN
     PRODUCT_IMAGE  PI
 ON
     P.PRODUCT_IDX = PI.PRODUCT_IDX
+JOIN
+    PRODUCT_ATTRIBUTE  PA
+ON 
+    P.PRODUCT_IDX = PA.PRODUCT_IDX
 WHERE
-    P.CATEGORY_IDX = #{category}
-    
+    P.CATEGORY_IDX  = #{category}
 
+ <if test="categoryAttributeIdxs != null ">    
+AND
+    PA.CATEGORY_ATTRIBUTE_IDX IN
+        <foreach item="categoryAttributeIdxs" index="index" collection="categoryAttributeIdxs"
+         open="(" separator="," close=")">
+           #{ categoryAttributeIdxs }
+         </foreach>
+</if>
+ <if test="categoryAttributeValueIdxs != null ">    
+AND
+    PA.CATEGORY_ATTRIBUTE_VALUE_IDX IN
+        <foreach item="categoryAttributeValueIdxs" index="index" collection="categoryAttributeValueIdxs"
+         open="(" separator="," close=")">
+           #{ categoryAttributeValueIdxs }
+         </foreach>
+</if>
+   
+GROUP BY 
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION) ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    P.CREATED_AT,
+    P.UPDATED_AT,
+    PI.PRODUCT_IMAGE_IDX,
+    PI.PRODUCT_IMAGE_NAME,
+    PI.PRODUCT_IMAGE_EXT,
+    PI.PRODUCT_SFILE_NAME
+ORDER  BY   P.PRODUCT_IDX ASC
+OFFSET #{ startRow } ROWS FETCH NEXT #{ endRow } ROWS ONLY
+
+</select>
+
+<select id="getProductResultListCount">
+SELECT  COUNT(DISTINCT P.PRODUCT_IDX)
+FROM
+    PRODUCT  P
+JOIN
+    PRODUCT_IMAGE  PI
+ON
+    P.PRODUCT_IDX = PI.PRODUCT_IDX
+JOIN
+    PRODUCT_ATTRIBUTE  PA
+ON 
+    P.PRODUCT_IDX = PA.PRODUCT_IDX
+WHERE
+    P.CATEGORY_IDX  = #{category}
+ <if test="categoryAttributeIdxs != null ">    
+AND
+    PA.CATEGORY_ATTRIBUTE_IDX IN
+        <foreach item="categoryAttributeIdxs" index="index" collection="categoryAttributeIdxs"
+         open="(" separator="," close=")">
+           #{ categoryAttributeIdxs }
+         </foreach>
+</if>
+ <if test="categoryAttributeValueIdxs != null ">    
+AND
+    PA.CATEGORY_ATTRIBUTE_VALUE_IDX IN
+        <foreach item="categoryAttributeValueIdxs" index="index" collection="categoryAttributeValueIdxs"
+         open="(" separator="," close=")">
+           #{ categoryAttributeValueIdxs }
+         </foreach>
+</if>
+
+
+
+</select>
+
+<select id="getCategoryMap">
+SELECT
+    CATEGORY_IDX,
+    CATEGORY_NAME,
+    PARENT_CATEGORY_IDX,
+    DEPTH
+FROM
+    CATEGORY
+WHERE 
+	CATEGORY_IDX = #{category}
+</select>
+
+<select id="getCategoryMap">
+SELECT
+    CATEGORY_IDX,
+    CATEGORY_NAME,
+    PARENT_CATEGORY_IDX,
+    DEPTH
+FROM
+    CATEGORY
+WHERE 
+   CATEGORY_IDX = #{category}
 </select>
 
 <select id="getcategoryAttributeList">
@@ -88,5 +210,104 @@ INSERT INTO PRODUCT_ATTRIBUTE (
 
 </insert>
 
+<select id="getProductList">
+  SELECT
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION ,
+    P.PRICE,
+    P.CATEGORY_IDX
+   
+FROM
+    PRODUCT  P
+JOIN
+    PRODUCT_ATTRIBUTE  PA
+ON
+    P.PRODUCT_IDX = PA.PRODUCT_IDX
+JOIN
+    CATEGORY_ATTRIBUTE CA
+ON
+    P.CATEGORY_IDX = CA.CATEGORY_IDX
+JOIN
+    CATEGORY_ATTRIBUTE_VALUE CAV
+ON
+    PA.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
+WHERE 
+
+	   P.PRODUCT_IDX IN
+
+<foreach item="productIdxList" index="index" collection="productIdxList"
+         open="(" separator="," close=")">
+           #{ productIdxList }
+         </foreach> 
+
+GROUP BY 
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION),
+    P.PRICE,
+    P.CATEGORY_IDX
+   
+ORDER BY 
+     P.PRODUCT_IDX ASC
+</select>
+
+
+<select id="getDeskTopPartProductList">
+ SELECT
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    PI. PRODUCT_SFILE_NAME,
+    C.CATEGORY_NAME
+
+   
+FROM
+    PRODUCT  P
+JOIN
+    PRODUCT_IMAGE  PI
+ON
+    P.PRODUCT_IDX = PI.PRODUCT_IDX
+
+JOIN
+    CATEGORY  C
+ON
+    P.CATEGORY_IDX = C.CATEGORY_IDX
+WHERE 
+	   P.PRODUCT_IDX IN
+
+<foreach item="productIdxList" index="index" collection="productIdxList"
+         open="(" separator="," close=")">
+           #{ productIdxList }
+         </foreach> 
+
+GROUP BY 
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION),
+    P.PRICE,
+    P.CATEGORY_IDX,
+    PI. PRODUCT_SFILE_NAME,
+    C.CATEGORY_NAME
+
+ORDER BY 
+     P.PRODUCT_IDX ASC
+
+
+</select>
+
+<select id="getCategoryAttributeValueList">
+SELECT
+    CATEGORY_ATTRIBUTE_VALUE_IDX,
+    CATEGORY_ATTRIBUTE_IDX,
+    CATEGORY_ATTRIBUTE_VALUE_NAME
+FROM
+    CATEGORY_ATTRIBUTE_VALUE
+WHERE CATEGORY_ATTRIBUTE_IDX = #{categoryAttributeIdx}   
+    
+
+</select>
 
 </mapper>

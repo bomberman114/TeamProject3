@@ -194,7 +194,7 @@ public class CsController {
 	    mv.setViewName("cs/noticeview");
 	    return mv;
 	}
-	
+  
 	//=========================================================================//
 		// ------------------------관리자 자주묻는질문-----------------------------//
 		@RequestMapping("/ManagerAsklist")
@@ -377,6 +377,5 @@ public class CsController {
 			mv.setViewName("cs/managermarketlist");
 			return mv;
 		}
-
 
 }

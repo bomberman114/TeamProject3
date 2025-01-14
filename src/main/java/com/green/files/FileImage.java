@@ -166,7 +166,7 @@ public class FileImage {
 		// 파일경로바꾸기
 		public String fileNemeReplace(String fileName) {
 			fileName = fileName.replace("\\", "/");
-			String path = "/img/commonImage/";
+			String path = "/images/product/";
 			fileName = path + fileName;
 			return fileName;
 		}

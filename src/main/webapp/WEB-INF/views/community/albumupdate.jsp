@@ -15,9 +15,6 @@
 
 <title>조립앨범 게시글 수정</title>
 <style>
-.inner {
-	margin-top: 40px; 
-}
 .cm-nav {
     min-width: 390px; /* 고정된 너비 */  
     margin-left: 20px;
@@ -41,11 +38,15 @@
     
     .login {
     	border-radius: 5px;
-    	background: #ccc;
+    	background: #1A3D91;
     	text-align: center;
     	padding: 10px;
     	margin-top: 10px;
     	margin-bottom: 10px;
+    	
+    	a {
+    		color: white;
+    	}
     }
 }
 input[type="text"] {
@@ -93,7 +94,7 @@ table {
 <%@include file="/WEB-INF/include/header.jsp"%>
 
 <div class="inner">  
-  <div style="display: flex; ">     
+    <div style="display: flex; margin-top:40px; ">   
     <div style="width: 790px;">
       <div class="bold" style="margin-bottom: 10px;">조립앨범 게시글 수정</div>
 

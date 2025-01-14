@@ -1,8 +1,10 @@
 package com.green.paging.vo;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class Pagination {
 
     private int 	totalRecordCount;     // 검색된 전체 데이터 수 

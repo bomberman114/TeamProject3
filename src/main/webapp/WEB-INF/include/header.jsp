@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+   uri="http://www.springframework.org/security/tags"%>
 <header>
   <div class="inner header__inner">
     <ul>
@@ -49,6 +49,7 @@
 		  <li><a href="/LaptopBrand/Brand">브랜드관</a></li>
 		  <li><a href="/Community/Albumlist">커뮤니티</a></li>
 		  <li><a href="/Cs/Cslist">고객센터</a></li>
+      <li><a href="/Manager/ManagerCsList">관리자</a></li>
 		</ul>
 	  </div>
 	  <c:choose>

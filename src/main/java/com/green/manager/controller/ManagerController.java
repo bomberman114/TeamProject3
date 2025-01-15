@@ -24,7 +24,7 @@ public class ManagerController {
 	private ManagerMapper ManagerMapper;
 	
 		// ------------------------관리자 자주묻는질문-----------------------------//
-		@RequestMapping("/ManagerAsklist") 
+		@RequestMapping("/ManagerAsklist")
 		public ModelAndView managerasklist(
 		        @RequestParam(name = "page", defaultValue = "1") int page, 
 		        @RequestParam(name = "size", defaultValue = "10") int size,
@@ -64,7 +64,7 @@ public class ManagerController {
 		public ModelAndView cswrite(ManagerVo ManagerVo) {
 			ManagerMapper.insertask(ManagerVo);
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("redirect:/manager/ManagerAsklist");
+			mv.setViewName("redirect:/Manager/ManagerAsklist");
 			return mv;
 		}
 		
@@ -82,7 +82,7 @@ public class ManagerController {
 		public ModelAndView managerAskUpdate(ManagerVo ManagerVo) {
 		    ModelAndView mv = new ModelAndView();
 		    ManagerMapper.updateask(ManagerVo);
-		    mv.setViewName("redirect:/manager/ManagerAsklist"); 
+		    mv.setViewName("redirect:/Manager/ManagerAsklist"); 
 		    return mv;
 		}
 		
@@ -91,7 +91,7 @@ public class ManagerController {
 		public ModelAndView managerAskDelete(@RequestParam("customer_service_idx") int idx) {
 		    ModelAndView mv = new ModelAndView();
 		    ManagerMapper.deleteAsk(idx);
-		    mv.setViewName("redirect:/manager/ManagerAsklist");
+		    mv.setViewName("redirect:/Manager/ManagerAsklist");
 		    return mv;
 		}
 		
@@ -138,7 +138,7 @@ public class ManagerController {
 			public ModelAndView managerCsUpdate(ManagerVo ManagerVo) {
 			    ModelAndView mv = new ModelAndView();
 			    ManagerMapper.updatecs(ManagerVo);
-			    mv.setViewName("redirect:/manager/ManagerCsList"); 
+			    mv.setViewName("redirect:/Manager/ManagerCsList"); 
 			    return mv;
 			}
 		// ------------------------관리자 자주묻는질문 삭제-----------------------------//
@@ -146,7 +146,7 @@ public class ManagerController {
 		public ModelAndView managerCsDelete(@RequestParam("customer_service_idx") int idx) {
 		    ModelAndView mv = new ModelAndView();
 		    ManagerMapper.deleteCs(idx);
-		    mv.setViewName("redirect:/manager/ManagerCsList");
+		    mv.setViewName("redirect:/Manager/ManagerCsList");
 		    return mv;
 		}
 
@@ -191,7 +191,7 @@ public class ManagerController {
 			public ModelAndView managernoticewrite(ManagerVo ManagerVo) {
 				ManagerMapper.insertnotice(ManagerVo);
 				ModelAndView mv = new ModelAndView();
-				mv.setViewName("redirect:/manager/ManagerNoticeList");
+				mv.setViewName("redirect:/Manager/ManagerNoticeList");
 				return mv;
 			}
 		
@@ -209,7 +209,7 @@ public class ManagerController {
 		public ModelAndView managerNoticeUpdate(ManagerVo ManagerVo) {
 		    ModelAndView mv = new ModelAndView();
 		    ManagerMapper.updatenotice(ManagerVo);
-		    mv.setViewName("redirect:/manager/ManagerNoticeList"); 
+		    mv.setViewName("redirect:/Manager/ManagerNoticeList"); 
 		    return mv;
 		}
 		
@@ -218,7 +218,7 @@ public class ManagerController {
 			public ModelAndView managerNoticeDelete(@RequestParam("notice_idx") int idx) {
 			    ModelAndView mv = new ModelAndView();
 			    ManagerMapper.deletenotice(idx);
-			    mv.setViewName("redirect:/manager/ManagerNoticeList");
+			    mv.setViewName("redirect:/Manager/ManagerNoticeList");
 			    return mv;
 			}
 
@@ -230,13 +230,6 @@ public class ManagerController {
 			return mv;
 		}
 
-		// ------------------------관리자 조립앨범-----------------------------//
-		@RequestMapping("/ManagerAlbumList")
-		public ModelAndView manageralbumlist() {
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("manager/manageralbumlist");
-			return mv;
-		}
 
 		// ------------------------관리자 장터-----------------------------//
 		@RequestMapping("/ManagerMarketList")
@@ -246,5 +239,45 @@ public class ManagerController {
 			return mv;
 		}
 
+		
+		
+		//------------------------커뮤니티 메인화면-----------------------------//
+		@RequestMapping("/ManagerAlbumList")
+		public ModelAndView manageralbumlist(
+		        @RequestParam(name = "page", defaultValue = "1") int page, 
+		        @RequestParam(name = "size", defaultValue = "10") int size,
+		        @RequestParam(name = "type", required = false) String type
+		) {
+		    if (page < 1) page = 1; 
+
+		    if (type == null || type.isEmpty()) {
+		        type = "latest";
+		    }
+
+		    int start = (page - 1) * size; 
+		    int totalPosts = ManagerMapper.getcountalbumList();
+		    int totalPages = (int) Math.ceil((double) totalPosts / size);
+
+		    List<ManagerVo> albumList = ManagerMapper.getalbumList(start, size, type);
+		    
+		    ModelAndView mv = new ModelAndView();
+		    mv.addObject("totalPages", totalPages);
+		    mv.addObject("currentPage", page);
+		    mv.addObject("size", size);
+		    mv.addObject("albumList", albumList);
+		    mv.addObject("selectedType", type);
+		    mv.setViewName("manager/manageralbumlist");
+		    return mv;
+		}
+		
+		// ------------------------관리자 커뮤니티 삭제-----------------------------//
+			@RequestMapping(value = "/ManagerCommunityDelete", method = RequestMethod.POST)
+			public ModelAndView deletecommunity(@RequestParam("community_idx") int idx) {
+			    ModelAndView mv = new ModelAndView();
+			    ManagerMapper.deletecommunity(idx);
+			    mv.setViewName("redirect:/Manager/ManagerAlbumList");
+			    return mv;
+			}
+			
 
 }

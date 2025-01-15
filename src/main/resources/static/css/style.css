@@ -558,8 +558,14 @@ footer {
     text-align: center;
     height: 80px;
     line-height: 80px;
-    background: #ccc;
     flex-shrink: 0;
+    background: #f9f9f9;
+    border-radius : 4px;
+    
+    & img{
+    	height : 100%;
+    	vertical-align: middle;
+    }
   }
 }
 /* 브랜드 캐러셀 end */
@@ -1448,6 +1454,10 @@ footer {
     align-items: center;
     gap: 6px;
     padding-left: 12px;
+    
+    & input{
+    	border : solid 1px #ccc;
+    }
   }
 }
 
@@ -1543,7 +1553,7 @@ footer {
 
 .brand-item {
   width: 265px;
-  height: 100px;
+  height: 160px;
   margin: 10px; /* 각 박스 간의 여백 */
   padding: 0; /* 박스 내부 여백 */
   border: 1px solid #ccc; /* 테두리 */
@@ -1563,9 +1573,6 @@ footer {
 }
 
 .brand-item img {
-  width: 265px;
-  height: 100px;
-  object-fit: contain;
   vertical-align: middle;
 }
 

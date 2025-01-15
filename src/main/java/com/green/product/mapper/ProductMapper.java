@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ProductMapper {
 
-
    List<HashMap<String, Object>> getdeskTopEstimateProductFilterList(HashMap<String, Object> map);
 
    List<HashMap<String, Object>> getProductResultList(HashMap<String, Object> map);
@@ -17,7 +16,6 @@ public interface ProductMapper {
    void setProductCpu(HashMap<String, Object> hashMap);
 
    List<HashMap<String, Object>> getcategoryAttributeList(HashMap<String, Object> map);
-
 
 
 	int getProductResultListCount(HashMap<String, Object> map);

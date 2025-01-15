@@ -36,6 +36,30 @@
 			     OR PRODUCT_NORMALIZE_NAME LIKE '%'|| FN_GET_DIV_KO_CHAR(#{keyword}) ||'%' 
 		OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
  	</select>
+ 	
+ 	<insert id="saveTestBrandImg">
+			INSERT INTO brand_manufacturer_image (
+		    brand_manufacturer_idx,
+		    brand_manufacturer_image_name,
+		    brand_manufacturer_image_ext,
+		    brand_manufacturer_sfile_name
+			) VALUES (
+			    (select nvl(max(BRAND_MANUFACTURER_IMAGE_IDX),0)+1 from brand_manufacturer_image),
+			    #{product_image_name},
+			    #{product_image_ext},
+			    #{product_sfile_name}  
+			)
+ 	</insert>
+ 	
+ 	<select id="findBrandList">
+		SELECT
+	    BM.BRAND_MANUFACTURER_IDX,
+	    BM.BRAND_MANUFACTURER_NAME,
+	    BMI.BRAND_MANUFACTURER_SFILE_NAME
+		FROM
+    	BRAND_MANUFACTURER BM LEFT JOIN BRAND_MANUFACTURER_IMAGE BMI ON BM.BRAND_MANUFACTURER_IDX = BMI.BRAND_MANUFACTURER_IDX
+ 	</select>
+ 	
 </mapper>
 
 

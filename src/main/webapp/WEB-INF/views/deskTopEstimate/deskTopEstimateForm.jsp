@@ -417,6 +417,7 @@
            //console.log("추출된 길이 값:" +  productIds.length);
         // 올바른 메서드 이름으로 수정
            const productCountEl = document.querySelector('#productCount');
+           //const productCountEl = document.querySelector('.under-under');
         // 제품 개수 표시
            if (productIds.length > 0) {
                productCountEl.innerHTML = '총 ' + productIds.length + ' 개 품목 선택';
@@ -718,8 +719,9 @@
                   // 제품 카운트 및 총 가격 업데이트
                   countProduct();  
                   updateTotalPrice();
-                  ajax(nowpage=1, category=5);
-        		  
+                  //ajax(nowpage=1, category=5);
+               // 페이지 새로 고침
+                  location.reload();
         	 	 }
         	  }
         };
@@ -778,21 +780,27 @@
                 });
             });
 
-            // 페이지 로드 시 CPU 카테고리의 배경색 및 글자색 변경
-            const cpuCategory = document.querySelector('.DeskTopEstimateCategory[href*="category=5"] .desktop-mini'); // CPU 카테고리 선택
-            if (cpuCategory) {
-                cpuCategory.style.backgroundColor = '#1A3D91'; // 배경색 설정
-                cpuCategory.style.color = '#FFFFFF'; // 글자색 설정
-
-                // CPU 카테고리의 취소 버튼 색상도 변경  #1A3D91
-                const hiddenContent = cpuCategory.closest('a').querySelector('.hidden-content');
-                const cancelButton = hiddenContent.querySelector('.cancel-btn');
-                if (cancelButton) {
-                    cancelButton.style.backgroundColor = '#1A3D91'; // 취소 버튼 색상 변경
-                    cancelButton.style.color = '#FFFFFF'; // 취소 버튼 글자색 변경
-                }
-            }
+            cpuStyle();
         });
+     
+     function cpuStyle(){
+    	 // 페이지 로드 시 CPU 카테고리의 배경색 및 글자색 변경
+         const cpuCategory = document.querySelector('.DeskTopEstimateCategory[href*="category=5"] .desktop-mini'); // CPU 카테고리 선택
+         if (cpuCategory) {
+             cpuCategory.style.backgroundColor = '#1A3D91'; // 배경색 설정
+             cpuCategory.style.color = '#FFFFFF'; // 글자색 설정
+
+             // CPU 카테고리의 취소 버튼 색상도 변경  #1A3D91
+             const hiddenContent = cpuCategory.closest('a').querySelector('.hidden-content');
+             const cancelButton = hiddenContent.querySelector('.cancel-btn');
+             if (cancelButton) {
+                 cancelButton.style.backgroundColor = '#1A3D91'; // 취소 버튼 색상 변경
+                 cancelButton.style.color = '#FFFFFF'; // 취소 버튼 글자색 변경
+             }
+         }
+    	 
+    	 
+     };
      
      
      
@@ -954,7 +962,7 @@
                <div id="productCount">  </div>&nbsp;
                <!-- 전체 삭제 버튼 -->
 
-               <button id="deleteAllButton" style="background-color: #ffffff; margin-right: 15px; border: 1px solid #ccc; padding: 5px 10px; font-weight: bold;">전체 삭제</button>
+               <button id="deleteAllButton" style="background-color: #ffffff; margin-right: 15px; border: 1px solid #ccc; padding: 5px 10px; font-weight: bold; float: right;">전체 삭제</button>
             </p>
             <div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
                <p class="amount" style="margin-right: auto; text-align: right;">총 합계 금액</p>

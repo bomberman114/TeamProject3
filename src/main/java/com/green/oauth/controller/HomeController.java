@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.green.crawling.vo.CrawlingImgVo;
+import com.green.files.FileImage;
 import com.green.oauth.mapper.HomeMapper;
+import com.green.util.CrwllingCPUFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +34,7 @@ import jakarta.servlet.http.HttpSession;
 	
 	@Controller
 	public class HomeController {
-	
+		
 		@Autowired
 		private HomeMapper homeMapper;
 		
@@ -57,7 +63,10 @@ import jakarta.servlet.http.HttpSession;
 	    		recentProductList.add(map);
 	    	}
 	    	
+	    	List<HashMap<String, Object>> brandList = homeMapper.findBrandList();
+	    	
 	    	mv.addObject("recentProductList",recentProductList);
+	    	mv.addObject("brandList",brandList);
 	    	
 	    	// 403 에러시에 리다이렉트 되고 세션에 담긴 에러메시지 처리
 	    	String errorMessage = (String) session.getAttribute("errorMessage");
@@ -66,7 +75,7 @@ import jakarta.servlet.http.HttpSession;
 	            session.removeAttribute("errorMessage");
 	        }
 	        //List<HashMap<String, Object>> productList = homeMapper.findProduct();
-	        //CrwllingProductFilter.cpuAttribute(productList);
+	        //CrwllingCPUFilter.cpuAttribute(productList);
 	        mv.setViewName("home");
 	        return mv;
 	    }
@@ -116,5 +125,18 @@ import jakarta.servlet.http.HttpSession;
 	            }
 	        });
 	    }  
+	    
+	    /*
+	    @Value("${part4.upload-path}")
+		private String uploadPath; 
+	    @PostMapping("/brandImgSave")
+	    public void brandImgSave(HashMap<String, Object> requestBody, @RequestParam(value="profileImge")  MultipartFile[]   profileImge) {
+			requestBody.put("uploadPath", uploadPath);
+			FileImage.oneSave(requestBody, profileImge);
+			System.out.println((CrawlingImgVo)requestBody.get("imgVo"));
+			homeMapper.saveTestBrandImg((CrawlingImgVo)requestBody.get("imgVo"));
+	
+	    }
+	    */
 	}
 	

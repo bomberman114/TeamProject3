@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/searchHistory.js" defer></script>
-    <script src="/js/mainCarousel.js" defer></script>
-	   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
     <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
@@ -202,7 +201,7 @@
         let content = '의 라인업에 대한 설명입니다.</p>';
         let additionalDescription = manufacturerExplain; // 가져온 설명을 사용
 
-		let add1 = '';
+      let add1 = '';
 
         
         switch(brand) {
@@ -266,14 +265,33 @@
         document.querySelector('#brand-description-container').innerHTML = add1; // 추가 설명 업데이트
     }
    
+	
+    
+    
     var markers = [];
 
+    const mapContentInner = document.querySelector('.map-container')
+    
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
             center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
         };  
 
+    let recent = null
+    
+    mapContentInner.style.display = "none"
+    document.addEventListener("click",(e)=>{
+    	if(e.target.closest(".brand-item") && recent != e.target.parentNode.dataset.content.toUpperCase()){
+       	mapContentInner.style.display = "block"
+        document.getElementById('keyword').value = e.target.parentNode.dataset.content.toUpperCase() + " 서비스센터"
+   			recent = e.target.parentNode.dataset.content.toUpperCase();
+    		map.relayout(); // 지도 재구성
+    		searchPlaces();    			
+    	}
+    })
+    
+    
     // 지도를 생성합니다    
     var map = new kakao.maps.Map(mapContainer, mapOption); 
 

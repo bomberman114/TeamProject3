@@ -9,6 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/images/favicon/favicon.svg"/>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 
@@ -240,12 +241,14 @@
     
     
     <div class="cm-nav">
+    <c:if test="${empty sessionScope.user}">
       <div class="border">
         <div class="border-in">
           <div class="login"><a href="/loginForm">로그인</a></div>
           <div style="text-align: right;"><a href="/registerForm">회원가입</a></div>
         </div>
       </div>
+    </c:if>
       
       <div class="border">
         <div class="border-in">

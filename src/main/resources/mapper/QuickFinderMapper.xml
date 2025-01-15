@@ -30,8 +30,8 @@
             </otherwise>
         </choose>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
-					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+				AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(#{requestBody.listSearch}, ' ', ''),  'i'))
         </if> 
     </where>
 	    <choose>
@@ -73,21 +73,14 @@
 			LEFT JOIN PRODUCT_IMAGE            PI  ON P.PRODUCT_IDX = PI.PRODUCT_IDX
 			LEFT JOIN CATEGORY_ATTRIBUTE_VALUE CAV ON RAM.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
 		  LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
-    <where>
-        <choose>
-            <when test="requestBody.computerType == null or requestBody.computerType == ''">
-                P.CATEGORY_IDX IN (2, 3)
-            </when>
-            <otherwise>
-                P.CATEGORY_IDX = #{requestBody.computerType}
-            </otherwise>
-        </choose>
+		WHERE P.CATEGORY_IDX IN (2, 3)
+         <if test="requestBody.computerType != null and requestBody.computerType != ''">
+             AND P.CATEGORY_IDX = #{requestBody.computerType}
+         </if>
         <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
-					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
-					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
-					OR PRODUCT_NAME LIKE '%'|| #{requestBody.listSearch} ||'%'
+			AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+			OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(#{requestBody.listSearch}, ' ', ''),  'i'))
         </if> 
-    </where>
     <choose>
 	    <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
 	         AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
@@ -115,7 +108,7 @@
     </if>        
     <if test="requestBody.sortType != null and requestBody.sortType == ''">
     	ORDER BY P.CREATED_AT DESC
-    </if>      
+    </if>   
     OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
 </select>
 

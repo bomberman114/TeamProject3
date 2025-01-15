@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LaptopBrandMapper {
 
-	List<HashMap<String, Object>> brandExplainList(HashMap<String, Object> map);
-	
+   List<HashMap<String, Object>> brandExplainList(HashMap<String, Object> map);
+   
 
 }

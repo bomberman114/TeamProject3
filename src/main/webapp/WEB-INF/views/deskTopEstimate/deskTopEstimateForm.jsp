@@ -48,9 +48,9 @@
                     let totalPrice = 0; // 총 가격 초기화
                     html += '<div class="desk-modal-content">' +
                         '<span class="desk-close" onclick="closeModal1()" style="cursor: pointer;">&times;</span>' +
-                        '<img src="/images/logo/logo.svg" style="height: 100px; width: 300px;" alt="로고" />' +
+                        '<div><img src="/images/logo/logo.svg" style="height: 80px; width: 200px;" alt="로고" /></div>' +    
                         '<div id="capture-capture">' +
-                            '<div id="capture-content">' +
+                        '<div id="capture-content">' +
                                 '<div class="capture-category">분류</div>' +
                                 '<div class="capture-image">이미지</div>' +
                                 '<div class="capture-name">상품명</div>' +
@@ -61,7 +61,7 @@
                     products.forEach(product => {
                         html += '<div id="capture-content1">' +
                             '<div class="capture-category">' + product.CATEGORY_NAME + '</div>' +
-                            '<img src="' + product.PRODUCT_SFILE_NAME + '" style="width: 14%;" class="capture-image" alt="로고" />' +
+                            '<img src="' + product.PRODUCT_SFILE_NAME + '" style="width: 13%;" class="capture-image" alt="로고" />' +
                             '<div class="capture-name">' + product.PRODUCT_NAME + '</div>' +
                             '<div class="capture-price">' + product.PRICE.toLocaleString() + ' 원</div>' +
                         '</div>';
@@ -102,19 +102,18 @@
     function closeModal1() {
         document.getElementById('capture-modal').style.display = 'none';
     }
-    
     function Compatibility() {
-       // 모든 hidden input 요소 선택
-       const hiddenInputs = document.querySelectorAll('.desktop-specs input[type="hidden"][name="PRODUCT_IDX"]');
+        // 모든 hidden input 요소 선택
+        const hiddenInputs = document.querySelectorAll('.desktop-specs input[type="hidden"][name="PRODUCT_IDX"]');
 
-       // 각 hidden input의 value를 배열에 저장
-       const productIds = Array.from(hiddenInputs).map(input => input.value);
+        // 각 hidden input의 value를 배열에 저장
+        const productIds = Array.from(hiddenInputs).map(input => input.value);
 
-       // 결과 출력
-       console.log("추출된 PRODUCT_IDX 값:", productIds);
-       if(productIds.length == 0){
-       alert("상품을 선택해주세요");
-       };
+        // 결과 출력
+        console.log("추출된 PRODUCT_IDX 값:", productIds);
+        if(productIds.length == 0){
+        alert("상품을 선택해주세요");
+        };
        if(productIds.length > 0){
           
        let url = '/DeskTopEstimate/CompauterPartCompatibilityCheck?productIdxList=' + productIds;
@@ -135,82 +134,80 @@
         '<span class="desk-close" onclick="closeModal()">&times;</span>' +
         '<h2 style="font-size: 20px; font-weight: bold; text-align: left; ' +
         ' ' +
-        ' display: inline-block;">호환성 체크 결과</h2>' +
+        ' display: inline-block; color:#333;">호환성 체크 결과</h2>' +
         '<div class="desk-modal-content2">' +
         
-        '<div class="desk-modal-text">*호환성 좋지 않은 부품이 존재하면 해당 항목이 0점으로 표시되고 총점도 0점이 됩니다*</div>'+
+        '<div class="desk-modal-text">*호환성이 좋지 않은 부품이 존재하면 해당 항목이 0점으로 표시되고 총점도 0점이 됩니다*</div>'+
         
-        '<p style="margin-bottom: 20px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-        '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-        'CPU - 메모리' +
-        '</span>' +  <!-- 고정된 width 설정 -->
-        '<span style="font-size:10px; margin-left:20px; color:#e62807;">*메모리 규격의 일치 여부로 점수를 부여합니다*</span>' +
-        '<span class="deskmodal-score">' + data.totalScoreCpuRam +  '점 / 15점</span>' +
-      '</p>' +
+        '<p style="border: 1px solid #ccc; border-bottom: none; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+        '<span style="display: flex;  margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+            '<span style ="display: inline-block; text-align:left; width:60px;">CPU</span><span style="margin-left:20px;">-</span> <span class="span-name">메모리</span>' +
+        '</span>' +
+        '<span style="font-size: 10px; margin-left: 20px; color: #e62807;">메모리 규격의 일치 여부로 점수를 부여합니다</span>' +
+        '<span class="deskmodal-score">' + data.totalScoreCpuRam + ' 점 / 15점</span>' +
+    '</p>' +
             
-            '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-            '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-            'CPU - 메인보드' +
+            '<p style="border: 1px solid #ccc; border-bottom: none; padding: 10px; color:#333333; display: flex; align-items: center; justify-content: space-between;">' +
+            '<span style="display: flex;  margin:0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+            '<span style ="display: inline-block; text-align:left; width:60px;">CPU</span><span style="margin-left:20px;">-</span> <span class="span-name">메인보드</span>' +
             '</span>' + 
-            '<span style="font-size:10px; margin-left:20px; color:#e62807;">*소켓의 일치 여부와 세부 칩셋에 따른 등급으로 점수를 부여합니다*</span><br>' +
-            '<span class="deskmodal-score">' + data.totalScoreCpuMotherboard +  '점 / 15점</span>' +
+            '<span style="font-size:10px; margin-left:20px; color:#e62807;">소켓의 일치 여부와 세부 칩셋에 따른 등급으로 점수를 부여합니다</span><br>' +
+            '<span class="deskmodal-score">' + data.totalScoreCpuMotherboard +  ' 점 / 15점</span>' +
           '</p>' +
           
-          '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-          '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-          'CPU - 그래픽카드' +
-          '</span>' +
-          '<span style="font-size:10px; margin-left:20px; color:#e62807;">*제조사의 일치도에 따라 추가 점수를 부여합니다*</span><br>' +
-          '<span class="deskmodal-score">' + data.totalScoreCpuGpuScore +  '점 / 15점</span>' +
-        '</p>' +
-                  
-                  
-        '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-        '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-        '메모리 - 메인보드' +
-        '</span>' +
-        '<span style="font-size:10px; margin-left:20px; color:#e62807;">*메모리 규격의 일치 여부와 소켓 용량에 따라 점수를 부여합니다*</span><br>' +
-        '<span class="deskmodal-score">' + data.totalScoreMotherboardRam +  '점 / 15점</span>' +
+          '<p style="border: 1px solid #ccc; border-bottom: none; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+          '<span style="display: flex; margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+              '<span style ="display: inline-block; text-align:left; width:60px;">CPU</span><span style="margin-left:20px;">-</span>   <span class="span-name">메인보드</span>' +
+          '</span>' + 
+          '<span style="font-size: 10px; margin-left: 20px; color: #e62807;">소켓의 일치 여부와 세부 칩셋에 따른 등급으로 점수를 부여합니다</span><br>' +
+          '<span class="deskmodal-score">' + data.totalScoreCpuMotherboard + ' 점 / 15점</span>' +
       '</p>' +
                   
-                  
-      '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-      '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-      '케이스 - 메인보드' +
+      '<p style="border: 1px solid #ccc; border-bottom: none; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+      '<span style="display: flex; margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+          '<span style ="display: inline-block; text-align:left; width:60px;">메모리</span><span style="margin-left:20px;">-</span>  <span class="span-name">메인보드</span>' +
       '</span>' +
-      '<span style="font-size:10px; margin-left:20px; color:#e62807;">*장착 규격이 일치하는 지에 따라 점수를 부여합니다*</span><br>' +
-      '<span class="deskmodal-score">' + data.totalScoreMotherboardDesktopCase +  '점 / 15점</span>' +
-      '</p>' +
+      '<span style="font-size: 10px; margin-left: 20px; color: #e62807;">메모리 규격의 일치 여부와 소켓 용량에 따라 점수를 부여합니다</span><br>' +
+      '<span class="deskmodal-score">' + data.totalScoreMotherboardRam + ' 점 / 15점</span>' +
+  '</p>' +
                   
                   
-      '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-      '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-      '케이스 - 그래픽카드' +
-      '</span>' +
-      '<span style="font-size:10px; margin-left:20px; color:#e62807;">*장착 길이에 따라 점수를 부여하고 조립 난이도가 낮을 시 추가 점수를 부여합니다*</span><br>' +
-      '<span class="deskmodal-score">' + data.totalScoreGpuDesktopCase + '점 / 15점</span>' +
-      '</p>' +
-                  
-      '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-      '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-      '케이스 - 파워' +
-      '</span>' +
-      '<span style="font-size:10px; margin-left:20px; color:#e62807;">*장착 규격이 일치하는 지에 따라 점수를 부여합니다. 조립 난이도가 낮을 시 추가 점수를 부여합니다*</span><br>' +
-      '<span class="deskmodal-score">' + data.totalScoredesktopCasePower + '점 / 12점</span>' +
-      '</p>' + 
+  '<p style="border: 1px solid #ccc; border-bottom: none; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+  '<span style="display: flex; margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+      '<span style ="display: inline-block; text-align:left; width:60px;">케이스</span><span style="margin-left:20px;">-</span>   <span class="span-name">메인보드</span>' +
+  '</span>' +
+  '<span style="font-size: 10px; margin-left: 20px; color: #e62807;">장착 규격이 일치하는 지에 따라 점수를 부여합니다</span><br>' +
+  '<span class="deskmodal-score">' + data.totalScoreMotherboardDesktopCase + ' 점 / 15점</span>' +
+'</p>' +
                   
                   
-      '<p style="margin-bottom: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color:#333333; display: flex; align-items: center;">' +
-      '<span style="display: inline-block; width: 150px; border: 1px solid #ccc; border-radius: 6px; background-color: #CCC; color: #2A2A2A; text-align: center; padding: 5px;">' +
-      '필요전력 - 파워' +
-      '</span>' +
-      '<span style="font-size:10px; margin-left:20px; color:#e62807;">*필요 전력 요구치가 정격 출력과 일치하면 점수를 부여합니다. 정격 출력이 높을 수록 추가 점수를 부여합니다*</span><br>' +
-      '<span class="deskmodal-score">' + data.totalScorePowerGpu +  '점 / 15점</span>' +
-      '</p>' + 
+'<p style="border: 1px solid #ccc; border-bottom: none; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+'<span style="display: flex; margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+    '<span style ="display: inline-block; text-align:left; width:60px;">케이스</span> <span style="margin-left:20px;">-</span>   <span class="span-name">그래픽카드</span>' +
+'</span>' +
+'<span style="font-size: 10px; margin-left: 20px; color: #e62807;">장착 길이에 따라 점수를 부여하고 조립 난이도가 낮을 시 추가 점수를 부여합니다</span><br>' +
+'<span class="deskmodal-score">' + data.totalScoreGpuDesktopCase + ' 점 / 15점</span>' +
+'</p>'+
+                  
+'<p style=" border: 1px solid #ccc; border-bottom: none; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+'<span style="display: flex; margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+    '<span style ="display: inline-block; text-align:left; width:60px;">케이스</span><span style="margin-left:20px;">-</span>  <span class="span-name">파워</span>' +
+'</span>' +
+'<span style="font-size: 10px; margin-left: 20px; color: #e62807;">장착 규격이 일치하는 지에 따라 점수를 부여합니다. 조립 난이도가 낮을 시 추가 점수를 부여합니다</span><br>' +
+'<span class="deskmodal-score">' + data.totalScoredesktopCasePower + ' 점 / 12점</span>' +
+'</p>' + 
+                  
+'<p style=" border: 1px solid #ccc; padding: 10px; color: #333333; display: flex; align-items: center; justify-content: space-between;">' +
+'<span style="display: flex; margin: 0; width: 200px;  color: #2A2A2A; text-align: center; padding: 5px;">' +
+    '<span style ="display: inline-block; text-align:left; width:60px;">필요전력</span> <span style="margin-left:20px;">-</span>   <span class="span-name">파워</span>' +
+'</span>' +
+'<span style="font-size: 10px; margin-left: 20px; color: #e62807;">필요 전력과 정격 출력이 일치하면 점수를 부여합니다. 정격 출력이 높으면 추가 점수를 부여합니다</span><br>' +
+'<span class="deskmodal-score">' + data.totalScorePowerGpu + ' 점 / 15점</span>' +
+'</p>' + 
                   '</div>' +
               '<div class="desk-modal-totalsocre">' +    
-                  '<p>*최고 점수 : 114점*</p>' +
-                  '<p style="font-size:18px;">내 호환성 점수 : ' + data.totalScore + '점</p>' + 
+                  '<p>최고 점수 : 114 점</p>' +
+                  '<p>내 호환성 점수 : <span style="font-size:20px; color:#1A3D91;"> ' + data.totalScore + '</span> 점</p>' + 
               '</div>' +
           '</div>';
      // HTML 내용 추가
@@ -365,8 +362,8 @@
         function updateCategoryHeader(categoryMap, count) {
             const headerElement = document.querySelector('.desk-filters h3');
             if (headerElement) { // headerElement가 존재하는지 확인
-                headerElement.innerHTML = "<span style='font-weight:bold;'>" + categoryMap.CATEGORY_NAME + " 상품 개수 : " + count + "개</span>" +
-                    "<button class='show-all-btn' onclick='toggleAll(this)' style='border: none; background-color: #1A3D91; font-weight:bold; color: #ffffff; margin-left: auto;'>옵션 전체보기</button>";
+            	 headerElement.innerHTML = "<span>" + categoryMap.CATEGORY_NAME + " 상품 개수 :<span style='font-weight:bold; font-size:16px;''> " + count + "개</span></span>" +
+                    "<button class='show-all-btn' onclick='toggleAll(this)' style='border: none; background-color: #ffffff; font-weight:bold; color: #1A3D91; margin-left: auto; margin-right:10px;'>옵션 전체보기</button>";
             }
         }
         
@@ -409,86 +406,142 @@
 
             desktopPartFillter.innerHTML = filterHTML;
         }
-
+       
+        
         function updateProductList(productResultList) {
             const productListContainer = document.querySelector('.product-list');
             productListContainer.innerHTML = ''; // 초기화
 
-            productResultList.forEach(function(product) {
-                const productHTML = 
+            productResultList.forEach(function (product) {
+                const productHTML =
                     "<input type='hidden' name='CATEGORY_IDX' value='" + product.CATEGORY_IDX + "'>" +
                     "<input type='hidden' name='PRODUCT_IDX' value='" + product.PRODUCT_IDX + "'>" +
                     "<div class='product-item'>" +
-                        "<img src='" + product.PRODUCT_SFILE_NAME + "' alt='상품 이미지' style='height: 80px; width: 80px; margin-left: 10px;'>" +
-                        "<div class='product-description'>" +
-                            "<h4 style='font-weight: bold; margin-left: 20px;'>" + product.PRODUCT_NAME + "</h4>" +
-                            "<p style='color: #767676; font-size: 14px; max-width: 492px; margin-left: 20px;'>" + product.PRODUCT_DESCRIPTION + "</p>" +
-                            "<p style='color: #767676; margin-left: 20px; font-weight:bold;'>등록일 : " + new Date(product.CREATED_AT).toLocaleDateString() + "</p>" +
-                        "</div>" +
-                        "<div class='price-container'>" +
-                            "<p class='price' style='font-weight: 20px; color: #333333; font-weight:bold; margin-right: 5px;'>" + product.PRICE.toLocaleString() + "원</p>" +
-                            "<button class='add-btn' data-idx='" + product.PRODUCT_IDX + "' data-category='" + product.CATEGORY_IDX + "' style='height: 42px; width: 78px; border: #cccccc; font-size:15px; font-weight: bold;'>담기</button>" +
-                        "</div>" +
+                    "<img src='" + product.PRODUCT_SFILE_NAME + "' alt='상품 이미지' style='height: 80px; width: 80px; margin-left: 10px;'>" +
+                    "<div class='product-description'>" +
+                    "<h4 style='font-weight: bold; margin-left: 20px;'>" + product.PRODUCT_NAME + "</h4>" +
+                    "<p style='color: #767676; font-size: 14px; max-width: 492px; margin-left: 20px;'>" + product.PRODUCT_DESCRIPTION + "</p>" +
+                    "<p style='color: #767676; margin-left: 20px; font-weight:bold;'>등록일 : " + new Date(product.CREATED_AT).toLocaleDateString() + "</p>" +
+                    "</div>" +
+                    "<div class='price-container'>" +
+                    "<p class='price' style='font-weight: 20px; color: #333333; font-weight:bold; margin-right: 5px;'>" + product.PRICE.toLocaleString() + "원</p>" +
+                    "<button class='add-btn' data-idx='" + product.PRODUCT_IDX + "' data-category='" + product.CATEGORY_IDX + "' style='height: 42px; width: 78px; border: #cccccc; font-size:15px; font-weight: bold;'>담기</button>" +
+                    "</div>" +
                     "</div>";
                 productListContainer.innerHTML += productHTML;
             });
 
-         // add-btn 클릭 이벤트 리스너 추가
+            
+            
+            // add-btn 클릭 이벤트 리스너 추가
             document.querySelectorAll('.add-btn').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const category = this.dataset.category;
                     const productName = this.closest('.product-item').querySelector('.product-description h4').textContent;
-                    const productPrice = parseInt(this.closest('.price-container').querySelector('.price').textContent.replace(/[^0-9]/g, '')); // 가격을 숫자로 변환
-                    const productIdx = this.dataset.idx; // PRODUCT_IDX를 가져옴
+                    const productPrice = parseInt(this.closest('.price-container').querySelector('.price').textContent.replace(/[^0-9]/g, ''));
+                    const productIdx = this.dataset.idx;
 
-
-                    // 해당 카테고리의 hidden-content 요소에 제품 이름과 가격을 설정
                     const hiddenContent = document.querySelector('a[href*="category=' + category + '"] .hidden-content');
+                    const desktopMini = document.querySelector('a[href*="category=' + category + '"] .desktop-mini');
+
                     if (hiddenContent) {
                         hiddenContent.querySelector('p').textContent = productName;
-                        hiddenContent.querySelector('span.price').textContent = productPrice.toLocaleString() + "원"; // 가격 업데이트
+                        hiddenContent.querySelector('span.price').textContent = productPrice.toLocaleString() + "원";
 
-                     // 숨겨진 input 요소에 PRODUCT_IDX 설정
                         let hiddenInput = hiddenContent.querySelector('input[name="PRODUCT_IDX"]');
                         if (!hiddenInput) {
-                            // 존재하지 않으면 새로운 input 요소 생성
                             hiddenInput = document.createElement('input');
                             hiddenInput.type = 'hidden';
                             hiddenInput.name = 'PRODUCT_IDX';
-                            hiddenContent.appendChild(hiddenInput); // hidden-content에 추가
+                            hiddenContent.appendChild(hiddenInput);
                         }
-                        hiddenInput.value = productIdx; // PRODUCT_IDX 설정
-                        
-                        
-                        // 취소 버튼 추가
-                        let cancelButton = hiddenContent.querySelector('.cancel-btn');
+                        hiddenInput.value = productIdx;
+
+                        let cancelButton = desktopMini.querySelector('.cancel-btn');
                         if (!cancelButton) {
                             cancelButton = document.createElement('button');
                             cancelButton.className = 'cancel-btn';
                             cancelButton.textContent = '취소';
-                            cancelButton.style = 'height: 42px; width: 78px; color: #2A2A2A; border: #cccccc; font-weight: bold; margin-left: 5px; background-color: #1A3D91;'; // 배경색 변경
-                            hiddenContent.appendChild(cancelButton); // hidden-content에 추가
+                            cancelButton.style = 'height: 25px; width: 78px; font-size:16px; color: #ffffff; border: #cccccc; margin-left: auto; font-weight: bold; background-color: #1A3D91;';
+                            desktopMini.appendChild(cancelButton);
                         }
+                        
+                        
 
-                        // 취소 버튼 클릭 이벤트 리스너 추가
-                        cancelButton.onclick = function() {
+                        // 취소 버튼 클릭 이벤트
+                        cancelButton.onclick = function () {
                             hiddenContent.querySelector('p').textContent = ''; // 제품 이름 지우기
                             hiddenContent.querySelector('span.price').textContent = ''; // 가격 지우기
-                            hiddenInput.value = ''; // PRODUCT_IDX 지우기
+                            hiddenContent.removeChild(hiddenInput); // hiddenInput 요소 삭제
+                            hiddenInput = null; // hiddenInput 변수 초기화
                             cancelButton.remove(); // 취소 버튼 제거
 
-                            // 총 가격 업데이트
+                            desktopMini.style.backgroundColor = '#ffffff';
+                            cancelButton.style.backgroundColor = '#ffffff';
+                            cancelButton.style.color = '#333333';
+
                             updateTotalPrice();
                         };
                     }
 
-                    // 총 가격 계산하여 업데이트
                     updateTotalPrice();
                 });
             });
+            
+            
+            
+         // desktop-mini 클릭 이벤트 리스너 추가
+            document.querySelectorAll('.desktop-mini').forEach(desktopMini => {
+                desktopMini.addEventListener('click', function () {
+                    // 모든 desktop-mini를 초기화
+                    document.querySelectorAll('.desktop-mini').forEach(el => {
+                        el.style.backgroundColor = '#ffffff';
+                        const cancelBtn = el.querySelector('.cancel-btn');
+                        if (cancelBtn) {
+                            cancelBtn.style.backgroundColor = '#ffffff';
+                            cancelBtn.style.color = '#333333';
+                        }
+                    });
 
+                    // 현재 클릭된 desktop-mini 활성화
+                    this.style.backgroundColor = '#1A3D91';
+                    const cancelBtn = this.querySelector('.cancel-btn');
+                    if (cancelBtn) {
+                        cancelBtn.style.backgroundColor = '#1A3D91';
+                        cancelBtn.style.color = '#ffffff';
+                    }
+                });
+            });
+
+            // hidden-content 클릭 이벤트 추가
+            document.querySelectorAll('.hidden-content').forEach(hiddenContent => {
+                hiddenContent.addEventListener('click', function () {
+                    // 모든 desktop-mini를 초기화
+                    document.querySelectorAll('.desktop-mini').forEach(el => {
+                        el.style.backgroundColor = '#ffffff';
+                        const cancelBtn = el.querySelector('.cancel-btn');
+                        if (cancelBtn) {
+                            cancelBtn.style.backgroundColor = '#ffffff';
+                            cancelBtn.style.color = '#333333';
+                        }
+                    });
+
+                    // 해당 hidden-content의 부모 desktop-mini 활성화
+                    const desktopMini = this.closest('a').querySelector('.desktop-mini');
+                    if (desktopMini) {
+                        desktopMini.style.backgroundColor = '#1A3D91'; // 색상 변경
+                        const cancelBtn = desktopMini.querySelector('.cancel-btn');
+                        if (cancelBtn) {
+                            cancelBtn.style.backgroundColor = '#1A3D91'; // 색상 변경
+                            cancelBtn.style.color = '#ffffff'; // 색상 변경
+                        }
+                    }
+                });
+            });
         }
-
+        
+        
+        
         function updateTotalPrice() {
             const prices = document.querySelectorAll('.hidden-content span.price');
             let totalPrice = 0;
@@ -508,9 +561,9 @@
                 totalPriceElement.textContent = totalPrice.toLocaleString() + "원"; // 총 가격 업데이트
             }
         }
-        
-        
-        
+
+
+
         
         // 페이징 업데이트 함수
        function updatePagination(pagination, pageSize, nowpage, categoryMap) {
@@ -599,6 +652,11 @@
         };
      // DOMContentLoaded 이벤트를 사용하여 DOM이 완전히 로드된 후 실행
         document.addEventListener('DOMContentLoaded', function() {
+            // 초기 "담기" 버튼 클릭 시 취소 버튼 글자색 설정
+            document.querySelectorAll('.cancel-btn').forEach(function(cancelButton) {
+                cancelButton.style.color = '#FFFFFF'; // 초기 글자색을 #FFFFFF로 설정
+            });
+
             // 모든 .DeskTopEstimateCategory 요소를 찾기
             document.querySelectorAll('.DeskTopEstimateCategory').forEach(function(link) {
                 link.addEventListener('click', function(event) {
@@ -656,13 +714,10 @@
                     cancelButton.style.color = '#FFFFFF'; // 취소 버튼 글자색 변경
                 }
             }
-
-            // 초기 "담기" 버튼 클릭 시 취소 버튼 글자색 설정
-            document.querySelectorAll('.cancel-btn').forEach(function(cancelButton) {
-                cancelButton.style.color = '#FFFFFF'; // 초기 글자색 설정
-            });
         });
-        
+     
+     
+     
         function addCheckboxListeners(categoryMap) {
       // 각 체크박스에 change 이벤트 리스너 추가
             const checkboxes = document.querySelectorAll('#desktopPartFillter input[type="checkbox"]');
@@ -750,110 +805,89 @@
         </script>
 </head>
 <body>
-   <%@include file="/WEB-INF/include/header.jsp"%>
-   <main class="desktopestimate-main" style="max-width: 1280px; margin: 0 auto; height: auto;">
-      <section class="content">
-         <h1 style="font-size: 24px; color: #333333; margin-bottom: 10px; font-weight: bold;">PC 견적</h1>
-         <div class="desk-search-bar">
-            <input type="text" class="desk-search-bar" placeholder="상품명을 입력하세요">
-            <button style="border: none; height: 60px; width: 60px; color: #ffffff; background-color: #1A3D91;">검색</button>
-         </div>
+	<%@include file="/WEB-INF/include/header.jsp"%>
+	<main class="desktopestimate-main" style="max-width: 1280px; margin: 0 auto; height: auto;">
+		<section class="content">
+			<h1 style="font-size: 24px; color: #333333; margin-bottom: 10px; font-weight: bold;">PC 견적</h1>
 
-         <div class="desk-filters">
-            <h3 style="padding-left: 15px; color: #ffffff; line-height: 60px; background-color: #1A3D91; height: 60px; width: 788px; display: flex; justify-content: space-between; align-items: center;"></h3>
-            <div id="desktopPartFillter"></div>
-            <!-- 필터 리스트가 동적으로 추가될 부분 -->
-         </div>
+
+			<div class="desk-filters">
+				<h3 style="padding-left: 15px; color: #333; line-height: 60px; background-color: #FFFFFF; height: 60px; width: 788px; display: flex; justify-content: space-between; border: 1px solid #1A3D91; align-items: center;"></h3>
+				<div id="desktopPartFillter"></div>
+				<!-- 필터 리스트가 동적으로 추가될 부분 -->
+			</div>
 
 
 
-         <div class="product-list">
-            <!-- 상품 리스트가 동적으로 추가될 부분 -->
-         </div>
+			<div class="product-list">
+				<!-- 상품 리스트가 동적으로 추가될 부분 -->
+			</div>
 
-         <div class="desk-pagination">
-            <!-- 페이징이 동적으로 추가될 부분 -->
-         </div>
-      </section>
+			<div class="desk-pagination">
+				<!-- 페이징이 동적으로 추가될 부분 -->
+			</div>
+		</section>
 
-      <aside class="sidebar-right">
-         <div class="sidebar-name">PC 주요 구성</div>
-         <div class="desktop-specs">
-            <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=5"><div class="desktop-mini">
-                  CPU
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=6"><div class="desktop-mini">
-                  메인보드
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=7"><div class="desktop-mini">
-                  메모리
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=8"><div class="desktop-mini">
-                  그래픽카드
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=9"><div class="desktop-mini">
-                  SSD
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=10"><div class="desktop-mini">
-                  HDD
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=11"><div class="desktop-mini">
-                  CPU 쿨러
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=12"><div class="desktop-mini">
-                  케이스
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=13"><div class="desktop-mini">
-                  파워
-                  <div class=hidden-content>
-                     <p></p>
-                     <span class="price"></span>
-                  </div>
-               </div></a>
-         </div>
-         <div class="under-specs">
-            <p class="under-under">
-               총#개 품목선택 &nbsp;
-               <button style="background-color: #ffffff; margin-right: 15px; border: none; padding: 5px 10px; font-weight: bold;">전체 삭제</button>
-            </p>
-            <div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
-               <p class="amount" style="margin-right: auto;">총 합계 금액</p>
-               <p class="total-add-price">#원</p>
-            </div>
-            <button class="desk-button" onclick="Compatibility()">호환성 체크</button>
-            <div id="compatibility-modal" class="desk-modal"></div>
-            <button class="desk-capture-button" onclick="capture()">견적 캡쳐</button>
-            
-            <div id="capture-modal" class="desk-modal">
-               
-            </div>
-      </aside>
-   </main>
-   <%@include file="/WEB-INF/include/footer.jsp"%>
+		<aside class="sidebar-right">
+			<div class="sidebar-name">PC 주요 구성</div>
+			<div class="desktop-specs">
+				<a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=5"><div class="desktop-mini">CPU</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div> </a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=6"><div class="desktop-mini">메인보드</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=7"><div class="desktop-mini">메모리</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=8"><div class="desktop-mini">그래픽카드</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=9"><div class="desktop-mini">SSD</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=10"><div class="desktop-mini">HDD</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=11"><div class="desktop-mini">CPU 쿨러</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=12"><div class="desktop-mini">케이스</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a> <a class="DeskTopEstimateCategory" href="/DeskTopEstimate/DeskTopEstimateFiler?category=13"><div class="desktop-mini">파워</div>
+					<div class=hidden-content>
+						<p></p>
+						<span class="price"></span>
+					</div></a>
+			</div>
+			<div class="under-specs">
+				<p class="under-under">
+					총#개 품목선택 &nbsp;
+					<!-- 전체 삭제 버튼 -->
+					<button id="deleteAllButton" style="background-color: #ffffff; margin-right: 15px; border: 1px solid #ccc; padding: 5px 10px; font-weight: bold;">전체 삭제</button>
+
+				</p>
+				<div class="total-container" style="display: flex; justify-content: flex-start; align-items: center;">
+					<p class="amount" style="margin-right: auto;">총 합계 금액</p>
+					<p class="total-add-price">#원</p>
+				</div>
+				<button class="desk-button" onclick="Compatibility()">호환성 체크</button>
+				<div id="compatibility-modal" class="desk-modal"></div>
+				<button class="desk-capture-button" onclick="capture()">견적 캡쳐</button>
+
+				<div id="capture-modal" class="desk-modal"></div>
+		</aside>
+	</main>
+	<%@include file="/WEB-INF/include/footer.jsp"%>
 </body>
 </html>
 

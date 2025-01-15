@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/searchHistory.js" defer></script>
     <script src="/js/mainCarousel.js" defer></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
-<style>
+	   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
     <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
@@ -47,7 +46,6 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
-</style>
 </style>
 </head>
 <body>
@@ -143,7 +141,7 @@
     <div id="brand-abcd-container" class="abcd-description-container"></div>
     <div id="brand-description-container" class="brand-description-container"></div>
     <div id="additional-info-container" class="additional-info-container"></div> <!-- 추가 정보 컨테이너 -->
-	
+
 
 
 
@@ -203,12 +201,16 @@
     function loadBrandContent(brand, manufacturerExplain) {
         let content = '의 라인업에 대한 설명입니다.</p>';
         let additionalDescription = manufacturerExplain; // 가져온 설명을 사용
+
 		let add1 = '';
+
         
         switch(brand) {
             case 'lenovo':
                 content = 'LENOVO' + content;
+
                 add1 = '<div class="iframe-container"><iframe src="https://kr.msi.com/" class="brand-iframe"></iframe></div>';
+
                 break;    
             case 'samsung':
                 content = '삼성' + content;

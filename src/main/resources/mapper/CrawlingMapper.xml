@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.crawling.mapper.CrawlingMapper">
+
+	<select id="findByProductName">
+		SELECT *
+		FROM   PRODUCT
+		WHERE  PRODUCT_NAME = #{product_name}
+	</select>
+	
+	<select id="findByIdx">
+		SELECT *
+		FROM   PRODUCT_IMAGE
+		WHERE  PRODUCT_IDX = #{proudctIDx}
+	</select>
+
+	<insert id="saveProduct">
+		INSERT INTO product (
+			product_name,
+			product_description,
+			price,
+			category_idx
+		) VALUES (
+			#{product_name},
+			#{product_description},
+			#{price},
+			#{category_idx}
+		)
+	</insert>
+
+	<insert id="saveProductImg">
+		INSERT INTO product_image (
+			product_idx,
+			product_image_name,
+			product_image_ext,
+			product_sfile_name
+		) VALUES (
+			(SELECT MAX(PRODUCT_IDX) FROM PRODUCT),
+			#{img.product_image_name},
+			#{img.product_image_ext},
+		  #{img.product_sfile_name}
+		)
+
+	</insert>
+	<insert id="reinforceProductImg">
+		INSERT INTO product_image (
+			product_idx,
+			product_image_name,
+			product_image_ext,
+			product_sfile_name
+		) VALUES (
+			#{proudctIDx},
+			#{img.product_image_name},
+			#{img.product_image_ext},
+		  #{img.product_sfile_name}
+		)
+	</insert>
+	
+	<insert id="saveAttr">
+		INSERT INTO product_attribute (
+		    product_idx,
+		    category_attribute_idx,
+		    category_attribute_value_idx
+		) VALUES (
+			    #{arg0},
+			    #{arg1},
+			    #{arg2}
+		)
+			
+
+	</insert>
+
+</mapper>

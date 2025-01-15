@@ -18,7 +18,7 @@ WHERE
 
 </select>
 
-<select id="getProductResultList" parameterType="hashMap" resultType="hashMap">
+<select id="getProductResultMapList">
 
 SELECT
     P.PRODUCT_IDX,
@@ -44,6 +44,51 @@ ON
     P.PRODUCT_IDX = PA.PRODUCT_IDX
 WHERE
     P.CATEGORY_IDX  = #{category}
+
+   
+GROUP BY 
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION) ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    P.CREATED_AT,
+    P.UPDATED_AT,
+    PI.PRODUCT_IMAGE_IDX,
+    PI.PRODUCT_IMAGE_NAME,
+    PI.PRODUCT_IMAGE_EXT,
+    PI.PRODUCT_SFILE_NAME
+ORDER  BY   P.PRODUCT_IDX ASC
+
+</select>
+
+<select id="getProductResultList" parameterType="hashMap" resultType="hashMap">
+
+SELECT
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION ,
+    P.PRICE,
+    P.CATEGORY_IDX,
+    P.CREATED_AT,
+    P.UPDATED_AT,
+    PI.PRODUCT_IMAGE_IDX,
+    PI.PRODUCT_IMAGE_NAME,
+    PI.PRODUCT_IMAGE_EXT,
+    PI.PRODUCT_SFILE_NAME
+FROM
+    PRODUCT  P
+JOIN
+    PRODUCT_IMAGE  PI
+ON
+    P.PRODUCT_IDX = PI.PRODUCT_IDX
+LEFT JOIN
+    PRODUCT_ATTRIBUTE  PA
+ON 
+    P.PRODUCT_IDX = PA.PRODUCT_IDX
+WHERE
+    P.CATEGORY_IDX  = #{category}
+
  <if test="categoryAttributeIdxs != null ">    
 AND
     PA.CATEGORY_ATTRIBUTE_IDX IN
@@ -86,7 +131,7 @@ JOIN
     PRODUCT_IMAGE  PI
 ON
     P.PRODUCT_IDX = PI.PRODUCT_IDX
-JOIN
+LEFT JOIN
     PRODUCT_ATTRIBUTE  PA
 ON 
     P.PRODUCT_IDX = PA.PRODUCT_IDX
@@ -110,6 +155,7 @@ AND
 </if>
 
 
+
 </select>
 
 <select id="getCategoryMap">
@@ -121,7 +167,7 @@ SELECT
 FROM
     CATEGORY
 WHERE 
-   CATEGORY_IDX = #{category}
+	CATEGORY_IDX = #{category}
 </select>
 
 <select id="getcategoryAttributeList">
@@ -175,7 +221,9 @@ JOIN
 ON
     PA.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
 WHERE 
-      P.PRODUCT_IDX IN
+
+	   P.PRODUCT_IDX IN
+
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
            #{ productIdxList }
@@ -200,7 +248,9 @@ ORDER BY
     TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION ,
     P.PRICE,
     P.CATEGORY_IDX,
-    PI. PRODUCT_SFILE_NAME
+    PI. PRODUCT_SFILE_NAME,
+    C.CATEGORY_NAME
+
    
 FROM
     PRODUCT  P
@@ -209,8 +259,13 @@ JOIN
 ON
     P.PRODUCT_IDX = PI.PRODUCT_IDX
 
+JOIN
+    CATEGORY  C
+ON
+    P.CATEGORY_IDX = C.CATEGORY_IDX
 WHERE 
-      P.PRODUCT_IDX IN
+	   P.PRODUCT_IDX IN
+
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
            #{ productIdxList }
@@ -222,8 +277,9 @@ GROUP BY
     TO_CHAR(P.PRODUCT_DESCRIPTION),
     P.PRICE,
     P.CATEGORY_IDX,
-    PI. PRODUCT_SFILE_NAME
-   
+    PI. PRODUCT_SFILE_NAME,
+    C.CATEGORY_NAME
+
 ORDER BY 
      P.PRODUCT_IDX ASC
 

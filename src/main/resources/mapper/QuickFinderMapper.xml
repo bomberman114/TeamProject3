@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.common.mapper.QuickFinderMapper">
+
+<select id="findPurposeList">
+    SELECT PC.PURPOSE_CONTENT_IDX, 
+           PC.PURPOSE_IDX, 
+           PC.PURPOSE_CONTENT_NAME, 
+           PC.CPU_BENCH, 
+           PC.GPU_BENCH, 
+           PC.RAM_BENCH,
+           PI.PURPOSE_SFILE_NAME
+    FROM   PURPOSE_CONTENT PC LEFT JOIN PURPOSE_IMAGE PI ON PC.PURPOSE_CONTENT_IDX = PI.PURPOSE_CONTENT_IDX 
+    WHERE  1 = 1
+    <if test="purposeIdx != null and purposeIdx != ''">
+        AND PURPOSE_IDX = #{purposeIdx}
+    </if>
+</select>
+
+<select id="getProductCount">
+    SELECT COUNT(*)
+    FROM   PRODUCT P LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
+    <where>
+        <choose>
+            <when test="requestBody.computerType == null or requestBody.computerType == ''">
+                CATEGORY_IDX IN (2, 3)
+            </when>
+            <otherwise>
+                CATEGORY_IDX = #{requestBody.computerType}
+            </otherwise>
+        </choose>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+        </if> 
+    </where>
+	    <choose>
+        <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
+            AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
+        </when>
+				<when test="requestBody.manufacture != null and requestBody.manufacture != ''">
+				   AND REGEXP_LIKE(PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*'))
+				</when>
+      </choose>
+	    <choose>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND PRICE &gt;= #{requestBody.lowestPrice} AND PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+		        AND PRICE &gt;= #{requestBody.lowestPrice}
+		    </when>
+		    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+			</choose>
+</select>
+
+<select id="getProductPagingList">
+    SELECT P.PRODUCT_IDX,
+       P.PRODUCT_NAME,
+       P.PRODUCT_DESCRIPTION,
+       P.PRICE,
+       P.CATEGORY_IDX,
+       TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
+       PI.PRODUCT_SFILE_NAME,
+       cpu.product_benchmark_score AS CPU_BENCH,
+       gpu.product_benchmark_score AS GPU_BENCH,
+       REGEXP_SUBSTR(cav.category_attribute_value_name, '[0-9]+')AS RAM_BENCH
+		FROM   PRODUCT P
+			LEFT JOIN PRODUCT_BENCHMARK_SCORE  CPU ON P.PRODUCT_IDX = CPU.PRODUCT_IDX AND CPU.CATEGORY_IDX = 5
+			LEFT JOIN PRODUCT_BENCHMARK_SCORE  GPU ON P.PRODUCT_IDX = GPU.PRODUCT_IDX AND GPU.CATEGORY_IDX = 8
+			LEFT JOIN PRODUCT_ATTRIBUTE        RAM ON P.PRODUCT_IDX = RAM.PRODUCT_IDX
+			LEFT JOIN PRODUCT_IMAGE            PI  ON P.PRODUCT_IDX = PI.PRODUCT_IDX
+			LEFT JOIN CATEGORY_ATTRIBUTE_VALUE CAV ON RAM.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
+		  LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
+    <where>
+        <choose>
+            <when test="requestBody.computerType == null or requestBody.computerType == ''">
+                P.CATEGORY_IDX IN (2, 3)
+            </when>
+            <otherwise>
+                P.CATEGORY_IDX = #{requestBody.computerType}
+            </otherwise>
+        </choose>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+					AND REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR PRODUCT_NAME LIKE '%'|| #{requestBody.listSearch} ||'%'
+        </if> 
+    </where>
+    <choose>
+	    <when test="requestBody.manufacture != null and requestBody.manufacture!= '' and requestBody.manufactureBrand != null and requestBody.manufactureBrand!= ''">
+	         AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*')) AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufactureBrand}, ' ', '\s*'))
+	    </when>
+		<when test="requestBody.manufacture != null and requestBody.manufacture != ''">
+		  AND REGEXP_LIKE(P.PRODUCT_NAME, REPLACE(#{requestBody.manufacture}, ' ', '\s*'))
+		</when>
+    </choose>
+	<choose>
+	    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+	        AND P.PRICE &gt;= #{requestBody.lowestPrice} AND P.PRICE &lt;= #{requestBody.highestPrice}
+	    </when>
+	    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+	        AND P.PRICE &gt;= #{requestBody.lowestPrice}
+	    </when>
+	    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+	        AND P.PRICE &lt;= #{requestBody.highestPrice}
+	    </when>
+	</choose>
+    <if test="requestBody.sortType == 'highestPrice'">
+    	ORDER BY P.PRICE DESC
+    </if>        
+    <if test="requestBody.sortType == 'lowestPrice'">
+    	ORDER BY P.PRICE ASC
+    </if>        
+    <if test="requestBody.sortType != null and requestBody.sortType == ''">
+    	ORDER BY P.CREATED_AT DESC
+    </if>      
+    OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
+</select>
+
+<select id="findManufacturerList">
+	SELECT
+    BRAND_MANUFACTURER_IDX,
+    BRAND_MANUFACTURER_NAME
+	FROM
+    BRAND_MANUFACTURER
+</select>
+
+<select id="findBrandListByManufactureIdx">
+	SELECT
+	    BRAND_LINEUP_IDX,
+	    BRAND_LINEUP_NAME,
+	    BRAND_MANUFACTURER_IDX,
+	    BRAND_PURPOSE_IDX,
+	    BRAND_LINEUP_RANK_IDX,
+	    BRAND_SIMPLE_TERMS_EXPLAIN,
+	    BRAND_TERMS_EXPLAIN,
+	    CATEGORY_IDX
+	FROM
+	    BRAND_LINEUP WHERE BRAND_MANUFACTURER_IDX = #{manufactureIdx}
+</select>
+
+<insert id="saveTestPurposeImg">
+INSERT INTO purpose_image (
+    purpose_content_idx,
+    purpose_image_name,
+    purpose_image_ext,
+    purpose_sfile_name
+) VALUES (
+    (select nvl(max(PURPOSE_IMAGE_IDX),0)+1 from purpose_image),
+    #{product_image_name},
+    #{product_image_ext},
+    #{product_sfile_name}  
+)
+</insert>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

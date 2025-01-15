@@ -30,7 +30,7 @@
 						<div><a href="/dSearch?keyword=9800x3d"><img src="/images/carousel/maincarasel1.png"></a></div>
 					</div>
 					<div class="carousel-slide">
-						<div><a href="/dSearch?keyword=인텔 울트라"><img src="/images/carousel/maincarasel2.png"></a></div>
+						<div><a href="/dSearch?keyword=인텔 코어 울트라"><img src="/images/carousel/maincarasel2.png"></a></div>
 					</div>
 					<div class="carousel-slide">
 						<div><a href="/QuickFinder"><img src="/images/carousel/maincarasel3.png"></a></div>
@@ -64,16 +64,9 @@
 			<div>
 				<div class="brand-carousel">
 					<ul class="brand-carousel-container">
-						<li>MSI1</li>
-						<li>MSI2</li>
-						<li>MSI3</li>
-						<li>MSI4</li>
-						<li>MSI5</li>
-						<li>MSI6</li>
-						<li>MSI7</li>
-						<li>MSI8</li>
-						<li>MSI9</li>
-						<li>MSI10</li>
+						<c:forEach var="brand" items="${brandList}">
+							<li><a href="/LaptopBrand/Brand"><img src="/images/brand-manufacturer/${brand.BRAND_MANUFACTURER_SFILE_NAME}"></a></li>						
+						</c:forEach>
 					</ul>
 				</div>
 				<h2>카테고리별 신상품</h2>

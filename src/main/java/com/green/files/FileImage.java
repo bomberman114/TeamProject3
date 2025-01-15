@@ -14,9 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.green.crawling.vo.CrawlingImgVo;
 
-
-
-
 public class FileImage {
 
 		// uploadfiles 에 넘어온 파일들을 저장
@@ -109,7 +106,7 @@ public class FileImage {
 		
 		
 		// uploadfiles 에 넘어온 파일들을 저장
-	/*	public static void oneSave(HashMap<String, Object> map, MultipartFile[] profileImge) {
+		public static void oneSave(HashMap<String, Object> map, MultipartFile[] profileImge) {
 		    String uploadPath = String.valueOf(map.get("uploadPath"));
 		    System.out.println("save까지옴");
 		    
@@ -131,7 +128,7 @@ public class FileImage {
 		        File saveFile = new File(savePath);
 		        file.transferTo(saveFile);
 		        
-		        CrollingImgVo  imgVo = new CrollingImgVo(0, 0, fileName, fileExtension, savePath);
+		        CrawlingImgVo  imgVo = new CrawlingImgVo(0, 0, fileName, fileExtension, savePath);
 		        System.out.println("File saved successfully at: " + savePath);
 		        map.put("imgVo", imgVo);
 		    } catch (IOException e) {
@@ -140,7 +137,7 @@ public class FileImage {
 		    }
 		}
 
-		*/
+		
 		
 
 		// 날짜 폴더 생성   d:\\dev\\data\\2024\\11\\05

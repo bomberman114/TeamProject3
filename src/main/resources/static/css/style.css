@@ -376,6 +376,7 @@ footer {
     align-items: baseline;
   }
 
+
   & .contact p {
     font-size: 16px;
     font-weight: 500;
@@ -1460,6 +1461,15 @@ footer {
   }
 }
 
+.price {
+   display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 10px;
+   
+}
+
 .exception-title {
   width: 100%;
   height: 300px;
@@ -1481,15 +1491,15 @@ footer {
 }
 
 .price-filter input{
-	padding : 4px 8px;
+   padding : 4px 8px;
 }
 
 .detailSearch-price-filter-btn{
-	background: #555;
-	color : #fff;
-	border : none;
-	padding : 4px 8px;
-	border-radius: 2px;
+   background: #555;
+   color : #fff;
+   border : none;
+   padding : 4px 8px;
+   border-radius: 2px;
 }
 
 .dSearch-title {
@@ -1523,14 +1533,14 @@ footer {
 }
 
 .brand-box {
-	flex-wrap: wrap; /* 줄 바꿈을 허용 */
-	max-width: 1200px; /* 최대 너비 설정 */
-	margin: 0 auto; /* 중앙 정렬 */
-	margin-top: 60px;
-	padding: 20px; /* 패딩 추가 */
-	background-color: #2a2b33;
-	border-radius: 8px;
-	margin-bottom: 30px;
+   flex-wrap: wrap; /* 줄 바꿈을 허용 */
+   max-width: 1200px; /* 최대 너비 설정 */
+   margin: 0 auto; /* 중앙 정렬 */
+   margin-top: 60px;
+   padding: 20px; /* 패딩 추가 */
+   background-color: #2a2b33;
+   border-radius: 8px;
+   margin-bottom: 30px;
 }
 
 .brand-links {
@@ -1575,23 +1585,23 @@ footer {
 }
 
 .brand-text {
-	font-size: 24px; /* 글자 크기 */
-	color: #ffffff; /* 글자 색상 */
-	text-align: center; /* 중앙 정렬 */
-	font-weight: bold; /* 글씨 두께 */
-	padding: 10px; /* 패딩 추가 */
-	background-color: #2a2b33;
-	border-radius: 8px; /* 모서리 둥글게 */
+   font-size: 24px; /* 글자 크기 */
+   color: #ffffff; /* 글자 색상 */
+   text-align: center; /* 중앙 정렬 */
+   font-weight: bold; /* 글씨 두께 */
+   padding: 10px; /* 패딩 추가 */
+   background-color: #2a2b33;
+   border-radius: 8px; /* 모서리 둥글게 */
 
 }
 
 .text-finder {
-	alingn-items: center;
-	background: #1A3D91;
-	border-radius: 20px;
-	gap: 4px;
-	justify-content: center;
-	padding: 4px 25px;
+   alingn-items: center;
+   background: #1A3D91;
+   border-radius: 20px;
+   gap: 4px;
+   justify-content: center;
+   padding: 4px 25px;
 }
 
 .brand-explain {
@@ -1601,21 +1611,21 @@ footer {
 
 
 .abcd-description-container {
-	text-align:center;
-	font-size: 20px;
-	font-weight: bold;
-	color: #333;
-	padding-top: 60px;
-	padding-bottom: 40px;
-	width: 75%;
-	margin: auto;
+   text-align:center;
+   font-size: 20px;
+   font-weight: bold;
+   color: #333;
+   padding-top: 60px;
+   padding-bottom: 40px;
+   width: 75%;
+   margin: auto;
 }
 
-.brand-description-container {	
-	text-align:center;
+.brand-description-container {   
+   text-align:center;
 
-	margin-top: 20px; /* 상단 여백 */
-	color: #333;
+   margin-top: 20px; /* 상단 여백 */
+   color: #333;
 }
 
 .additional-info-container {
@@ -1659,39 +1669,47 @@ footer {
 }
 
 .desktop-specs {
-	padding: 10px;
-	font-size: 20px;
-	color:#333333;
-	font-weight: bold;
-	height: auto;
-	overflow-x: hidden;      /* 가로 스크롤 숨기기 */
-	overflow-y: auto;        /* 세로 스크롤 가능 */
+   padding: 5px;
+   font-size: 20px;
+   color:#333333;
+   font-weight: bold;
+   height: auto;
+   overflow-x: hidden;      /* 가로 스크롤 숨기기 */
+   overflow-y: auto;        /* 세로 스크롤 가능 */
 
 }
 
 
 .sidebar-right {
-    width: 380px;            /* 너비 설정 */
-    background: #CCCCCC;     /* 배경색 설정 */
+    width: 395px;            /* 너비 설정 */
+    background-color: #f6f3f2;     /* 배경색 설정 */
     padding: 20px;           /* 내부 여백 */
-    margin-left: 50px;       /* 왼쪽 여백 */
     margin-top: 63px;        /* 상단 여백 */
     height: 730px;           /* 고정 높이 설정 (필요에 따라 조정) */               /* 왼쪽에서의 위치 */
-	overflow-x: hidden;
+   overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
       position: sticky; /* 스티키 위치 */
     top: 25px; /* 상단에서의 위치 */
     z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+    margin-right: 20px;
+    border: 1px solid #ccc;
 }
 .desktop-mini {
-	margin-bottom: 10px;
-	background-color: #ffffff;
-	width: 325px;
-	height: auto;
-	padding: 10px;
-
+   background-color: #ffffff;
+   width: 325px;
+   height: auto;
+   padding: 10px;
+   display: flex; /* Flexbox 활성화 */
+    justify-content: space-between;
+    align-items: center; /* 수직 정렬 */
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    font-size: 16px;
 }
+
+
 
 .under-specs {
     padding: 13px;
@@ -1702,40 +1720,48 @@ footer {
 
 
 .under-under {
-	text-align:right;
-	color: #ffffff;
-	font-size: 14px;
-	margin-right: 10px;
-	margin-bottom: 10px;
-	margin-top: 5px;
+   text-align:right;
+   color: #333333;
+   font-size: 14px;
+   margin-right: 10px;
+   margin-bottom: 10px;
+   margin-top: 5px;
+   font-weight: bold;
 }
 
 .desk-button {
-	width: 45%;
-	height: 30px;
-	background-color: #ffffff;
-	font-size: 14px;
-	border: none;
-	padding: 3px;
-	margin-right: 5px;
-	justify-content: center;
+   width: 45%;
+   height: 30px;
+   background-color: #ffffff;
+   font-size: 15px;
+   border: none;
+   padding: 3px;
+   margin-right: 5px;
+   justify-content: center;
+   font-weight: bold;
+   color:#333333;
+   border: 1px solid #ccc;
 }
 
 .desk-capture-button {
-	width: 45%;
-	height: 30px;
-	background-color:  #ffffff;
-	font-size: 14px;
-	border: none;
-	padding: 3px;
-	margin-right: 5px;
-	justify-content: center;
+   width: 45%;
+   height: 30px;
+   background-color:  #ffffff;
+   font-size: 14px;
+   border: none;
+   padding: 3px;
+   margin-right: 5px;
+   justify-content: center;
+    font-weight: bold;
+   color:#333333;
+   border: 1px solid #ccc;
 }
 
 .amount {
     margin-right: 23px; /* 원하는 값으로 조정 */
-	margin-bottom: 10px;
-	color:#ffffff;
+   margin-bottom: 10px;
+   color:#333333;
+   font-weight: bold;
 }
 
 .desk-search-bar {
@@ -1774,7 +1800,7 @@ footer {
 }
 
 .product-item {
-    /* 플렉스 박스 설정 */
+    display:flex; /* 플렉스 박스 설정 */
     align-items: center; /* 세로 중앙 정렬 */
     margin-bottom: 20px; /* 아래쪽 여백 */
     border: 1px solid #ddd; /* 테두리 추가 (선택 사항) */
@@ -1782,6 +1808,7 @@ footer {
     width: 790px;
     height: auto;
     min-height:183px; 
+   
 
 }
 
@@ -1836,9 +1863,9 @@ footer {
 }
 
 .brand-p {
-	max-width: 1200px;
-	color:#333333;
-	
+   max-width: 1200px;
+   color:#333333;
+   
 }
 
 .image-container {
@@ -1864,33 +1891,42 @@ footer {
 }
 
 .brand-iframe {
-	width: 90%;
-	margin:auto; 
-	height: 1200px;	
+   width: 90%;
+   margin:auto; 
+   height: 1200px;   
 }
 
-    .desk-fillter {
-        display: flex; /* 플렉스박스 적용 */
-        margin: 15px; /* 외부 여백 */
-        align-items: flex-start; /* 아이템을 위쪽 정렬 */
-        border-bottom: 1px solid #ccc;
-    }
+
+.desk-fillter {
+    display: flex;
+    margin-top : 10px;
+    border-bottom: 1px solid #ccc; /* 아래에 선 추가 */
+    padding: 10px; /* 아래 여백 추가 */
+    
+}
+
+.desk-fillter:last-child {
+    border-bottom: none; /* 마지막 항목의 선 제거 */
+}
     .desk-fillter h3 {
         color: #333333;
         font-weight: bold;
         margin-bottom: 5px; /* h3와 체크박스 간의 간격 조정 */
-        width: 100px; /* h3의 고정 너비 설정 */
+        width: 130px; /* h3의 고정 너비 설정 */
+         margin-left: 5px;
     }
     .checkbox-group {
         display: flex; /* 체크박스 그룹을 수평 방향으로 정렬 */
         flex-wrap: wrap; /* 줄 바꿈 허용 */
-        margin-left: 10px; /* h3와 체크박스 간의 간격 조정 */
+        margin-left: 30px; /* h3와 체크박스 간의 간격 조정 */
         max-width: 550px;
+        
         
     }
     .checkbox-group label {
         margin-right: 10px; /* 체크박스 간의 간격 */
         margin-bottom: 12px; /* 아래 여백 */
+        width: 170px;
     }
     .right-align {
         margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
@@ -1910,7 +1946,7 @@ footer {
     padding: 5px 10px;
     cursor: pointer;
     margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
-    align-self: flex-end; /* 수직 정렬을 오른쪽 끝으로 설정 */
+   margin-bottom: 7px;
 }
 
 .desk-pagination {
@@ -1950,10 +1986,10 @@ footer {
     border: 2px solid #888;
     width: 55%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	height:60%;
-	overflow: scroll;
-	overflow-x:hidden;
-	font-weight: bold;
+   height:60%;
+   overflow: scroll;
+   overflow-x:hidden;
+   font-weight: bold;
 }
 
 /* 닫기 버튼 */
@@ -1973,113 +2009,133 @@ footer {
 }
 
 .deskmodal-score {
-	margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
-    float: right;
-    border:1px solid #ccc;
-    border-radius: 6px;
-    background-color: #CCC; 
+   margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
     color: #2A2A2A;
     padding: 5px;
-    
-    
-   
 }
 
 .desk-modal-totalsocre {
     text-align: right;
-    font-weight: bold;
     height: auto;
+    font-weight: 600;
+    color:#333;
+    
 }
 
 .desk-modal-content2 {
-	font-weight: bold;
-	margin: auto;
-	margin-bottom: 20px;
-	margin-top: 10px;
-	height: auto;
-}
-
-.desk-hidden {
-	height: auto;
-	width: 325px;
-	margin-bottom:10px;
-	background-color: #f5f5f5;
-	
+   font-weight: bold;
+   margin: auto;
+   margin-bottom: 20px;
+   margin-top: 10px;
+   height: auto;
 }
 
 .hidden-content {
-	height: auto;
-	
-	
+   border-bottom:1px solid #ccc;
+   border-left:1px solid #ccc;
+   border-right:1px solid #ccc;
+   height: auto;
+   width:325px;
+   padding-left:10px;
+   padding-right:5px;
+   background-color: #ffffff;
+   color:#2a2a2a;
+   margin-bottom: 10px;
+   font-size: 13px;
+   font-weight: 500;
+   border-top:1px solid #ccc;
+}
+
+.hidden-content p {
+   
+}
+
+.span-name {
+   margin-left: 30px;
 }
 
 .total-add-price {
-	font-weight: bold;
-	margin-right: 25px;
+   font-weight: bold;
+   margin-right: 25px;
 }
 
 .cancel-btn {
-	background-color: #ffffff;
+   background-color: #ffffff;
 }
 
 #capture-content {
     display: flex; /* Flexbox 사용 */
-    background-color: #CCCCCC;
         width: 100%;
+        border-left: 1px solid #2a2a2a;
+        border-right: 1px solid #2a2a2a;
+        border-top : 1px solid #2a2a2a;
+        background-color: #f6f3f2;
     /* justify-content: space-between; /* 항목 간의 공간을 균등하게 배분 (필요에 따라 주석 처리) */
 }
 
 #capture-content1 {
     display: flex; /* Flexbox 사용 */
+
     /* justify-content: space-between; /* 항목 간의 공간을 균등하게 배분 (필요에 따라 주석 처리) */
 }
 
 
 #capture-content1 div {
-    text-align: center; /* 중앙 정렬 */
+
     padding: 10px; /* 패딩 추가 */
-    border: 1px solid #333333; /* 경계선 추가 */
 }
 
 
 #capture-content1 {
     display: flex; /* Flexbox 사용 */
+            border:1px solid #2A2A2A;
     /* justify-content: space-between; /* 항목 간의 공간을 균등하게 배분 (필요에 따라 주석 처리) */
 }
 
 
 #capture-content1 div {
-    text-align: center; /* 중앙 정렬 */
     padding: 10px; /* 패딩 추가 */
-    border: 1px solid #333333; /* 경계선 추가 */
 }
 
 #capture-content div {
     text-align: center; /* 중앙 정렬 */
     padding: 10px; /* 패딩 추가 */
-    border: 1px solid #333333; /* 경계선 추가 */
+   
 }
 .capture-category {
     flex: 0 0 15%; /* 분류의 너비 15% */
+            border-right:1px solid #2A2A2A;
+            text-align: center;
+                display: grid; /* Grid 활성화 */
+    place-items: center; /* 수직 및 수평 중앙 정렬 */
 
 }
 .capture-image {
     flex: 0 0 15%; /* 이미지의 너비 15% */
-	border: 1px solid #333333; 
+            border-right:1px solid #2A2A2A;
 }
 .capture-name {
     flex: 0 0 55%; /* 상품명의 너비 55% */
+    border-right:1px solid #2A2A2A;
+    text-align: left !important;
+    display: grid; /* Grid 활성화 */
+     align-items: center; /* 수직 중앙 정렬 */
+     padding-left:30px;
+    height: auto;
 }
 .capture-price {
     flex: 0 0 15%; /* 가격의 너비 15% */
+    text-align: center;
+        display: grid; /* Grid 활성화 */
+    place-items: center; /* 수직 및 수평 중앙 정렬 */
 }
 
 .total-modal-price {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	font-weight: bold;
-	font-size: 20px;
-	text-align: right;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   font-weight: bold;
+   font-size: 20px;
+   text-align: right;
 }
 
 .button-container {
@@ -2091,12 +2147,12 @@ footer {
 .capture-button {
      border-radius: 6px; /* 둥근 모서리 (선택 사항) */
      font-weight: bold;
-     background-color: #1A3D91; /* 배경색 */
-        color:#cccccc;
+     background-color: #f6f3f2; /* 배경색 */
+        color:#333;
         outline: none; /* 포커스 시 나타나는 테두리 제거 */
-    border: 2px solid transparent;
     padding: 10px;
     font-size: 18px;
+    border:1px solid #ccc;
     
 } 
 
@@ -2105,20 +2161,40 @@ footer {
     background-color: #1A3D91; /* hover 시 배경색 변경 */
 }
 
+.desk-capture-button:hover{
+   color:#ffffff;
+   background-color : #1A3D91;
+}
+
+.desk-button:hover{
+   color:#ffffff;
+   background-color : #1A3D91;
+   
+}
+
+.add-btn:hover {
+   background-color: #1A3D91;
+   color:#ffffff;
+   
+}
+
+.add-btn {
+    color: #767676;
+}
 .map {
-	display:flex;
-	justify-content: center;
+   display:flex;
+   justify-content: center;
 }
 
 .map-container {
-	width: 76%;
-	justify-content: center;
-	display: flex;
-	   margin: 0 auto; /* 중앙 정렬 */
+   width: 76%;
+   justify-content: center;
+   display: flex;
+      margin: 0 auto; /* 중앙 정렬 */
 }
 
 .desk-modal-text {
-	margin-bottom: 40px;
-	color:#c9500e;
+   margin-bottom: 20px;
+   color:#c9500e;
 }
 

@@ -40,36 +40,35 @@ import com.green.ssd.mapper.SsdMapper;
 public class DeskTopEstimateController {
 // PC 견적
 
-   @Autowired
-   private DeskTopEstimateService deskTopEstimateService;
+	@Autowired
+	private DeskTopEstimateService deskTopEstimateService;
 
-   @Autowired
-   private CpuMapper cpuMapper;
+	@Autowired
+	private CpuMapper cpuMapper;
 
-   @Autowired
-   private GpuMapper gpuMapper;
+	@Autowired
+	private GpuMapper gpuMapper;
 
-   @Autowired
-   private RamMapper ramMapper;
+	@Autowired
+	private RamMapper ramMapper;
 
-   @Autowired
-   private SsdMapper ssdMapper;
+	@Autowired
+	private SsdMapper ssdMapper;
 
-   @Autowired
-   private CoolerMapper coolerMapper;
+	@Autowired
+	private CoolerMapper coolerMapper;
 
-   @Autowired
-   private DesktopCaseMapper desktopCaseMapper;
+	@Autowired
+	private DesktopCaseMapper desktopCaseMapper;
 
-   @Autowired
-   private PowerMapper powerMapper;
+	@Autowired
+	private PowerMapper powerMapper;
 
-   @Autowired
-   private HddMapper hddMapper;
+	@Autowired
+	private HddMapper hddMapper;
 
-   @Autowired
-   private MotherboardMapper motherboardMapper;
-
+	@Autowired
+	private MotherboardMapper motherboardMapper;
 
 	@Autowired
 	private ProductMapper productMapper;
@@ -79,230 +78,49 @@ public class DeskTopEstimateController {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("도착");
 		System.out.println(map);
-		int category = 6;
+		int category = 13;
 		map.put("category", category);
-		/*
 		List<HashMap<String, Object>> productResultList = productMapper.getProductResultMapList(map);
-		for (int i = 6; i <= 29; i++) {
-			String productDescription = String.valueOf(productResultList.get(i).get("PRODUCT_DESCRIPTION"));
-			String productName = String.valueOf(productResultList.get(i).get("PRODUCT_NAME"));
-			productResultList.get(i).put("CATEGORY_ATTRIBUTE_IDX", i);
-			// "인텔"이 포함되어 있는지 체크
-			
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(16)) {
-				if (productName != null && productName.contains("ASUS")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 56);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productName != null && productName.matches("GIGABYTE")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 57);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productName != null && productName.matches("ASRock")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 58);
-					productMapper.setProductCpu(productResultList.get(i));
+		List<HashMap<String, Object>> productCategoryResultList = productMapper.productCategoryResultList(map);
+		/*
+		for (int z = 0; z < productResultList.size(); z++) {
+			for (int i = 129; i <= 139; i++) {
+
+				productResultList.get(z).put("CATEGORY_ATTRIBUTE_IDX", i);
+				String productDescription = String.valueOf(productResultList.get(z).get("PRODUCT_DESCRIPTION"));
+				String productName = String.valueOf(productResultList.get(z).get("PRODUCT_NAME"));
+				
+				for (int y = 0; y < productCategoryResultList.size(); y++) {
+					int categoryAttributeIdx = Integer
+							.parseInt(String.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_IDX")));
+					String categoryAttributeame = String
+							.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_NAME"));
+					int categoryAttributeValueIdx = Integer.parseInt(
+							String.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_VALUE_IDX")));
+					String categoryAttributeValueName = String
+							.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_VALUE_NAME"));
+
+					if (productResultList.get(z).get("CATEGORY_ATTRIBUTE_IDX").equals(categoryAttributeIdx)) {
+						if (productName != null && productName.contains(categoryAttributeValueName)) {
+							productResultList.get(z).put("CATEGORY_ATTRIBUTE_VALUE_IDX", categoryAttributeValueIdx);
+							productMapper.setProductCpu(productResultList.get(z));
+						}
+						if (productDescription != null && productDescription.contains(categoryAttributeValueName)) {
+							productResultList.get(z).put("CATEGORY_ATTRIBUTE_VALUE_IDX", categoryAttributeValueIdx);
+							productMapper.setProductCpu(productResultList.get(z));
+						}
+
+					}
+
 				}
 
 			}
-
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(2)) {
-				if (productName != null && productName.contains("애로우레이크")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 3);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productName != null && productName.matches("버미어(2020)")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 4);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-			}
-
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(3)) {
-				if (productDescription != null && productDescription.contains("DDR4")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 5);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("DDR5")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 6);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-			}
-
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(4)) {
-				if (productName != null && productName.contains("14세대")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 7);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				// if (productName != null && productName.contains("라이젠 7000시리즈")) {
-				if (productName != null && productName.matches(".*7\\d{3}.*")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 8);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(5)) {
-				if (productName != null && productName.contains("울트라7")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 9);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productName != null && productName.matches("i7")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 10);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productName != null && productName.matches("i9")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 11);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			 
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(6)) {
-				if (productDescription != null && productDescription.contains("24코어")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 12);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("16코어")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 13);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("10코어")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 14);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("8코어")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 15);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("6코어")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 16);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(7)) {
-				if (productDescription != null && productDescription.contains("32스레드")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 17);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("24스레드")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 18);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("16스레드")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 19);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("12스레드")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 20);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("8스레드")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 21);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(11)) {
-				if (productDescription != null && productDescription.contains("3nm")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 37);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("5nm")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 38);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("7nm")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 39);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("10nm")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 40);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("22nm")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 41);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(12)) {
-				if (productDescription != null && productDescription.contains("LGA 1200")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 42);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("AM4")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 43);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(13)) {
-				if (productDescription != null && productDescription.contains("내장그래픽: 미탑재")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 44);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("내장그래픽: 탑재")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 45);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(14)) {
-				if (productDescription != null && productDescription.contains("96MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 46);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("64MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 47);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("40MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 48);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("36MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 49);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("32MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 50);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-			if (productResultList.get(i).get("CATEGORY_ATTRIBUTE_IDX").equals(15)) {
-				if (productDescription != null && productDescription.contains("384MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 51);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("300MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 52);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("256MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 53);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("128MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 54);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-				if (productDescription != null && productDescription.matches("96MB")) {
-					productResultList.get(i).put("CATEGORY_ATTRIBUTE_VALUE_IDX", 55);
-					productMapper.setProductCpu(productResultList.get(i));
-				}
-
-			}
-
-
 		}
-*/
+		*/
+		// System.out.println("작동함");
 		mv.setViewName("deskTopEstimate/deskTopEstimateForm");
 		return mv;
 	};
-
-
-
 
 	@RequestMapping("/DeskTopEstimateFiler")
 	@ResponseBody
@@ -463,6 +281,5 @@ public class DeskTopEstimateController {
 		System.out.println(map);
 		return map;
 	}
-
 
 }

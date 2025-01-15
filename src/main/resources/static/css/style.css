@@ -1,8 +1,44 @@
 @charset "UTF-8";
 :root {
-	--main-color: #1A3D91;  /* CSS 전역 변수 선언 */
+  --main-color: #1a3d91; /* CSS 전역 변수 선언 */
 }
 
+/* 스니퍼 */
+/*===============================================================================*/
+.layerPopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%);
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid var(--main-color);
+  border-radius: 50%;
+  width: 240px;
+  height: 240px;
+  animation: spinner 2s linear infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+/*===============================================================================*/
+/* 스니퍼 끝 */
 
 /* 헤더 */
 /*===============================================================================*/
@@ -42,23 +78,23 @@ header {
   z-index: 3;
   bottom: 0;
   transform: translateY(100%);
-  background : #fff;
-  border : solid 1px #eee;
-  box-shadow : 0 2px 4px rgba(0,0,0,0.08);
+  background: #fff;
+  border: solid 1px #eee;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  font-size: 16px;
 
   & li {
-    padding: 10px;
     position: relative;
-    
-    & a{
-    display : block;
-    width : 100%;
-    height: 100%}
+    & a {
+      display: block;
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+    }
   }
-  
-  & >li:hover{
-  	color : var(--main-color);
-  	font-weight: 500;
+  & > li:hover {
+    color: var(--main-color);
+    font-weight: 500;
   }
 }
 
@@ -78,14 +114,20 @@ header {
   transform: translateX(100%);
   width: 100%;
   color: #333;
-  font-weight : 300;
+  font-weight: 300;
   background: #fff;
-  box-shadow : 0 2px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+  & a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
-.header__category-3depth li:hover{
-	color : var(--main-color);
-  	font-weight: 500;
+.header__category-3depth li:hover {
+  color: var(--main-color);
+  font-weight: 500;
 }
 
 .header__content {
@@ -100,19 +142,21 @@ header {
   display: flex;
   gap: 20px;
   height: 50px;
-  align-items : center;
+  align-items: center;
   margin-bottom: 20px;
 
   & h1 {
     width: 200px;
-    
-    & a{
-        display : flex;
-    justify-content: center;
-    align-items: center;}
-    
-    & img{
-    height : 100%;}
+
+    & a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    & img {
+      height: 100%;
+    }
   }
 }
 
@@ -123,8 +167,8 @@ header {
   font-weight: 500;
 }
 
-.header__gnb li:hover{
-	color : var(--main-color)
+.header__gnb li:hover {
+  color: var(--main-color);
 }
 
 .header-nav {
@@ -139,10 +183,11 @@ header {
 /* 헤더__검색바 */
 .search-div {
   width: 573px;
-  border : solid 2px var(--main-color);
+  border: solid 2px var(--main-color);
   text-align: center;
   height: 100%;
-  background: url(/images/icon/header-icon/search.svg) no-repeat right 24px center;
+  background: url(/images/icon/header-icon/search.svg) no-repeat right 24px
+    center;
   transition: width 0.4s;
 
   & input {
@@ -150,7 +195,7 @@ header {
     height: 100%;
     font-size: 18px;
     padding: 0 100px 0 30px;
-    height : 50px;
+    height: 50px;
     border: none;
     background: none;
     font-family: "Pretendard";
@@ -263,11 +308,119 @@ header {
 /*===============================================================================*/
 
 footer {
-  margin-top: 200px;
-  height: 200px;
-  background: #ccc;
-  text-align: center;
-  line-height: 200px;
+  font-size: 12px;
+  background: #fafafa;
+  margin-top: 40px;
+
+  & .footer-top {
+    border-bottom: solid 1px #d9d9d9;
+  }
+
+  & .footer-top .inner {
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  & .footer-top ul {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 17px;
+    font-size: 14px;
+
+    & li {
+      white-space: nowrap;
+      position: relative;
+    }
+  }
+
+  & .footer-top ul li::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 8px;
+    content: "";
+    background: #ccc;
+  }
+
+  & .footer-top ul li:last-child::after {
+    display: none;
+  }
+
+  & .footer-bold {
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  & .footer-info {
+    margin: 18px 0 32px 0;
+
+    & li:last-child span {
+      margin: 4px;
+    }
+  }
+  & .footer-info li:not(:first-child) {
+    margin-bottom: 4px;
+  }
+
+  & .footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+
+  & .contact p {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  & .contact ul:first-of-type {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 4px 12px;
+  }
+
+  & .contact ul:last-of-type {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .contact ul:last-of-type li a {
+    display: block;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+
+  & .contact-btn li {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  & .email-q {
+    background: url("../images/main/footer-info-next.png") no-repeat right
+      center;
+    width: 90px;
+  }
+
+  & .email-q a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /*===============================================================================*/
@@ -276,36 +429,36 @@ footer {
 /* 홈  */
 /*===============================================================================*/
 
-.scroll-top-btn{
-	opacity : 0;
-	transition : all 0.4s;
-	position: fixed;
-	right: 40px; 
-	bottom: 40px;
-	border-radius : 30px;
-	border : solid 1px #767676;
-	cursor: pointer;
-	}
+.scroll-top-btn {
+  opacity: 0;
+  transition: all 0.4s;
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
 
 /* 메인 캐러셀 */
 .home__main-carousel {
   width: 100%;
   height: 400px;
-  overflow : hidden;
-  
-	& .inner{
-		position: relative;
-		width : 1200px;
-		margin : auto;
-		padding : 0;
-		height: 400px
-	}
+  overflow: hidden;
+
+  & .inner {
+    position: relative;
+    width: 1200px;
+    margin: auto;
+    padding: 0;
+    height: 400px;
+  }
 
   & .dim {
     position: absolute;
     width: 100%;
     height: 400px;
-    cursor : pointer;
+    cursor: pointer;
     right: 0px;
     transform: translateX(-100%);
     background: rgba(0, 0, 0, 0.2);
@@ -317,29 +470,28 @@ footer {
     left: 0px;
     transform: translateX(100%);
   }
-  
+
   & .carousel-container {
-  display: flex;
-  transform: translateX(100%);
-  height: 100%;
-  transition: transform 0.5s ease-in-out;
-}
-
- & .carousel-slide {
-  width: 1200px;
-  flex-shrink: 0;
-  background: #ccc;
-}
-
- & .carousel-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  background: none;
-  cursor: pointer;
+    display: flex;
+    transform: translateX(100%);
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
   }
-  
+
+  & .carousel-slide {
+    width: 1200px;
+    flex-shrink: 0;
+    background: #ccc;
+  }
+
+  & .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
 }
 
 .home__main-carousel .prev {
@@ -442,18 +594,18 @@ footer {
     text-align: center;
     border: solid 1px #ccc;
     cursor: pointer;
-    border-bottom : none;
+    border-bottom: none;
   }
-  
-  & li:last-child{
-  	border-bottom : solid 1px #ccc
+
+  & li:last-child {
+    border-bottom: solid 1px #ccc;
   }
-  
-  & li.box-best-btn-active{
-  	background : var(--main-color);
-  	color : #fff;
-  	font-weight: 500;
-  	border : none;
+
+  & li.box-best-btn-active {
+    background: var(--main-color);
+    color: #fff;
+    font-weight: 500;
+    border: none;
   }
 }
 
@@ -482,6 +634,7 @@ footer {
 
 .box-best-item {
   overflow: hidden;
+  cursor: pointer;
 }
 
 .box-best-item-img {
@@ -489,10 +642,10 @@ footer {
   aspect-ratio: 1;
   background: #ccc;
   margin-bottom: 8px;
-  
-  & img{
-  	display : block;
-  	width: 100%;
+
+  & img {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -502,7 +655,7 @@ footer {
   word-break: break-word;
   display: -webkit-box;
   line-clamp: 2;
-  min-height : 40px;
+  min-height: 40px;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
@@ -537,12 +690,11 @@ footer {
 
     & a {
       display: flex;
-      justify-content : center;
-      align-items : center;
+      justify-content: center;
+      align-items: center;
       width: 200px;
       height: 40px;
       margin: auto;
-      
     }
 
     & .login-back-btn {
@@ -624,50 +776,47 @@ footer {
     }
   }
 }
-.social-login-container{
-	margin: 30px 105px; 
-	
-	& > div{
-		height: 40px;
-		position: relative;
-		}
-		
-		& hr{
-			margin-bottom: 24px;
-		}
+.social-login-container {
+  margin: 30px 105px;
 
-		& span{
-			position: absolute;
-			left: 50%;
-			top : 0;
-			transform : translate(-50%, -50%);
-			background: #fff;
-			padding: 4px 6px;
-	}
-	
-	& .social-btn{
-		display: flex;
-		gap : 12px;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	& .google-login-btn{
-		background: #fff;
-		border: solid 1px #ccc;
-		color : #555;
-		margin-bottom: 20px;
-	}
-	
-	& .naver-login-btn{
-		background: #03C75A;
-		border: none;
-		color : #fff
-	}
+  & > div {
+    height: 40px;
+    position: relative;
+  }
+
+  & hr {
+    margin-bottom: 24px;
+  }
+
+  & span {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 4px 6px;
+  }
+
+  & .social-btn {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .google-login-btn {
+    background: #333;
+    border: none;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  & .naver-login-btn {
+    background: #03c75a;
+    border: none;
+    color: #fff;
+  }
 }
-
-
-
 
 /*===============================================================================*/
 /* 로그인 end */
@@ -736,8 +885,8 @@ footer {
 
   & span {
     font-size: 20px;
-    background: #fff;
-    color: var(--main-color);
+    background: var(--main-color);
+    color: #fff;
     padding: 10px;
     border-radius: 100px;
   }
@@ -776,133 +925,155 @@ footer {
   }
 }
 
-.quick-finder-program{
+.quick-finder-program {
   margin: 20px 0 30px;
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(5, 1fr);
 
   & li {
-    background: #ccc;
-    aspect-ratio: 1.618;
     border-radius: 4px;
     width: 100%;
-    cursor: pointer
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & img {
+      width: 100%;
+    }
   }
 }
 
 .program-filter {
-	display: none;
-	position: fixed;
-	align-items : center;
-	padding : 20px 40px;
-	z-index: 2;
-	width : 100%;
-	background : #2a2b33;
-	color: #fff;
-	
-	 & .quick-finder-program {
-	background: #2a2b33;
-	display: flex;
-	overflow: hidden;
-	}
+  display: none;
+  position: fixed;
+  align-items: center;
+  padding: 20px 40px;
+  z-index: 2;
+  width: 100%;
+  background: #2a2b33;
+  color: #fff;
+
+  & .quick-finder-program {
+    background: #2a2b33;
+    display: flex;
+    overflow: hidden;
+  }
 }
 
 .program-filter.scroll-active {
-	display: flex;
-	flex-wrap: nowrap;
-	width : 100%;
-	gap : 40px;
-	
-	& >div{
-		width : 100%;
-		display: flex;
-		gap : 40px;
-		align-items: center;
-		padding : 0  20px;
-	}
-	
-	& .purpose-container{
-		width: 100%;
-		overflow: hidden;
-	}
-	
-	& .purpose-btn{
-		flex-shink : 1;
-		width: 40px;
-		height: 40px;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 40px;
 
-		& img{
-		width : 40px;
-		cursor: pointer;
-		}
-	}
-	
-	& >ul:first-child{
-		width : 300px;
-		white-space : nowrap;
-		
-		
-		& li{
-			display : flex;
-			justify-content: center;
-			align-items: center;
-			width : 100%;
-			border : solid 1px #ccc;
-			padding : 12px;
-			border : solid 1px rbg(189,234,20);
-			margin-bottom: 12px;
-			cursor: pointer;
-		}
-		
-		& li:last-child{
-			margin-bottom: 0;
-		}
-		
-		& .purpose-active{
-		color : #37D0FD;
-		border : solid 1px #37D0FD;
-		}
-	}
+  & > div {
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  & .purpose-container {
+    overflow: hidden;
+
+    & ul {
+      width: 100%;
+    }
+
+    & li {
+      width: calc(100% / 5);
+      max-width: 250px;
+      max-height: 160px;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    }
+
+    & img {
+      width: 100%;
+    }
+  }
+
+  & .purpose-btn {
+    width: 40px;
+    height: 40px;
+
+    & img {
+      width: 40px;
+      cursor: pointer;
+    }
+  }
+
+  & > ul:first-child {
+    width: 300px;
+    white-space: nowrap;
+
+    & li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      border: solid 1px #ccc;
+      padding: 12px;
+      border: solid 1px rbg(189, 234, 20);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    & li:last-child {
+      margin-bottom: 0;
+    }
+
+    & .purpose-active {
+      color: #37d0fd;
+      border: solid 1px #37d0fd;
+    }
+  }
 }
 
-.quick-finder-filter-program{
-	display: flex;
-	width: 90%;
-	height : 100%;
-	gap : 8px;
-	transition : all 0.4s;
-	
-	& li{
-		width : calc(100%/5);
-		aspect-ratio : 1.618;
-		flex-shrink : 0;
-		height : 100%;
-		background: #ccc;
-		cursor: pointer;
-	}
+.quick-finder-filter-program {
+  display: flex;
+  width: 90%;
+  height: 100%;
+  gap: 8px;
+  transition: all 0.4s;
+
+  & li {
+    flex-shrink: 0;
+    height: 100%;
+    cursor: pointer;
+  }
 }
 
-
-.list-search-btn{
-	background-image: url("/images/icon/common-icon/search-fff.svg");
-	background-repeat : no-repeat;
-	background-position : center;
-	background-color : var(--main-color);
-	text-indent: -9999px;
-	border : none;
-	border-radius: 2px;
-	cursor: pointer;
+.list-search {
+  outline: none;
 }
 
-.paging-prev-btn{
-	background: url("/images/icon/common-icon/paging-prev-btn.png") no-repeat center;
-}
-.paging-next-btn{
-	background: url("/images/icon/common-icon/paging-next-btn.png") no-repeat center;
+.list-search-btn {
+  background-image: url("/images/icon/common-icon/search-fff.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--main-color);
+  text-indent: -9999px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
-
+.paging-prev-btn {
+  background: url("/images/icon/common-icon/paging-prev-btn.png") no-repeat
+    center;
+}
+.paging-next-btn {
+  background: url("/images/icon/common-icon/paging-next-btn.png") no-repeat
+    center;
+}
 
 .quick-finder-filter {
   & li {
@@ -914,6 +1085,15 @@ footer {
     & span {
       width: 100px;
       flex-shrink: 0;
+    }
+
+    & select {
+      -webkit-appearance: none; /* 크롬 화살표 없애기 */
+      -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
+      appearance: none; /* 화살표 없애기 */
+      background: url("/images/icon/common-icon/chevron-down-fff-20.png")
+        no-repeat right 12px center !important;
+      min-width: 100px;
     }
 
     & input,
@@ -1058,15 +1238,17 @@ footer {
     & .quick-searched-item-img {
       width: 120px;
       height: 120px;
-      margin-right : 12px;
+      margin-right: 12px;
       line-height: 103px;
       text-align: center;
       background: #ccc;
       flex-shrink: 0;
-      
-      & img{
-      display : block;
-      width: 100%;}
+      cursor: pointer;
+
+      & img {
+        display: block;
+        width: 100%;
+      }
     }
 
     & .quick-searched-item-info {
@@ -1078,10 +1260,11 @@ footer {
         font-size: 16px;
         font-weight: 500;
         margin-bottom: 12px;
+        cursor: pointer;
       }
-      & div>div{
-      	word-break : keep-all;
-      	padding-right: 40px;
+      & div > div {
+        word-break: keep-all;
+        padding-right: 40px;
       }
     }
   }
@@ -1089,14 +1272,14 @@ footer {
   .quick-searched-item-right {
     display: flex;
     gap: 60px;
-    justify-content : end;
+    justify-content: end;
     align-items: center;
     & p {
       font-weight: 500;
       font-size: 20px;
-      width : 120px;
+      width: 120px;
       white-space: nowrap;
-    };
+    }
   }
 }
 
@@ -1143,13 +1326,13 @@ footer {
     color: #333;
     font-weight: 500;
   }
-  
-  & a{
-  	display: flex;
-  	justify-content : center;
-  	align-items : center;
-  	width: 100%;
-  	height: 100%;
+
+  & a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -1158,23 +1341,33 @@ footer {
   display: flex;
   align-items: center;
   gap: 20px;
+  font-size: 16px;
 
   & li {
     position: relative;
+    margin: 0px 4px 10px;
   }
 
   & li::after {
     display: block;
-    content: ">";
-    right: -16px;
-    padding-left: 10px;
+    width: 20px;
+    height: 20px;
+    content: "";
+    right: 0px;
+    padding-left: 8px;
     top: 50%;
-    transform: translateY(-50%);
+    background: url("/images/icon/common-icon/chevron-left-333-20.png")
+      no-repeat center center;
+    transform: translate(100%, -50%);
     position: absolute;
   }
 
   & li:last-child::after {
     display: none;
+  }
+
+  & .category-select {
+    padding: 4px 8px;
   }
 }
 
@@ -1184,32 +1377,53 @@ footer {
   font-weight: 700;
 }
 
+.detail-search-container {
+  overflow: hidden;
+  border: solid 1px #ccc;
+  border-bottom: none;
+}
+
 .detail-search-container table {
   width: 100%;
-  border: solid 1px #ccc;
 
   & tr {
     border-bottom: solid 1px #ccc;
   }
 
+  & tr:last-child {
+    border-bottom: none;
+  }
+
+  & td {
+    height: 50px;
+    padding: 12px;
+  }
+
   & td:first-child {
-    width: 120px;
+    width: 140px;
     background: #eee;
-    padding: 12px 0 12px 12px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   & ul {
     display: flex;
     width: 90%;
-    padding: 12px 0 0 12px;
+    height: 100%;
     align-items: center;
     overflow: hidden;
 
     & li {
-      width: calc(100% / 6);
+      min-width: calc(100% / 5);
       flex-shrink: 0;
       display: flex;
       gap: 4px;
+
+      & label {
+        white-space: nowrap;
+      }
     }
   }
 
@@ -1219,6 +1433,8 @@ footer {
 
   & .filter-val-all {
     position: absolute;
+    width: 100px;
+    text-align: right;
     right: 20px;
     top: 12px;
     border: none;
@@ -1228,131 +1444,200 @@ footer {
   }
 
   & .price-filter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 12px;
+  }
+}
+
+.price {
+   display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 10px;
+   
+}
+
+.exception-title {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailSearch-option-all-open-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px #ccc;
+  padding: 12px 0;
+  color: #767676;
+  margin-bottom: 40px;
+}
+
+.price-filter input{
+   padding : 4px 8px;
+}
+
+.detailSearch-price-filter-btn{
+   background: #555;
+   color : #fff;
+   border : none;
+   padding : 4px 8px;
+   border-radius: 2px;
+}
+
+.dSearch-title {
+  margin-top: 40px;
+}
+.dSearch-container {
+  margin-bottom: 40px;
+
+  & ul {
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 1px #ccc;
     & li {
-      width: auto;
-      margin-right: 6px;
+      flex-basis: 0;
+      min-width: calc(100% / 4);
+      display: flex;
+      padding: 20px 0;
+      justify-content: center;
+      align-items: center;
+      color: #555;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    & li.categoryActive {
+      color: var(--main-color);
+      border: solid 1px var(--main-color);
+      font-weight: 500;
     }
   }
 }
 
 .brand-box {
-
-	flex-wrap: wrap; /* 줄 바꿈을 허용 */
-	max-width: 1200px; /* 최대 너비 설정 */
-	margin: 0 auto; /* 중앙 정렬 */
-	margin-top: 60px;
-	padding: 20px; /* 패딩 추가 */
-	background-color: #2a2b33;
-	border-radius: 8px;
-	margin-bottom: 30px;
+   flex-wrap: wrap; /* 줄 바꿈을 허용 */
+   max-width: 1200px; /* 최대 너비 설정 */
+   margin: 0 auto; /* 중앙 정렬 */
+   margin-top: 60px;
+   padding: 20px; /* 패딩 추가 */
+   background-color: #2a2b33;
+   border-radius: 8px;
+   margin-bottom: 30px;
 }
 
 .brand-links {
-	display: flex;
-	flex-direction: row; /* 가로 방향으로 배치 */
-	margin: 10px; /* 상하 여백 조정 */
-	flex-wrap: wrap; /* 줄 바꿈을 허용 */
-	justify-content: space-around; /* 아이템 간격 조정 */
+  display: flex;
+  flex-direction: row; /* 가로 방향으로 배치 */
+  margin: 10px; /* 상하 여백 조정 */
+  flex-wrap: wrap; /* 줄 바꿈을 허용 */
+  justify-content: space-around; /* 아이템 간격 조정 */
 }
 
 .brand-item {
-	width: 265px;
-	height: 100px;
-	margin: 10px; /* 각 박스 간의 여백 */
-	padding: 0; /* 박스 내부 여백 */
-	border: 1px solid #ccc; /* 테두리 */
-	border-radius: 8px; /* 모서리 둥글게 */
-	background-color: #f9f9f9; /* 배경색 */
-	text-align: center; /* 텍스트 중앙 정렬 */
-	transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
-	align-items: center; /* 수직 정렬 */
-	display: flex; /* Flexbox로 설정 */
-	justify-content: center; /* 수평 정렬 */
+  width: 265px;
+  height: 100px;
+  margin: 10px; /* 각 박스 간의 여백 */
+  padding: 0; /* 박스 내부 여백 */
+  border: 1px solid #ccc; /* 테두리 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  background-color: #f9f9f9; /* 배경색 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
+  align-items: center; /* 수직 정렬 */
+  display: flex; /* Flexbox로 설정 */
+  justify-content: center; /* 수평 정렬 */
 }
 
 .brand-item a {
-	text-decoration: none; /* 밑줄 제거 */
-	color: #333; /* 글자 색상 */
-	font-size: 18px; /* 글자 크기 조정 */
+  text-decoration: none; /* 밑줄 제거 */
+  color: #333; /* 글자 색상 */
+  font-size: 18px; /* 글자 크기 조정 */
 }
 
 .brand-item img {
-	width: 265px;
-	height: 100px;
-	object-fit: contain;
-	vertical-align: middle;
+  width: 265px;
+  height: 100px;
+  object-fit: contain;
+  vertical-align: middle;
 }
 
 .brand-item:hover {
-	background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+  background-color: #e0e0e0; /* 호버 시 배경색 변경 */
 }
 
 .img:hover {
-	background-color: #e0e0e0;
+  background-color: #e0e0e0;
 }
 
 .brand-text {
-	font-size: 24px; /* 글자 크기 */
-	color: #ffffff; /* 글자 색상 */
-	text-align: center; /* 중앙 정렬 */
-	font-weight: bold; /* 글씨 두께 */
-	padding: 10px; /* 패딩 추가 */
-	background-color: #2a2b33;
-	border-radius: 8px; /* 모서리 둥글게 */
+   font-size: 24px; /* 글자 크기 */
+   color: #ffffff; /* 글자 색상 */
+   text-align: center; /* 중앙 정렬 */
+   font-weight: bold; /* 글씨 두께 */
+   padding: 10px; /* 패딩 추가 */
+   background-color: #2a2b33;
+   border-radius: 8px; /* 모서리 둥글게 */
 
 }
 
 .text-finder {
-	alingn-items: center;
-	background: #1A3D91;
-	border-radius: 20px;
-	gap: 4px;
-	justify-content: center;
-	padding: 4px 25px;
+   alingn-items: center;
+   background: #1A3D91;
+   border-radius: 20px;
+   gap: 4px;
+   justify-content: center;
+   padding: 4px 25px;
 }
 
 .brand-explain {
-	text-align: center;
-	height: 150px;
+  text-align: center;
+  height: 150px;
 }
+
 
 .abcd-description-container {
-	text-align:center;
-	font-size: 20px;
-	font-weight: bold;
-	color: #333;
-	padding-top: 60px;
-	padding-bottom: 40px;
-	width: 75%;
-	margin: auto;
+   text-align:center;
+   font-size: 20px;
+   font-weight: bold;
+   color: #333;
+   padding-top: 60px;
+   padding-bottom: 40px;
+   width: 75%;
+   margin: auto;
 }
 
-.brand-description-container {	
-	text-align:center;
+.brand-description-container {   
+   text-align:center;
 
-	margin-top: 20px; /* 상단 여백 */
-	color: #333;
-	
+   margin-top: 20px; /* 상단 여백 */
+   color: #333;
 }
-
 
 .additional-info-container {
-    display: flex; /* Flexbox 사용 */
-    flex-wrap: wrap; /* 여러 줄로 나눔 */
-    margin-top: 20px; /* 상단 여백 */
+  display: flex; /* Flexbox 사용 */
+  flex-wrap: wrap; /* 여러 줄로 나눔 */
+  margin-top: 20px; /* 상단 여백 */
 }
 
 .additional-info-item {
-    flex: 1 1 30%; /* 각 항목이 30% 너비를 차지하도록 설정 */
-    margin: 10px; /* 항목 간 여백 */
-    border: 1px solid #ccc; /* 경계선 */
-    padding: 10px; /* 패딩 */
-    text-align: center; /* 텍스트 가운데 정렬 */
+  flex: 1 1 30%; /* 각 항목이 30% 너비를 차지하도록 설정 */
+  margin: 10px; /* 항목 간 여백 */
+  border: 1px solid #ccc; /* 경계선 */
+  padding: 10px; /* 패딩 */
+  text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .additional-info-item img {
-    max-width: 100%; /* 이미지의 최대 너비를 100%로 설정 */
-    height: auto; /* 비율을 유지하여 높이 자동 설정 */
+  max-width: 100%; /* 이미지의 최대 너비를 100%로 설정 */
+  height: auto; /* 비율을 유지하여 높이 자동 설정 */
 }
 
 .desktopestimate-main {
@@ -1360,56 +1645,64 @@ footer {
     padding: 20px;
     align-items: start;
 }
-       
+
 .content {
-    flex-grow: 1;
-    background-color: #fff;
-    padding: 20px;
-    width: 790px;
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 20px;
+  width: 790px;
 }
 
 .sidebar-name {
-	text-align: center;
-	font-size: 20px;
-	color:#333333;
-	margin-bottom: 20px;
-	font-weight: bold;
-	
+  text-align: center;
+  font-size: 20px;
+  color: #333333;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .desktop-specs {
-	padding: 10px;
-	font-size: 20px;
-	color:#333333;
-	font-weight: bold;
-	height: auto;
-	overflow-x: hidden;      /* 가로 스크롤 숨기기 */
-	 overflow-y: auto;        /* 세로 스크롤 가능 */
+   padding: 5px;
+   font-size: 20px;
+   color:#333333;
+   font-weight: bold;
+   height: auto;
+   overflow-x: hidden;      /* 가로 스크롤 숨기기 */
+   overflow-y: auto;        /* 세로 스크롤 가능 */
+
 }
 
 
 .sidebar-right {
-    width: 380px;            /* 너비 설정 */
-    background: #CCCCCC;     /* 배경색 설정 */
+    width: 395px;            /* 너비 설정 */
+    background-color: #f6f3f2;     /* 배경색 설정 */
     padding: 20px;           /* 내부 여백 */
-    margin-left: 50px;       /* 왼쪽 여백 */
     margin-top: 63px;        /* 상단 여백 */
     height: 730px;           /* 고정 높이 설정 (필요에 따라 조정) */               /* 왼쪽에서의 위치 */
-	overflow-x: hidden;
+   overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
       position: sticky; /* 스티키 위치 */
     top: 25px; /* 상단에서의 위치 */
     z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+    margin-right: 20px;
+    border: 1px solid #ccc;
 }
 .desktop-mini {
-	margin-bottom: 10px;
-	background-color: #ffffff;
-	width: 325px;
-	height: auto;
-	padding: 10px;
-
+   background-color: #ffffff;
+   width: 325px;
+   height: auto;
+   padding: 10px;
+   display: flex; /* Flexbox 활성화 */
+    justify-content: space-between;
+    align-items: center; /* 수직 정렬 */
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    font-size: 16px;
 }
+
+
 
 .under-specs {
     padding: 13px;
@@ -1420,140 +1713,139 @@ footer {
 
 
 .under-under {
-	text-align:right;
-	color: #ffffff;
-	font-size: 14px;
-	margin-right: 10px;
-	margin-bottom: 10px;
-	margin-top: 5px;
+   text-align:right;
+   color: #333333;
+   font-size: 14px;
+   margin-right: 10px;
+   margin-bottom: 10px;
+   margin-top: 5px;
+   font-weight: bold;
 }
 
 .desk-button {
-	width: 45%;
-	height: 30px;
-	background-color: #ffffff;
-	font-size: 14px;
-	border: none;
-	padding: 3px;
-	margin-right: 5px;
-	justify-content: center;
+   width: 45%;
+   height: 30px;
+   background-color: #ffffff;
+   font-size: 15px;
+   border: none;
+   padding: 3px;
+   margin-right: 5px;
+   justify-content: center;
+   font-weight: bold;
+   color:#333333;
+   border: 1px solid #ccc;
 }
 
 .desk-capture-button {
-	width: 45%;
-	height: 30px;
-	background-color:  #ffffff;
-	font-size: 14px;
-	border: none;
-	padding: 3px;
-	margin-right: 5px;
-	justify-content: center;
+   width: 45%;
+   height: 30px;
+   background-color:  #ffffff;
+   font-size: 14px;
+   border: none;
+   padding: 3px;
+   margin-right: 5px;
+   justify-content: center;
+    font-weight: bold;
+   color:#333333;
+   border: 1px solid #ccc;
 }
 
 .amount {
     margin-right: 23px; /* 원하는 값으로 조정 */
-	margin-bottom: 10px;
-	color:#ffffff;
+   margin-bottom: 10px;
+   color:#333333;
+   font-weight: bold;
 }
 
-
-     
-     
-
 .desk-search-bar {
-     display: flex;
-     margin-bottom: 20px;
-     width: 790px;
-     height: 60px;
+  display: flex;
+  margin-bottom: 20px;
+  width: 790px;
+  height: 60px;
 }
 
 .desk-click {
-    display: flex; /* 전체 요소를 flex로 설정하여 한 줄로 배치 */
-    align-items: center; /* 수직 정렬 */
-    margin-left: -10px; /* 왼쪽으로 이동시키기 위한 음수 마진 추가 */
-    margin-bottom: 10px;
+  display: flex; /* 전체 요소를 flex로 설정하여 한 줄로 배치 */
+  align-items: center; /* 수직 정렬 */
+  margin-left: -10px; /* 왼쪽으로 이동시키기 위한 음수 마진 추가 */
+  margin-bottom: 10px;
 }
 
 .desk-click p {
-    margin: 0 10px; /* p 요소의 기본 마진 제거 및 간격 추가 */
+  margin: 0 10px; /* p 요소의 기본 마진 제거 및 간격 추가 */
 }
 
 .desk-click p:not(:last-child)::after {
-    content: '|'; /* 구분선 추가 */
-    margin-left: 10px; /* 구분선과 텍스트 사이의 간격 */
-    margin-right: 10px; /* 구분선과 텍스트 사이의 간격 */
+  content: "|"; /* 구분선 추가 */
+  margin-left: 10px; /* 구분선과 텍스트 사이의 간격 */
+  margin-right: 10px; /* 구분선과 텍스트 사이의 간격 */
 }
-
 
 .desk-filters {
      margin-bottom: 20px;
      border:1px solid #D9D9D9;
      width: 790px;
      max-height: auto;
-     
 }
 
 .product-list {
-     margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-    .product-item {
-        display: flex; /* 플렉스 박스 설정 */
-        align-items: center; /* 세로 중앙 정렬 */
-        margin-bottom: 20px; /* 아래쪽 여백 */
-        border: 1px solid #ddd; /* 테두리 추가 (선택 사항) */
-        padding: 10px; /* 패딩 추가 (선택 사항) */
-        width: 790px;
-        height:183px; 
-        
-    }
+.product-item {
+    display:flex; /* 플렉스 박스 설정 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
+    border: 1px solid #ddd; /* 테두리 추가 (선택 사항) */
+    padding: 10px; /* 패딩 추가 (선택 사항) */
+    width: 790px;
+    height: auto;
+    min-height:183px; 
+   
 
-    .product-item {
-        /* 플렉스 박스 설정 */
-        align-items: center; /* 세로 중앙 정렬 */
-        margin-bottom: 20px; /* 아래쪽 여백 */
-        border: 1px solid #ddd; /* 테두리 추가 (선택 사항) */
-        padding: 10px; /* 패딩 추가 (선택 사항) */
-        width: 790px;
-        height: auto;
-        min-height:183px; 
-        
-    }
+}
 
-    .product-description {
-        flex: 1; /* 설명 영역이 남은 공간을 차지하도록 설정 */
-        max-width: calc(100% - 100px); /* 최대 너비 설정 (이미지 너비를 고려) */
-    }
 
-    .product-description h4 {
-        font-weight: bold; /* 제목 굵게 설정 */
-        margin: 0; /* 기본 마진 제거 */
-    }
+.product-item img {
+  height: 80px; /* 이미지 높이 */
+  width: 80px; /* 이미지 너비 */
+  margin-right: 20px; /* 이미지와 설명 사이의 간격 */
+}
 
-    .product-description p {
-        margin: 5px 0; /* 문단 간격 설정 */
-        font-size: 14px; /* 기본 폰트 크기 설정 */
-    }
+.product-description {
+  flex: 1; /* 설명 영역이 남은 공간을 차지하도록 설정 */
+  max-width: calc(100% - 100px); /* 최대 너비 설정 (이미지 너비를 고려) */
+}
 
-    .price-container {
-        display: flex; /* 가격과 버튼을 수직으로 배치 */
-        flex-direction: column; /* 세로 방향으로 정렬 */
-        align-items: flex-end; /* 오른쪽 정렬 */
-        margin-top: 10px; /* 가격과 버튼 간격 */
-    }
+.product-description h4 {
+  font-weight: bold; /* 제목 굵게 설정 */
+  margin: 0; /* 기본 마진 제거 */
+}
 
-    .price-container p {
-        margin: 0; /* 가격 문단의 기본 마진 제거 */
-        margin-bottom: 5px; /* 가격과 버튼 사이의 간격 */
-    }
+.product-description p {
+  margin: 5px 0; /* 문단 간격 설정 */
+  font-size: 14px; /* 기본 폰트 크기 설정 */
+}
 
+.price-container {
+  display: flex; /* 가격과 버튼을 수직으로 배치 */
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  align-items: flex-end; /* 오른쪽 정렬 */
+  margin-top: 10px; /* 가격과 버튼 간격 */
+}
+
+.price-container p {
+  margin: 0; /* 가격 문단의 기본 마진 제거 */
+  margin-bottom: 5px; /* 가격과 버튼 사이의 간격 */
+}
 
 .pagination {
-     display: flex;
-     justify-content: center;
- }
+  display: flex;
+  justify-content: center;
+}
 
 .pagination button {
+
      margin: 0 5px;
      border: none;
      background-color: #ffffff;
@@ -1564,9 +1856,9 @@ footer {
 }
 
 .brand-p {
-	max-width: 1200px;
-	color:#333333;
-	
+   max-width: 1200px;
+   color:#333333;
+   
 }
 
 .image-container {
@@ -1592,33 +1884,42 @@ footer {
 }
 
 .brand-iframe {
-	width: 90%;
-	margin:auto; 
-	height: 1200px;	
+   width: 90%;
+   margin:auto; 
+   height: 1200px;   
 }
 
-    .desk-fillter {
-        display: flex; /* 플렉스박스 적용 */
-        margin: 15px; /* 외부 여백 */
-        align-items: flex-start; /* 아이템을 위쪽 정렬 */
-        border-bottom: 1px solid #ccc;
-    }
+
+.desk-fillter {
+    display: flex;
+    margin-top : 10px;
+    border-bottom: 1px solid #ccc; /* 아래에 선 추가 */
+    padding: 10px; /* 아래 여백 추가 */
+    
+}
+
+.desk-fillter:last-child {
+    border-bottom: none; /* 마지막 항목의 선 제거 */
+}
     .desk-fillter h3 {
         color: #333333;
         font-weight: bold;
         margin-bottom: 5px; /* h3와 체크박스 간의 간격 조정 */
-        width: 100px; /* h3의 고정 너비 설정 */
+        width: 130px; /* h3의 고정 너비 설정 */
+         margin-left: 5px;
     }
     .checkbox-group {
         display: flex; /* 체크박스 그룹을 수평 방향으로 정렬 */
         flex-wrap: wrap; /* 줄 바꿈 허용 */
-        margin-left: 10px; /* h3와 체크박스 간의 간격 조정 */
+        margin-left: 30px; /* h3와 체크박스 간의 간격 조정 */
         max-width: 550px;
+        
         
     }
     .checkbox-group label {
         margin-right: 10px; /* 체크박스 간의 간격 */
         margin-bottom: 12px; /* 아래 여백 */
+        width: 170px;
     }
     .right-align {
         margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
@@ -1638,7 +1939,7 @@ footer {
     padding: 5px 10px;
     cursor: pointer;
     margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
-    align-self: flex-end; /* 수직 정렬을 오른쪽 끝으로 설정 */
+   margin-bottom: 7px;
 }
 
 .desk-pagination {
@@ -1678,10 +1979,10 @@ footer {
     border: 2px solid #888;
     width: 55%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	height:60%;
-	overflow: scroll;
-	overflow-x:hidden;
-	font-weight: bold;
+   height:60%;
+   overflow: scroll;
+   overflow-x:hidden;
+   font-weight: bold;
 }
 
 /* 닫기 버튼 */
@@ -1701,113 +2002,133 @@ footer {
 }
 
 .deskmodal-score {
-	margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
-    float: right;
-    border:1px solid #ccc;
-    border-radius: 6px;
-    background-color: #CCC; 
+   margin-left: auto; /* 오른쪽으로 밀기 위한 설정 */
     color: #2A2A2A;
     padding: 5px;
-    
-    
-   
 }
 
 .desk-modal-totalsocre {
     text-align: right;
-    font-weight: bold;
     height: auto;
+    font-weight: 600;
+    color:#333;
+    
 }
 
 .desk-modal-content2 {
-	font-weight: bold;
-	margin: auto;
-	margin-bottom: 20px;
-	margin-top: 10px;
-	height: auto;
-}
-
-.desk-hidden {
-	height: auto;
-	width: 325px;
-	margin-bottom:10px;
-	background-color: #f5f5f5;
-	
+   font-weight: bold;
+   margin: auto;
+   margin-bottom: 20px;
+   margin-top: 10px;
+   height: auto;
 }
 
 .hidden-content {
-	height: auto;
-	
-	
+   border-bottom:1px solid #ccc;
+   border-left:1px solid #ccc;
+   border-right:1px solid #ccc;
+   height: auto;
+   width:325px;
+   padding-left:10px;
+   padding-right:5px;
+   background-color: #ffffff;
+   color:#2a2a2a;
+   margin-bottom: 10px;
+   font-size: 13px;
+   font-weight: 500;
+   border-top:1px solid #ccc;
+}
+
+.hidden-content p {
+   
+}
+
+.span-name {
+   margin-left: 30px;
 }
 
 .total-add-price {
-	font-weight: bold;
-	margin-right: 25px;
+   font-weight: bold;
+   margin-right: 25px;
 }
 
 .cancel-btn {
-	background-color: #ffffff;
+   background-color: #ffffff;
 }
 
 #capture-content {
     display: flex; /* Flexbox 사용 */
-    background-color: #CCCCCC;
         width: 100%;
+        border-left: 1px solid #2a2a2a;
+        border-right: 1px solid #2a2a2a;
+        border-top : 1px solid #2a2a2a;
+        background-color: #f6f3f2;
     /* justify-content: space-between; /* 항목 간의 공간을 균등하게 배분 (필요에 따라 주석 처리) */
 }
 
 #capture-content1 {
     display: flex; /* Flexbox 사용 */
+
     /* justify-content: space-between; /* 항목 간의 공간을 균등하게 배분 (필요에 따라 주석 처리) */
 }
 
 
 #capture-content1 div {
-    text-align: center; /* 중앙 정렬 */
+
     padding: 10px; /* 패딩 추가 */
-    border: 1px solid #333333; /* 경계선 추가 */
 }
 
 
 #capture-content1 {
     display: flex; /* Flexbox 사용 */
+            border:1px solid #2A2A2A;
     /* justify-content: space-between; /* 항목 간의 공간을 균등하게 배분 (필요에 따라 주석 처리) */
 }
 
 
 #capture-content1 div {
-    text-align: center; /* 중앙 정렬 */
     padding: 10px; /* 패딩 추가 */
-    border: 1px solid #333333; /* 경계선 추가 */
 }
 
 #capture-content div {
     text-align: center; /* 중앙 정렬 */
     padding: 10px; /* 패딩 추가 */
-    border: 1px solid #333333; /* 경계선 추가 */
+   
 }
 .capture-category {
     flex: 0 0 15%; /* 분류의 너비 15% */
+            border-right:1px solid #2A2A2A;
+            text-align: center;
+                display: grid; /* Grid 활성화 */
+    place-items: center; /* 수직 및 수평 중앙 정렬 */
 
 }
 .capture-image {
     flex: 0 0 15%; /* 이미지의 너비 15% */
-	border: 1px solid #333333; 
+            border-right:1px solid #2A2A2A;
 }
 .capture-name {
     flex: 0 0 55%; /* 상품명의 너비 55% */
+    border-right:1px solid #2A2A2A;
+    text-align: left !important;
+    display: grid; /* Grid 활성화 */
+     align-items: center; /* 수직 중앙 정렬 */
+     padding-left:30px;
+    height: auto;
 }
 .capture-price {
     flex: 0 0 15%; /* 가격의 너비 15% */
+    text-align: center;
+        display: grid; /* Grid 활성화 */
+    place-items: center; /* 수직 및 수평 중앙 정렬 */
 }
 
 .total-modal-price {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	font-weight: bold;
-	font-size: 20px;
-	text-align: right;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   font-weight: bold;
+   font-size: 20px;
+   text-align: right;
 }
 
 .button-container {
@@ -1819,12 +2140,12 @@ footer {
 .capture-button {
      border-radius: 6px; /* 둥근 모서리 (선택 사항) */
      font-weight: bold;
-     background-color: #1A3D91; /* 배경색 */
-        color:#cccccc;
+     background-color: #f6f3f2; /* 배경색 */
+        color:#333;
         outline: none; /* 포커스 시 나타나는 테두리 제거 */
-    border: 2px solid transparent;
     padding: 10px;
     font-size: 18px;
+    border:1px solid #ccc;
     
 } 
 
@@ -1833,19 +2154,40 @@ footer {
     background-color: #1A3D91; /* hover 시 배경색 변경 */
 }
 
+.desk-capture-button:hover{
+   color:#ffffff;
+   background-color : #1A3D91;
+}
+
+.desk-button:hover{
+   color:#ffffff;
+   background-color : #1A3D91;
+   
+}
+
+.add-btn:hover {
+   background-color: #1A3D91;
+   color:#ffffff;
+   
+}
+
+.add-btn {
+    color: #767676;
+}
 .map {
-	display:flex;
-	justify-content: center;
+   display:flex;
+   justify-content: center;
 }
 
 .map-container {
-	width: 76%;
-	justify-content: center;
-	display: flex;
-	   margin: 0 auto; /* 중앙 정렬 */
+   width: 76%;
+   justify-content: center;
+   display: flex;
+      margin: 0 auto; /* 중앙 정렬 */
 }
 
 .desk-modal-text {
-	margin-bottom: 40px;
-	color:#c9500e;
+   margin-bottom: 20px;
+   color:#c9500e;
 }
+

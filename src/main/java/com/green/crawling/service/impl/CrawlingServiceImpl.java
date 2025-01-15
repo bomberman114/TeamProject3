@@ -1,4 +1,4 @@
-package com.green.crolling.service.impl;
+package com.green.crawling.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,20 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.green.crolling.mapper.CrollingMapper;
-import com.green.crolling.service.CrollingService;
-import com.green.crolling.vo.CrollingImgVo;
-import com.green.util.CrollingUtil;
+import com.green.crawling.mapper.CrawlingMapper;
+import com.green.crawling.service.CrawlingService;
+import com.green.crawling.vo.CrawlingImgVo;
+import com.green.util.CrawlingUtil;
 
 @Transactional
 @Service
-public class CrollingServiceImpl implements CrollingService {
+public class CrawlingServiceImpl implements CrawlingService {
 	
 	@Value("${part4.upload-path}")
 	private String uploadpath;
 	
 	@Autowired
-	private CrollingMapper crollingMapper;
+	private CrawlingMapper crollingMapper;
 
 	@Override
 	public void DownloadAndSaveImg(HashMap<String, Object> map) {
@@ -38,12 +38,12 @@ public class CrollingServiceImpl implements CrollingService {
 					int proudctIDx = Integer.parseInt(String.valueOf(exist.get("PRODUCT_IDX")));
 					HashMap<String, Object> existImg = crollingMapper.findByIdx(proudctIDx);
 					if(existImg == null) {
-					CrollingImgVo img = CrollingUtil.downloadAndSaveImage(String.valueOf(product.get("product_img")), uploadpath);
+					CrawlingImgVo img = CrawlingUtil.downloadAndSaveImage(String.valueOf(product.get("product_img")), uploadpath);
 					crollingMapper.reinforceProductImg(img,proudctIDx);
 					}
 				}else {
 					crollingMapper.saveProduct(product);
-					CrollingImgVo img = CrollingUtil.downloadAndSaveImage(String.valueOf(product.get("product_img")), uploadpath);
+					CrawlingImgVo img = CrawlingUtil.downloadAndSaveImage(String.valueOf(product.get("product_img")), uploadpath);
 					crollingMapper.saveProductImg(img);
 				}
 				

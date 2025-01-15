@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.sql.Clob;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class ClobUtils {
 
@@ -25,4 +28,21 @@ public final class ClobUtils {
         }
         return sb.toString();
     }
+    
+	public static List<HashMap<String, Object>> processClobData(List<HashMap<String, Object>> list) {
+	    String clobKey = "PRODUCT_DESCRIPTION";
+	    return list.stream().map(item -> {
+	        Object value = item.get(clobKey);
+	        if (value instanceof Clob) {
+	            try {
+	                String clobString = ClobUtils.clobToString((Clob) value);
+	                item.put(clobKey, clobString);
+	            } catch (Exception e) {
+	                // 로그 기록
+	                item.put(clobKey, "Error processing description");
+	            }
+	        }
+	        return item;
+	    }).collect(Collectors.toList());
+	}
 }

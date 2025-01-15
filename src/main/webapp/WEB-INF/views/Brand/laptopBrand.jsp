@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/searchHistory.js" defer></script>
     <script src="/js/mainCarousel.js" defer></script>
-
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
-
-<style>
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
     <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
@@ -49,7 +46,6 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
-</style>
 </style>
 </head>
 <body>
@@ -130,7 +126,7 @@
         <div class="option">
             <div>
                 <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="HP 서비스센터" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="" id="keyword" size="15"> 
                     <button type="submit">검색하기</button> 
                 </form>
             </div>
@@ -206,65 +202,76 @@
         let content = '의 라인업에 대한 설명입니다.</p>';
         let additionalDescription = manufacturerExplain; // 가져온 설명을 사용
 
-		let add1 = '';
+      let add1 = '';
 
-        
+        let value = '';
         switch(brand) {
             case 'lenovo':
                 content = 'LENOVO' + content;
-
+				value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://kr.msi.com/" class="brand-iframe"></iframe></div>';
 
                 break;    
             case 'samsung':
                 content = '삼성' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'lg':
                 content = 'LG' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'hp':
                 content = 'HP' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'acer':
                 content = 'ACER' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'gigabyte':
                 content = 'GIGABYTE' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'dell':
                 content = 'DELL' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'microsoft':
                 content = 'MICROSOFT' + content;
+                value += 'MS' + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'razer':
                 content = 'RAZER' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.razer.com/store/gaming-laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'msi':
                 content = 'MSI' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://blog.naver.com/ww31ni/223051564142" class="brand-iframe"></iframe></div>';
                 break;
             case 'asus':
                 content = 'ASUS' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             case 'apple':
                 content = 'APPLE' + content;
+                value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://www.dell.com/ko-kr/shop/dell-laptops/scr/laptops" class="brand-iframe"></iframe></div>';
                 break;
             default:
                 content = '<h2>브랜드 설명</h2><p>선택된 브랜드에 대한 설명이 없습니다.</p>';
                 additionalDescription = '<p>추가 정보가 없습니다.</p>';
         }
-        
+        searchPlaces(value);
         document.querySelector('#brand-abcd-container').innerHTML = additionalDescription;
         document.querySelector('.brand-text').innerHTML = content;
         document.querySelector('#brand-description-container').innerHTML = add1; // 추가 설명 업데이트
@@ -288,17 +295,22 @@
     var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
     // 키워드로 장소를 검색합니다
-    searchPlaces();
+    //searchPlaces();
 
     // 키워드 검색을 요청하는 함수입니다
-    function searchPlaces() {
-
+    function searchPlaces(value) {
+		
         var keyword = document.getElementById('keyword').value;
-
+		if(value){
+			document.getElementById('keyword').value = value;
+			keyword = value;
+		};
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
             alert('키워드를 입력해주세요!');
             return false;
         }
+        
+        
 
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         ps.keywordSearch( keyword, placesSearchCB); 

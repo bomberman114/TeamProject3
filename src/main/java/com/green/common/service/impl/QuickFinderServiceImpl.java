@@ -35,7 +35,6 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 		HashMap<String, Object> res = new HashMap<>();
 		
 		int  productCount  = quickFinderMapper.getProductCount(requestBody);
-		System.out.println(productCount);
 		
 	    PagingResponse<HashMap<String, Object>> response = null;
 	    if( productCount < 1 ) { // 현재 조회한 자료가 없다면
@@ -63,9 +62,6 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 	    Pagination pagination = new Pagination(productCount, searchVo);
 	    int 	offset		= searchVo.getOffset();
 	    int		recordSize	= searchVo.getRecordSize();
-	    System.out.println(offset);
-	    System.out.println(recordSize);
-	    System.out.println(requestBody);
     	List<HashMap<String, Object>> list = quickFinderMapper.getProductPagingList(offset,recordSize,requestBody);
     	
     	String clobKey = "PRODUCT_DESCRIPTION";
@@ -92,6 +88,18 @@ public class QuickFinderServiceImpl implements QuickFinderService{
 		res.put("nowpage", nowpage);
 		res.put("searchVo", searchVo);
 		return res;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> findManufacturerList() {
+		List<HashMap<String, Object>> manufacturerList = quickFinderMapper.findManufacturerList();
+		return manufacturerList;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getBrandByManufactureList(String manufactureIdx) {
+		List<HashMap<String, Object>> brandList = quickFinderMapper.findBrandListByManufactureIdx(manufactureIdx);
+		return brandList;
 	}
 
 

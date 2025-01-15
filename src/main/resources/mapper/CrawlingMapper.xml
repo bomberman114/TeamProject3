@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.crolling.mapper.CrollingMapper">
+<mapper namespace="com.green.crawling.mapper.CrawlingMapper">
 
 	<select id="findByProductName">
 		SELECT *
@@ -55,6 +55,19 @@
 			#{img.product_image_ext},
 		  #{img.product_sfile_name}
 		)
+	</insert>
+	
+	<insert id="saveAttr">
+		INSERT INTO product_attribute (
+		    product_idx,
+		    category_attribute_idx,
+		    category_attribute_value_idx
+		) VALUES (
+			    #{arg0},
+			    #{arg1},
+			    #{arg2}
+		)
+			
 
 	</insert>
 

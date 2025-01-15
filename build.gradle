@@ -48,6 +48,20 @@ dependencies {
 	
 	//sql로그
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+	
+	// Jackson for JSON parsing
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
+  // Apache HttpClient 
+  implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+  
+  // AsyncHttpClient
+  implementation 'org.asynchttpclient:async-http-client:2.12.3'
+  
+  implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+  // Jsoup HTML 파서
+  implementation 'org.jsoup:jsoup:1.18.3'
 
 }
 

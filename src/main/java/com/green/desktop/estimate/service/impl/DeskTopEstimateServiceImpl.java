@@ -3,12 +3,16 @@ package com.green.desktop.estimate.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.green.computer.part.compatibility.CompauterPartCompatibilityCheck;
 import com.green.cooler.mapper.CoolerMapper;
 import com.green.cpu.mapper.CpuMapper;
 import com.green.desktop.estimate.service.DeskTopEstimateService;
@@ -24,6 +28,7 @@ import com.green.ssd.mapper.SsdMapper;
 
 @Service("DeskTopEstimateService")
 public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
+
 
 	@Autowired
 	private CpuMapper cpuMapper;
@@ -73,7 +78,6 @@ public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
 				.getdeskTopEstimateProductFilterList(map);
 		// 결과를 저장할 List 생성
 		List<HashMap<String, Object>> groupedResults = new ArrayList<>();
-		System.out.println(deskTopEstimateProductFilterList);
 		// 그룹화 로직
 		for (HashMap<String, Object> item : deskTopEstimateProductFilterList) {
 			int idx = Integer.parseInt(String.valueOf(item.get("CATEGORY_ATTRIBUTE_IDX")));
@@ -98,7 +102,6 @@ public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
 		}
 
 		// 결과 출력
-		System.out.println(groupedResults);
 		return groupedResults;
 	}
 
@@ -112,14 +115,121 @@ public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
 	// 카테고리를 찾는 메서드
 	private static HashMap<String, Object> findCategory(List<HashMap<String, Object>> groupedResults, String category) {
 		for (HashMap<String, Object> cat : groupedResults) {
-			System.out.println(cat.get("category"));
-			System.out.println(cat);
-			System.out.println(category);
 			if (cat.get("CATEGORY_ATTRIBUTE_NAME").equals(category)) {
 				return cat;
 			}
 		}
 		return null;
+	}
+
+
+	@Override
+	public HashMap<String, Object> compauterPartCompatibilityCheck(HashMap<String, Object> map) {
+		List<HashMap<String, Object>> productList = productMapper.getProductList(map);
+		System.out.println("productList전:" + productList);
+		productList = deduplication(productList);
+		System.out.println("productList후:" + productList);
+		HashMap<String, Object> resultMap = new HashMap<>();
+		CompauterPartCompatibilityCheck compauterPartCompatibilityCheck = new CompauterPartCompatibilityCheck();
+		resultMap = compauterPartCompatibilityCheck.compauterPartCompatibilityCheck(productList);
+		System.out.println("호환성 결과 :" + resultMap);
+		return resultMap;
+	}
+
+	private static List<HashMap<String, Object>> deduplication(List<HashMap<String, Object>> productList) {
+
+		// 중복 제거 후 통합된 결과를 저장할 새로운 리스트
+		List<HashMap<String, Object>> unifiedProductList = new ArrayList<>();
+
+		for (HashMap<String, Object> prod : productList) {
+			HashMap<String, Object> unifiedProduct = new HashMap<>();
+
+			// CATEGORY_ATTRIBUTE_IDXS (문자열 처리)
+			String categoryAttributeIdxsStr = (String) prod.get("CATEGORY_ATTRIBUTE_IDXS");
+			Set<Integer> uniqueIdxs = new LinkedHashSet<>();
+			if (categoryAttributeIdxsStr != null && !categoryAttributeIdxsStr.isEmpty()) {
+				String[] idxsArray = categoryAttributeIdxsStr.split(",");
+				for (String idx : idxsArray) {
+					uniqueIdxs.add(Integer.parseInt(idx.trim()));
+				}
+			}
+			unifiedProduct.put("CATEGORY_ATTRIBUTE_IDXS", uniqueIdxs);
+
+			// PRODUCT_DESCRIPTION
+			unifiedProduct.put("PRODUCT_DESCRIPTION", prod.get("PRODUCT_DESCRIPTION"));
+
+			// PRODUCT_IDX
+			unifiedProduct.put("PRODUCT_IDX", prod.get("PRODUCT_IDX"));
+
+			// CATEGORY_ATTRIBUTE_VALUE_NAMES (문자열 처리)
+			String categoryAttributeValueNamesStr = (String) prod.get("CATEGORY_ATTRIBUTE_VALUE_NAMES");
+			Set<String> uniqueValueNames = new LinkedHashSet<>();
+			if (categoryAttributeValueNamesStr != null && !categoryAttributeValueNamesStr.isEmpty()) {
+				String[] valueNamesArray = categoryAttributeValueNamesStr.split(",");
+				for (String valueName : valueNamesArray) {
+					uniqueValueNames.add(valueName.trim());
+				}
+			}
+			unifiedProduct.put("CATEGORY_ATTRIBUTE_VALUE_NAMES", String.join(", ", uniqueValueNames));
+
+			// PRICE
+			unifiedProduct.put("PRICE", prod.get("PRICE"));
+
+			// CATEGORY_IDX
+			unifiedProduct.put("CATEGORY_IDX", prod.get("CATEGORY_IDX"));
+
+			// CATEGORY_ATTRIBUTE_NAMES (문자열 처리)
+			String categoryAttributeNamesStr = (String) prod.get("CATEGORY_ATTRIBUTE_NAMES");
+			Set<String> uniqueAttributeNames = new LinkedHashSet<>();
+			if (categoryAttributeNamesStr != null && !categoryAttributeNamesStr.isEmpty()) {
+				String[] attributeNamesArray = categoryAttributeNamesStr.split(",");
+				for (String attributeName : attributeNamesArray) {
+					uniqueAttributeNames.add(attributeName.trim());
+				}
+			}
+			unifiedProduct.put("CATEGORY_ATTRIBUTE_NAMES", String.join(", ", uniqueAttributeNames));
+
+			// CATEGORY_ATTRIBUTE_VALUE_IDXS (문자열 처리)
+			String categoryAttributeValueIdxsStr = (String) prod.get("CATEGORY_ATTRIBUTE_VALUE_IDXS");
+			Set<Integer> uniqueValueIdxs = new LinkedHashSet<>();
+			if (categoryAttributeValueIdxsStr != null && !categoryAttributeValueIdxsStr.isEmpty()) {
+				String[] valueIdxsArray = categoryAttributeValueIdxsStr.split(",");
+				for (String valueIdx : valueIdxsArray) {
+					uniqueValueIdxs.add(Integer.parseInt(valueIdx.trim()));
+				}
+			}
+			unifiedProduct.put("CATEGORY_ATTRIBUTE_VALUE_IDXS", uniqueValueIdxs);
+
+			// PRODUCT_NAME
+			unifiedProduct.put("PRODUCT_NAME", prod.get("PRODUCT_NAME"));
+
+			// PRODUCT_ATTRIBUTE_IDXS (문자열 처리)
+			String productAttributeIdxsStr = (String) prod.get("PRODUCT_ATTRIBUTE_IDXS");
+			Set<Integer> uniqueProductAttributeIdxs = new LinkedHashSet<>();
+			if (productAttributeIdxsStr != null && !productAttributeIdxsStr.isEmpty()) {
+				String[] productIdxsArray = productAttributeIdxsStr.split(",");
+				for (String productIdx : productIdxsArray) {
+					uniqueProductAttributeIdxs.add(Integer.parseInt(productIdx.trim()));
+				}
+			}
+			unifiedProduct.put("PRODUCT_ATTRIBUTE_IDXS", uniqueProductAttributeIdxs);
+
+			// 통합된 제품 정보를 새로운 리스트에 추가
+			unifiedProductList.add(unifiedProduct);
+		}
+		return unifiedProductList;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getDeskTopPartProductList(HashMap<String, Object> map) {
+		List<HashMap<String, Object>> getDeskTopPartProductList = productMapper.getDeskTopPartProductList(map);
+		for (int i = 0; i < getDeskTopPartProductList.size(); i++) {
+			String productSfileName = String.valueOf(getDeskTopPartProductList.get(i).get("PRODUCT_SFILE_NAME"));
+			FileImage fileImage = new FileImage();
+			productSfileName = fileImage.fileNemeReplace(productSfileName);
+			getDeskTopPartProductList.get(i).put("PRODUCT_SFILE_NAME", productSfileName);
+		}
+		return getDeskTopPartProductList;
 	}
 
 }

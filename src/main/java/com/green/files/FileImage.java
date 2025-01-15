@@ -7,15 +7,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
-
+import com.green.crawling.vo.CrawlingImgVo;
 
 public class FileImage {
 
@@ -107,6 +104,41 @@ public class FileImage {
 		
 		}
 		
+		
+		// uploadfiles 에 넘어온 파일들을 저장
+		public static void oneSave(HashMap<String, Object> map, MultipartFile[] profileImge) {
+		    String uploadPath = String.valueOf(map.get("uploadPath"));
+		    System.out.println("save까지옴");
+		    
+		    if (profileImge == null || profileImge.length == 0) {
+		        System.out.println("No files to upload");
+		        return;
+		    }
+		    
+		    System.out.println("profileImge:" + profileImge[0].getOriginalFilename());
+		    
+		    try {
+		        MultipartFile file = profileImge[0];
+		        String originalFilename = file.getOriginalFilename();
+		        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+		        String fileName = UUID.randomUUID().toString() + fileExtension;
+		        String folderPath = makeFolder(uploadPath);
+		        String savePath = folderPath + File.separator + fileName;
+		        
+		        File saveFile = new File(savePath);
+		        file.transferTo(saveFile);
+		        
+		        CrawlingImgVo  imgVo = new CrawlingImgVo(0, 0, fileName, fileExtension, savePath);
+		        System.out.println("File saved successfully at: " + savePath);
+		        map.put("imgVo", imgVo);
+		    } catch (IOException e) {
+		        System.err.println("Error saving file: " + e.getMessage());
+		        e.printStackTrace();
+		    }
+		}
+
+		
+		
 
 		// 날짜 폴더 생성   d:\\dev\\data\\2024\\11\\05
 		private static String makeFolder(String uploadPath) {
@@ -131,7 +163,7 @@ public class FileImage {
 		// 파일경로바꾸기
 		public String fileNemeReplace(String fileName) {
 			fileName = fileName.replace("\\", "/");
-			String path = "/img/commonImage/";
+			String path = "/images/product/";
 			fileName = path + fileName;
 			return fileName;
 		}

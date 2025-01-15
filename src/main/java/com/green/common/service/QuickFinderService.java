@@ -9,4 +9,9 @@ public interface QuickFinderService {
 
 	HashMap<String, Object> getProductPagingList(HashMap<String, Object> requestBody);
 
+	List<HashMap<String, Object>> findManufacturerList();
+
+	List<HashMap<String, Object>> getBrandByManufactureList(String manufactureIdx);
+
+	
 }

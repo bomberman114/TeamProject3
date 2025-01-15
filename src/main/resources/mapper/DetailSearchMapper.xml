@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.common.mapper.DetailSearchMapper">
+	
+<select id="getAttributeListByCategoryIdx">
+		SELECT *
+		FROM   CATEGORY_ATTRIBUTE CA LEFT JOIN  CATEGORY_ATTRIBUTE_VALUE CAV ON CA.CATEGORY_ATTRIBUTE_IDX = CAV.CATEGORY_ATTRIBUTE_IDX
+		WHERE  1=1
+    <if test="categoryIdx != null and categoryIdx != ''">
+        AND CA.CATEGORY_IDX = #{categoryIdx}
+    </if>
+</select>
+<select id="getProductCount">
+		 SELECT COUNT(DISTINCT P.PRODUCT_IDX)
+		 FROM   PRODUCT P LEFT JOIN PRODUCT_ATTRIBUTE PA ON P.PRODUCT_IDX = PA.PRODUCT_IDX
+    <where>
+        <if test="requestBody.categoryIdx != null and requestBody.categoryIdx!= ''">
+        	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
+        </if>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+					AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i'))
+        </if> 
+        <if test="requestBody.userSearch != null and requestBody.userSearch != ''">
+          AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i'))
+					OR PRODUCT_NAME = REPLACE(#{requestBody.userSearch},'%20',' ')
+        </if> 
+    </where>
+	    <choose>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND P.PRICE &gt;= #{requestBody.lowestPrice} AND P.PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+		    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+		        AND P.PRICE &gt;= #{requestBody.lowestPrice}
+		    </when>
+		    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+		        AND P.PRICE &lt;= #{requestBody.highestPrice}
+		    </when>
+	</choose>
+    <if test="requestBody.sortType == 'highestPrice'">
+    	ORDER BY P.PRICE DESC
+    </if>        
+    <if test="requestBody.sortType == 'lowestPrice'">
+    	ORDER BY P.PRICE ASC
+    </if>        
+    <if test="requestBody.sortType != null and requestBody.sortType == ''">
+    	ORDER BY P.CREATED_AT DESC
+    </if>    
+</select>
+
+<select id="getProductPagingFilterList">
+SELECT DISTINCT P.PRODUCT_IDX,
+       P.PRODUCT_NAME,
+       TO_CHAR(P.PRODUCT_DESCRIPTION) PRODUCT_DESCRIPTION,
+       P.PRICE,
+       P.CATEGORY_IDX,
+       TO_CHAR(P.CREATED_AT,'YYYY.MM') AS CREATED_AT,
+       PI.PRODUCT_SFILE_NAME,
+       ATTRIBUTE_VALUES
+FROM   PRODUCT P
+    JOIN PRODUCT_IMAGE PI ON P.PRODUCT_IDX = PI.PRODUCT_IDX
+		LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
+    LEFT JOIN (
+		  SELECT DISTINCT PRODUCT_IDX,
+		           LISTAGG(DISTINCT category_attribute_value_idx, ', ') 
+		           WITHIN GROUP (ORDER BY category_attribute_value_idx) AS attribute_values
+		    FROM product_attribute 
+		    GROUP BY PRODUCT_IDX
+		) ATTRIBUT_VALUE ON P.product_idx = ATTRIBUT_VALUE.PRODUCT_IDX
+   	 <where>
+        <if test="requestBody.categoryIdx != null and requestBody.categoryIdx!= ''">
+        	AND  P.CATEGORY_IDX = #{requestBody.categoryIdx}
+        </if>
+        <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+					AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i'))
+        </if> 
+        <if test="requestBody.userSearch != null and requestBody.userSearch != ''">
+          AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+					OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i'))
+					OR PRODUCT_NAME = REPLACE(#{requestBody.userSearch},'%20',' ')
+        </if> 
+        
+    </where>
+	<choose>
+	    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+	        AND P.PRICE &gt;= #{requestBody.lowestPrice} AND P.PRICE &lt;= #{requestBody.highestPrice}
+	    </when>
+	    <when test="requestBody.lowestPrice != null and requestBody.lowestPrice != '' and (requestBody.highestPrice == null or requestBody.highestPrice == '')">
+	        AND P.PRICE &gt;= #{requestBody.lowestPrice}
+	    </when>
+	    <when test="(requestBody.lowestPrice == null or requestBody.lowestPrice == '') and requestBody.highestPrice != null and requestBody.highestPrice != ''">
+	        AND P.PRICE &lt;= #{requestBody.highestPrice}
+	    </when>
+	</choose>
+    <if test="requestBody.sortType == 'highestPrice'">
+    	ORDER BY P.PRICE DESC
+    </if>        
+    <if test="requestBody.sortType == 'lowestPrice'">
+    	ORDER BY P.PRICE ASC
+    </if>        
+    <if test="requestBody.sortType == 'recent'">
+    	ORDER BY P.CREATED_AT DESC
+    </if>            
+    <if test="offset != 0 and recordSize != 0" >
+    	OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY
+    </if>          
+</select>
+
+<select id="findParentIdxAndDepthByCategoryIdx">
+	SELECT *
+	FROM   CATEGORY
+	WHERE  CATEGORY_IDX = ${categoryIdx}
+</select>
+
+<select id="findCategoryListByParentIdxAndDepth">
+	SELECT *
+	FROM   CATEGORY
+	WHERE  DEPTH = #{arg1}
+	<if test="arg0 != 'null'"></if>
+	AND PARENT_CATEGORY_IDX = #{arg0}  
+</select>
+
+<select id="findChildCategoryByCategoryIdx">
+	SELECT *
+	FROM   CATEGORY
+	WHERE  PARENT_CATEGORY_IDX = ${categoryIdx}
+</select>
+
+<select id="getSearchedProductList">
+	SELECT P.CATEGORY_IDX,
+	       C.CATEGORY_NAME 
+	FROM   PRODUCT P LEFT JOIN CATEGORY C ON P.CATEGORY_IDX = C.CATEGORY_IDX
+	                 LEFT JOIN PRODUCT_NORMALIZE_NAME PNN ON P.PRODUCT_IDX = PNN.PRODUCT_IDX 
+	WHERE 1 = 1	
+   <if test="requestBody.listSearch != null and requestBody.listSearch != ''">
+		AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i')
+		OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.listSearch}), ' ', ''),  'i'))
+   </if> 
+   <if test="requestBody.userSearch != null and requestBody.userSearch != ''">
+    AND (REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_NORMALIZE_NAME, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i')
+		OR  REGEXP_LIKE(REGEXP_REPLACE(PRODUCT_DESCRIPTION, ' ', ''), REPLACE(FN_GET_DIV_KO_CHAR(#{requestBody.userSearch}), ' ', ''),  'i'))
+		OR  PRODUCT_NAME = REPLACE(#{requestBody.userSearch},'%20',' ')
+   </if> 
+</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,10 +14,8 @@
 <link rel="stylesheet" href="/css/style.css" />
 
 <title>조립앨범 게시글 작성</title>
+
 <style>
-.inner {
-	margin-top: 40px; 
-}
 .cm-nav {
     min-width: 390px; /* 고정된 너비 */  
     margin-left: 20px;
@@ -41,11 +39,15 @@
     
     .login {
     	border-radius: 5px;
-    	background: #ccc;
+    	background: #1A3D91;
     	text-align: center;
     	padding: 10px;
     	margin-top: 10px;
     	margin-bottom: 10px;
+    	
+    	a {
+    		color: white;
+    	}
     }
 }
 input[type="text"] {
@@ -93,7 +95,7 @@ table {
 <%@include file="/WEB-INF/include/header.jsp"%>
 
 <div class="inner">  
-  <div style="display: flex; ">     
+  <div style="display: flex; margin-top:40px; ">      
     <div style="width: 790px;">
       <div class="bold" style="margin-bottom: 10px;">조립앨범 게시글 작성</div>
 
@@ -581,6 +583,36 @@ document.addEventListener('click', function(event) {
     ],
         height: 300 // 에디터 높이 설정
     });
+    
+ 	// 금지어 목록
+    const forbiddenWords = ['욕설1', '욕설2', '욕설3']; // 금지어 추가
+    const forbiddenRegex = new RegExp(forbiddenWords.join('|'), 'gi'); // 정규식 생성
+
+    // 플래그로 무한 루프 방지
+    let isSanitizing = false;
+
+    // CKEditor 초기화 후 이벤트 설정
+    CKEDITOR.instances.editor.on('change', function () {
+        if (isSanitizing) return; // 이미 정화 중이라면 중단
+
+        const instance = CKEDITOR.instances.editor;
+        if (!instance) return; // CKEditor 인스턴스 확인
+
+        const originalContent = instance.getData(); // 현재 입력된 데이터 가져오기
+        const sanitizedContent = originalContent.replace(forbiddenRegex, match => {
+            alert(match + "는 사용이 금지된 단어입니다.");
+            return '***'; // 금지어를 제거 또는 '***'로 대체
+        });
+
+        // 내용이 수정되었을 경우에만 업데이트
+        if (originalContent !== sanitizedContent) {
+            isSanitizing = true; // 플래그 설정
+            instance.setData(sanitizedContent); // 수정된 데이터 설정
+            isSanitizing = false; // 플래그 해제
+        }
+     
+    });  
+ 	
 </script>
 
 

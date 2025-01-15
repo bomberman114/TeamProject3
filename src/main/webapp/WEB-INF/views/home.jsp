@@ -6,13 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>찾았닷컴</title>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <script src="/js/searchHistory.js" defer></script>
 <script src="/js/mainCarousel.js" defer></script>
-<style type="text/css">
-</style>
 </head>
 <body>
 	<%@include file="/WEB-INF/include/header.jsp"%>
@@ -29,16 +27,13 @@
 				<div class="dim-next dim"></div>
 				<div class="carousel-container">
 					<div class="carousel-slide">
-						<div>aa</div>
+						<div><a href="/dSearch?keyword=9800x3d"><img src="/images/carousel/maincarasel1.png"></a></div>
 					</div>
 					<div class="carousel-slide">
-						<div>bb</div>
+						<div><a href="/dSearch?keyword=인텔 코어 울트라"><img src="/images/carousel/maincarasel2.png"></a></div>
 					</div>
 					<div class="carousel-slide">
-						<div>cc</div>
-					</div>
-					<div class="carousel-slide">
-						<div>dd</div>
+						<div><a href="/QuickFinder"><img src="/images/carousel/maincarasel3.png"></a></div>
 					</div>
 				</div>
 				<button class="carousel-button prev">
@@ -69,16 +64,9 @@
 			<div>
 				<div class="brand-carousel">
 					<ul class="brand-carousel-container">
-						<li>MSI1</li>
-						<li>MSI2</li>
-						<li>MSI3</li>
-						<li>MSI4</li>
-						<li>MSI5</li>
-						<li>MSI6</li>
-						<li>MSI7</li>
-						<li>MSI8</li>
-						<li>MSI9</li>
-						<li>MSI10</li>
+						<c:forEach var="brand" items="${brandList}">
+							<li><a href="/LaptopBrand/Brand"><img src="/images/brand-manufacturer/${brand.BRAND_MANUFACTURER_SFILE_NAME}"></a></li>						
+						</c:forEach>
 					</ul>
 				</div>
 				<h2>카테고리별 신상품</h2>
@@ -103,7 +91,7 @@
 								<h3>${productListAll.categoryName}</h3>
 								<div class="box-best-item-list">
 									<c:forEach var="productList" items="${productListAll.productList}">
-										<div class="box-best-item">
+										<div class="box-best-item" data-pname="${productList.PRODUCT_NAME}">
 											<div class="box-best-item-img"><img src="/images/product/${productList.PRODUCT_SFILE_NAME}"></div>
 											<div class="box-best-item-title">${productList.PRODUCT_NAME}</div>
 											<div class="box-best-item-price"><fmt:formatNumber value="${productList.PRICE}" type="number" pattern="#,###" />원</div>
@@ -115,9 +103,11 @@
 					</div>
 				</div>
 			</div>
+		</div>
 	</main>
 	<%@include file="/WEB-INF/include/footer.jsp"%>
 	<script>
+
     let brandCarouselIdx = 0;
 
     const $brandCarouselContainer = document.querySelector(".brand-carousel-container");
@@ -205,10 +195,9 @@ const $scrollTopBtn = document.querySelector(".scroll-top-btn");
     });
     
     
-$scrollTopBtn.addEventListener("click", () => {
-    window.scroll({ top: 0, behavior: "smooth" });
-});
-
-
+		$scrollTopBtn.addEventListener("click", () => {
+		    window.scroll({ top: 0, behavior: "smooth" });
+		});
     </script>
+    </body>
 </html>

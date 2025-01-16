@@ -98,6 +98,7 @@
 
 .paging-container {
 	margin-bottom: 20px;
+  margin-top: 50px;
 } 
 
 .write-btn {
@@ -142,7 +143,7 @@
 	display: flex;
 	text-align: center;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	flex-shrink: 0;
 
 	select {
@@ -179,13 +180,23 @@
   <div style="display: flex; margin-top:40px; ">      
     <div>
       <div>
-        <div class="title">조립앨범
-          <select class="select-field" name="sort" id="sort" onchange="sortAlbums()" style="color: #333;">
+        <div class="title">조립앨범</div>
+             <div class="search-container">
+            <form method="GET" action="/Community/Albumlist?page=${currentPage + 1}&sort=${param.sort}&search=${param.search}&searchtext=${param.searchtext}">
+        <div>
+            <select class="select-field" name="search" id="search">
+                <option value="제목" ${param.search == '제목' ? 'selected' : ''}>제목</option>
+                <option value="작성자" ${param.search == '작성자' ? 'selected' : ''}>작성자</option>
+            </select>
+            <input type="search" name="searchtext" id="searchtext" placeholder="검색어를 입력하세요." value="${param.searchtext}">
+            <button type="submit" name="imgclick" id="imgclick">검색</button>
+        </div>
+    </form>
+     <select class="select-field" name="sort" id="sort" onchange="sortAlbums()" style="color: #333;">
             <option value="등록순" ${param.sort == '등록순' ? 'selected' : ''}>등록순</option>
             <option value="조회순" ${param.sort == '조회순' ? 'selected' : ''}>조회순</option>
           </select>
-        </div>
-
+      </div>
       </div>
       
       <div>
@@ -223,20 +234,6 @@
         
         </ul>
 	  </div>
-
-      <div class="search-container">
-            <form method="GET" action="/Community/Albumlist?page=${currentPage + 1}&sort=${param.sort}&search=${param.search}&searchtext=${param.searchtext}">
-        <div>
-            <select class="select-field" name="search" id="search">
-                <option value="제목" ${param.search == '제목' ? 'selected' : ''}>제목</option>
-                <option value="작성자" ${param.search == '작성자' ? 'selected' : ''}>작성자</option>
-            </select>
-            <input type="search" name="searchtext" id="searchtext" placeholder="검색어를 입력하세요." value="${param.searchtext}">
-            <button type="submit" name="imgclick" id="imgclick">검색</button>
-        </div>
-    </form>
-      </div>
-    
     </div>
     
     

@@ -153,18 +153,18 @@ WHERE
   <!-- 커뮤니티_조립앨범_이미지 등록 --> 
   <insert id="insertcommunityImage">
    INSERT INTO COMMUNITY_IMAGE (
-	COMMUNITY_IMAGE_IDX,
-	COMMUNITY_IDX,
-	COMMUNITY_IMAGE_NAME,
-	COMMUNITY_IMAGE_EXT,
-	COMMUNITY_SFILE_NAME
-	) VALUES (
-	(SELECT NVL(MAX(community_image_idx),0)+1 FROM COMMUNITY_IMAGE),
-	(SELECT MAX(community_idx) FROM COMMUNITY),
-	#{fileList[0].community_image_name},
-	#{fileList[0].community_image_ext},
-	#{fileList[0].community_sfile_name}
-	)
+   COMMUNITY_IMAGE_IDX,
+   COMMUNITY_IDX,
+   COMMUNITY_IMAGE_NAME,
+   COMMUNITY_IMAGE_EXT,
+   COMMUNITY_SFILE_NAME
+   ) VALUES (
+   (SELECT NVL(MAX(community_image_idx),0)+1 FROM COMMUNITY_IMAGE),
+   (SELECT MAX(community_idx) FROM COMMUNITY),
+   #{fileList[0].community_image_name},
+   #{fileList[0].community_image_ext},
+   #{fileList[0].community_sfile_name}
+   )
   </insert>
   
   <!-- 커뮤니티_조립앨범_게시글 정보 --> 

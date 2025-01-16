@@ -13,7 +13,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-<script src="/js/searchHistory.js" defer></script>
 <style type="text/css">
 </style>
 </head>

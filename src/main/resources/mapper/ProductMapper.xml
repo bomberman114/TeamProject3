@@ -101,7 +101,7 @@ JOIN
     PRODUCT_IMAGE  PI
 ON
     P.PRODUCT_IDX = PI.PRODUCT_IDX
-LEFT 	JOIN
+LEFT    JOIN
     PRODUCT_ATTRIBUTE  PA
 ON 
     P.PRODUCT_IDX = PA.PRODUCT_IDX
@@ -242,7 +242,7 @@ ON
     PA.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
 WHERE 
 
-	   P.PRODUCT_IDX IN
+      P.PRODUCT_IDX IN
 
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
@@ -271,7 +271,7 @@ FROM
     PRODUCT  P
 
 WHERE 
-	   P.PRODUCT_IDX IN
+      P.PRODUCT_IDX IN
 
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
@@ -303,7 +303,7 @@ JOIN
 ON
     P.CATEGORY_IDX = C.CATEGORY_IDX
 WHERE 
-	   P.PRODUCT_IDX IN
+      P.PRODUCT_IDX IN
 
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">

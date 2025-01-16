@@ -90,6 +90,9 @@ table {
     font-size: 20px;
     font-weight: bold;
 }
+.cke_notifications_area {
+	display: none;
+}
 </style>
 </head>
 <body>

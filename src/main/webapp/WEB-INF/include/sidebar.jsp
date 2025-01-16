@@ -23,8 +23,6 @@
     background-color: #CCC;
 }
 .dropdown-menu {
-    max-height: 0;
-    overflow: hidden;
     background-color: #fff;
     transition: max-height 0.3s ease;
 }

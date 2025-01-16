@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>찾았닷컴</title>
+<link rel="icon" href="/images/favicon/favicon.svg"/>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <script src="/js/searchHistory.js" defer></script>

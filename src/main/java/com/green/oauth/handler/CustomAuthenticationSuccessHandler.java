@@ -36,11 +36,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String targetUrl    = (String) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
         if (targetUrl == null) {
             // 저장된 URL이 없으면 Referer 헤더 확인
-            targetUrl = request.getHeader("Referer");
-            if (targetUrl == null || targetUrl.contains("/login")) {
-                // Referer가 없거나 로그인 페이지인 경우 기본 URL로 설정
-                targetUrl = "/";
-            }
+        	targetUrl = request.getHeader("Referer");
+        	if (targetUrl == null) {
+        	    targetUrl = request.getHeader("Referer");
+        	    if (targetUrl == null || targetUrl.contains("/login") || targetUrl.contains("/register")) {
+        	        targetUrl = "/";
+        	    }
+        	}
         } else {
             // 사용 후 세션에서 제거
             session.removeAttribute("SPRING_SECURITY_SAVED_REQUEST");

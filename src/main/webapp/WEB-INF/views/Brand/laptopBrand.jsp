@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/searchHistory.js" defer></script>
-    <script src="/js/mainCarousel.js" defer></script>
-
       <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
     <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
+.map_wrap {position:relative;width:100%;height:500px; margin: auto;}
 #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
@@ -47,6 +45,18 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.radius_border{border:1px solid #919191;border-radius:5px;}     
+.custom_typecontrol {position:absolute;top:10px;right:10px;overflow:hidden;width:130px;height:30px;margin:0;padding:0;z-index:1;font-size:12px;font-family:'Malgun Gothic', '맑은 고딕', sans-serif;}
+.custom_typecontrol span {display:block;width:65px;height:30px;float:left;text-align:center;line-height:30px;cursor:pointer;}
+.custom_typecontrol .btn {background:#fff;background:linear-gradient(#fff,  #e6e6e6);}       
+.custom_typecontrol .btn:hover {background:#f5f5f5;background:linear-gradient(#f5f5f5,#e3e3e3);}
+.custom_typecontrol .btn:active {background:#e6e6e6;background:linear-gradient(#e6e6e6, #fff);}    
+.custom_typecontrol .selected_btn {color:#fff;background:#425470;background:linear-gradient(#425470, #5b6d8a);}
+.custom_typecontrol .selected_btn:hover {color:#fff;}   
+.custom_zoomcontrol {position:absolute;top:50px;right:10px;width:36px;height:80px;overflow:hidden;z-index:1;background-color:#f5f5f5;} 
+.custom_zoomcontrol span {display:block;width:36px;height:40px;text-align:center;cursor:pointer;}     
+.custom_zoomcontrol span img {width:15px;height:15px;padding:12px 0;border:none;}             
+.custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}       
 </style>
 </head>
 <body>
@@ -120,26 +130,27 @@
         </div>
     </div>
     <div class="map-container">
-<div class="map_wrap"">
-    <div id="map" style="width:100%; height:100%;position:relative;overflow:hidden;"></div>
-
-    <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <form onsubmit="searchPlaces(); return false;">
-                    키워드 : <input type="text" value="" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
-            </div>
-        </div>
+      <div id="brand-abcd-title"></div>
+      <div id="brand-abcd-container" class="abcd-description-container"></div>
+	  <div class="map_wrap">
+        <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
+        <div id="menu_wrap" class="bg_white">
+          <div class="option">
+              <div>
+                  <form onsubmit="searchPlaces(); return false;">
+                      키워드 : <input type="text" value="" id="keyword" size="15"> 
+                      <button type="submit">검색하기</button> 
+                  </form>
+              </div>
+          </div>
         <hr>
         <ul id="placesList"></ul>
         <div id="pagination"></div>
     </div>
-</div>
+   </div>
 </div>
     
-    <div id="brand-abcd-container" class="abcd-description-container"></div>
+
     <div id="brand-description-container" class="brand-description-container"></div>
     <div id="additional-info-container" class="additional-info-container"></div> <!-- 추가 정보 컨테이너 -->
 
@@ -209,7 +220,7 @@
         switch(brand) {
             case 'lenovo':
                 content = 'LENOVO' + content;
-				value += brand + ' 서비스센터';
+            value += brand + ' 서비스센터';
                 add1 = '<div class="iframe-container"><iframe src="https://kr.msi.com/" class="brand-iframe"></iframe></div>';
 
                 break;    
@@ -274,11 +285,11 @@
         }
         searchPlaces(value);
         document.querySelector('#brand-abcd-container').innerHTML = additionalDescription;
-        document.querySelector('.brand-text').innerHTML = content;
+        document.querySelector("#brand-abcd-title").innerHTML = content;
         document.querySelector('#brand-description-container').innerHTML = add1; // 추가 설명 업데이트
     }
    
-	
+   
     
     
     var markers = [];
@@ -295,13 +306,13 @@
     
     mapContentInner.style.display = "none"
     document.addEventListener("click",(e)=>{
-    	if(e.target.closest(".brand-item") && recent != e.target.parentNode.dataset.content.toUpperCase()){
-       	mapContentInner.style.display = "block"
+       if(e.target.closest(".brand-item") && recent != e.target.parentNode.dataset.content.toUpperCase()){
+          mapContentInner.style.display = "block"
         document.getElementById('keyword').value = e.target.parentNode.dataset.content.toUpperCase() + " 서비스센터"
-   			recent = e.target.parentNode.dataset.content.toUpperCase();
-    		map.relayout(); // 지도 재구성
-    		searchPlaces();    			
-    	}
+            recent = e.target.parentNode.dataset.content.toUpperCase();
+          map.relayout(); // 지도 재구성
+          searchPlaces();             
+       }
     })
     
     
@@ -517,6 +528,30 @@
             el.removeChild (el.lastChild);
         }
     }
+     
+     
+ // 지도타입 컨트롤의 지도 또는 스카이뷰 버튼을 클릭하면 호출되어 지도타입을 바꾸는 함수입니다
+    function setMapType(maptype) { 
+        var roadmapControl = document.getElementById('btnRoadmap');
+        var skyviewControl = document.getElementById('btnSkyview'); 
+        if (maptype === 'roadmap') {
+            map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);    
+            roadmapControl.className = 'selected_btn';
+            skyviewControl.className = 'btn';
+        } else {
+            map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);    
+            skyviewControl.className = 'selected_btn';
+            roadmapControl.className = 'btn';
+        }
+    }
+
+    const mapTypeControl = new kakao.maps.MapTypeControl();
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+ 
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+ 
+     
 </script>
 </body>
 </html>

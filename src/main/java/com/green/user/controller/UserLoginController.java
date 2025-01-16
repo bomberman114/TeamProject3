@@ -30,11 +30,11 @@ public class UserLoginController {
 
 	@GetMapping("/loginForm")
 	public String loginForm(HttpServletRequest request) {
-		String referer = request.getHeader("Referer");
-		if (referer != null && !referer.contains("/login")) {
-			request.getSession().setAttribute("SPRING_SECURITY_SAVED_REQUEST", referer);
-		}
-		return "loginForm";
+	    String referer = request.getHeader("Referer");
+	    if (referer != null && !referer.contains("/login") && !referer.contains("/register")) {
+	        request.getSession().setAttribute("SPRING_SECURITY_SAVED_REQUEST", referer);
+	    }
+	    return "loginForm";
 	}
 
 	@GetMapping("/registerForm")
@@ -43,11 +43,12 @@ public class UserLoginController {
 	}
 
 	@PostMapping("/register")
-	public String postRegisterUser(UserVo vo) {
-		String encodedPassword = passwordEncoder.encode(vo.getUser_password());
-		vo.setUser_password(encodedPassword);
-		userMapper.saveUserLocal(vo);
-		return "redirect:/loginForm";
+	public String postRegisterUser(UserVo vo, HttpServletRequest request) {
+	    String encodedPassword = passwordEncoder.encode(vo.getUser_password());
+	    vo.setUser_password(encodedPassword);
+	    userMapper.saveUserLocal(vo);
+	    request.getSession().setAttribute("registrationSuccess", true);
+	    return "redirect:/loginForm";
 	}
 
 	@PostMapping("/IsUserExist")

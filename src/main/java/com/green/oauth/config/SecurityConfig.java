@@ -49,7 +49,8 @@ public class SecurityConfig {
             		.requestMatchers("/Cs/Mycslist").hasRole("USER")
             		.requestMatchers("/Cs/CswriteForm").hasRole("USER")
             		.requestMatchers("/Community/AlbumwriteForm").hasRole("USER")
-            		.requestMatchers("/Community/Albumview").hasRole("USER")
+            		.requestMatchers("/Community/AlbumwriteForm").hasRole("ADMIN")
+            		//.requestMatchers("/Community/Albumview").hasRole("USER")
                     .anyRequest().permitAll())                     // 위에 설정한 엔드포인트 제외하곤 인가 
             .userDetailsService(customUserDetailsService)
             .formLogin((login) -> login

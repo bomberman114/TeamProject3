@@ -61,4 +61,6 @@ public interface CommunityMapper {
 
    HashMap<String, Object> getCommunityDeskTop(HashMap<String, Object> map);
 
+	HashMap<String, Object> getCommunityDeskTop(HashMap<String, Object> map);
+
 }

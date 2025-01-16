@@ -18,6 +18,8 @@ public interface DeskTopEstimateService {
 
    List<HashMap<String, Object>> getCommunityDeskTop(HashMap<String, Object> map);
 
+	List<HashMap<String, Object>> getCommunityDeskTop(HashMap<String, Object> map);
+
 
 }
  

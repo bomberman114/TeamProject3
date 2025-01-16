@@ -116,7 +116,7 @@ public class CommunityController {
 		return mv;
 		}
 	
-	// Community/Albumwrite (게시글 작성)
+	// Community/Albumwrite (게시글 작성) /Community/Albumview
 	@RequestMapping(value = "/Albumwrite", method = RequestMethod.POST)
 	public ModelAndView albumwrite(
 	        @ModelAttribute CommunityVo communityVo,
@@ -151,6 +151,7 @@ public class CommunityController {
 			@RequestParam("community_idx") int community_idx,
 			@RequestParam("user_idx") int user_idx
 			) {
+		System.out.println(user_idx);
 		//조회수 증가
 		communityMapper.plusviews(communityVo);
 

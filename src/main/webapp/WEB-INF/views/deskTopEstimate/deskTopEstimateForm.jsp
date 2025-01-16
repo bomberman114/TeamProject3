@@ -722,17 +722,17 @@
             ajax(nowpage=1, category=5); // 페이지 로드 시 AJAX 호출
             // JSON 문자열을 파싱하여 객체로 변환
           
-          let productListStr = '${productList}'; // 서버에서 전달된 문자열
+		    let productListStr = '${productList}'; // 서버에서 전달된 문자열
             //console.log('결과:' + productListStr);
-          // JSON 형식으로 변환
-         
-            // JSON 문자열을 객체로 변환
-            let productList = JSON.parse(productListStr);
-            
-            // 데이터 출력
-            console.log(productList); // 배열 형태로 출력
-          
-            // productList가 정의되어 있고 배열인지 확인
+		    // JSON 형식으로 변환
+		   
+				// JSON 문자열을 객체로 변환
+				let productList = JSON.parse(productListStr);
+				
+				// 데이터 출력
+				console.log(productList); // 배열 형태로 출력
+		    
+        	 // productList가 정의되어 있고 배열인지 확인
             if (productList && Array.isArray(productList)) {
                 productListAdd(productList); // productList를 인자로 전달
             }

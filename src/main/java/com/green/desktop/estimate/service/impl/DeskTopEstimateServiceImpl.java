@@ -347,4 +347,117 @@ public class DeskTopEstimateServiceImpl implements DeskTopEstimateService {
       return productList;
    }
 
+	@Override
+	public List<HashMap<String, Object>> getCommunityDeskTop(HashMap<String, Object> map) {
+		//map.put("community_idx", 6);
+		map = communityMapper.getCommunityDeskTop(map);
+		//System.out.println(map);
+		String communitySpecCpu = null;
+		String communitySpecMainboard = null;
+		String communitySpecMemory = null;
+		String communitySpecGpu = null;
+		String communitySpecSsd = null;
+		String communitySpecHdd = null;
+		String communitySpecCooler = null;
+		String communitySpecCase = null;
+		String communitySpecPower = null;
+		if (map.get("COMMUNITY_SPEC_CPU") != null) {
+			communitySpecCpu = String.valueOf(map.get("COMMUNITY_SPEC_CPU")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_MAINBOARD") != null) {
+			communitySpecMainboard = String.valueOf(map.get("COMMUNITY_SPEC_MAINBOARD")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_MEMORY") != null) {
+			communitySpecMemory = String.valueOf(map.get("COMMUNITY_SPEC_MEMORY")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_GPU") != null) {
+			communitySpecGpu = String.valueOf(map.get("COMMUNITY_SPEC_GPU")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_SSD") != null) {
+			communitySpecSsd = String.valueOf(map.get("COMMUNITY_SPEC_SSD")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_HDD") != null) {
+			communitySpecHdd = String.valueOf(map.get("COMMUNITY_SPEC_HDD")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_COOLER") != null) {
+			communitySpecCooler = String.valueOf(map.get("COMMUNITY_SPEC_COOLER")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_CASE") != null) {
+			communitySpecCase = String.valueOf(map.get("COMMUNITY_SPEC_CASE")).trim();
+		}
+		if (map.get("COMMUNITY_SPEC_POWER") != null) {
+			communitySpecPower = String.valueOf(map.get("COMMUNITY_SPEC_POWER")).trim();
+		}
+		List<Integer> categoryList = new ArrayList<>();
+		categoryList.add(5);
+		categoryList.add(6);
+		categoryList.add(7);
+		categoryList.add(8);
+		categoryList.add(9);
+		categoryList.add(10);
+		categoryList.add(11);
+		categoryList.add(12);
+		categoryList.add(13);
+		map.put("categoryList", categoryList);
+		List<HashMap<String, Object>> listMap = new ArrayList<>();
+		listMap = productMapper.getProductListPart(map);
+		List<Integer> productIdxList = new ArrayList<>();
+		for (HashMap<String, Object> part1 : listMap) {
+			for (int i = 0; i < categoryList.size(); i++) {
+				int categoryIdx = Integer.parseInt(String.valueOf(categoryList.get(i)));
+				int productIdx = Integer.parseInt(String.valueOf(part1.get("PRODUCT_IDX")));
+				int listMapInCategoryIdx = Integer.parseInt(String.valueOf(part1.get("CATEGORY_IDX")));
+				String listMapPart = String.valueOf(part1.get("PRODUCT_NAME")).trim();
+				if (categoryIdx == listMapInCategoryIdx) {
+					if (listMapPart.equals(communitySpecCpu)) {
+						// map.put("productIdx", productIdx);
+						productIdxList.add(productIdx);
+					}
+					if (listMapPart.equals(communitySpecMainboard)) {
+						productIdxList.add(productIdx);
+
+					}
+					if (listMapPart.equals(communitySpecMemory)) {
+
+						productIdxList.add(productIdx);
+					}
+					if (listMapPart.equals(communitySpecGpu)) {
+						productIdxList.add(productIdx);
+
+					}
+					if (listMapPart.equals(communitySpecSsd)) {
+
+						productIdxList.add(productIdx);
+					}
+					if (listMapPart.equals(communitySpecHdd)) {
+
+						productIdxList.add(productIdx);
+					}
+					if (listMapPart.equals(communitySpecCooler)) {
+						productIdxList.add(productIdx);
+
+					}
+					if (listMapPart.equals(communitySpecCase)) {
+						productIdxList.add(productIdx);
+
+					}
+					if (listMapPart.equals(communitySpecPower)) {
+						productIdxList.add(productIdx);
+
+					}
+				}
+
+			}
+
+		}
+		map.put("productIdxList", productIdxList);
+		System.out.println("productIdxList:"+productIdxList.size());
+		List<HashMap<String, Object>> productList = null;
+		if(productIdxList.size() != 0) {
+			productList = productMapper.getDeskTopPartProductCommunityList(map);
+		}
+		//System.out.println("342 번줄 서비스 임플 결과:" + productList);
+		return productList;
+	}
+
 }

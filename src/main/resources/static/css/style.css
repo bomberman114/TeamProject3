@@ -1620,6 +1620,7 @@ footer {
 
 
 .abcd-description-container {
+
    font-size: 20px;
    color: #333;
    padding-top: 12px;
@@ -1904,7 +1905,7 @@ footer {
 }
 
 .brand-iframe {
-   width: 100%;
+   width: 90%;
    margin:auto; 
    height: 1200px;   
 }
@@ -2197,11 +2198,11 @@ footer {
 .map {
    display:flex;
    justify-content: center;
-   margin: auto;
+
 }
 
 .map-container {
-   width: 1200px;
+   width: 76%;
    justify-content: center;
    display: flex;
       margin: 0 auto; /* 중앙 정렬 */

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.green.product.mapper.ProductMapper;
@@ -40,7 +39,7 @@ public class CompauterPartCompatibilityCheck {
 							map2 = checkCompatibilityBetweenCpuAndMotherboard(map2);
 						}
 						if (categoryIdx2 == categoryRamIdx) {
-
+							System.out.println("호환성43번줄:" + map2);
 							map2.put("categoryRam", part2);
 							map2 = checkCompatibilityBetweenCpuAndRam(map2);
 						}
@@ -63,6 +62,10 @@ public class CompauterPartCompatibilityCheck {
 					map2.put("categoryMotherBoard", part1);
 					for (HashMap<String, Object> part2 : computerPart) {
 						int categoryIdx2 = Integer.parseInt(String.valueOf(part2.get("CATEGORY_IDX")));
+						if (categoryIdx1 == categoryCpuIdx) {
+							map2.put("categoryCpu", part1);
+							map2 = checkCompatibilityBetweenCpuAndMotherboard(map2);
+						}
 						if (categoryIdx2 == categoryRamIdx) {
 
 							map2.put("categoryRam", part2);
@@ -75,6 +78,22 @@ public class CompauterPartCompatibilityCheck {
 						}
 					}
 				}
+				if (categoryIdx1 == categoryRamIdx) {
+					map2.put("categoryRam", part1);
+					for (HashMap<String, Object> part2 : computerPart) {
+						int categoryIdx2 = Integer.parseInt(String.valueOf(part2.get("CATEGORY_IDX")));
+						if (categoryIdx2 == categoryCpuIdx) {
+							map2.put("categoryCpu", part2);
+							map2 = checkCompatibilityBetweenCpuAndRam(map2);
+						}
+						if (categoryIdx2 == categoryMotherBoardIdx) {
+
+							map2.put("categoryMotherBoard", part2);
+							map2 = checkCompatibilityBetweenMotherboardAndRam(map2);
+						}
+					}
+
+				}
 				if (categoryIdx1 == categoryGpuIdx) {
 					map2.put("categoryGpu", part1);
 					for (HashMap<String, Object> part2 : computerPart) {
@@ -83,6 +102,23 @@ public class CompauterPartCompatibilityCheck {
 
 							map2.put("categoryCase", part2);
 							map2 = checkCompatibilityBetweenDesktopCaseAndGpu(map2);
+						}
+						if (categoryIdx2 == categoryCpuIdx) {
+
+							map2.put("categoryCpu", part2);
+							map2 = checkCompatibilityBetweenCpuAndGpu(map2);
+						}
+						if (categoryIdx2 == categoryPowerIdx) {
+
+							map2.put("categoryPower", part2);
+							for (HashMap<String, Object> part3 : computerPart) {
+								int categoryIdx3 = Integer.parseInt(String.valueOf(part3.get("CATEGORY_IDX")));
+								if (categoryIdx3 == categoryCpuIdx) {
+
+									map2.put("categoryCpu", part3);
+									map2 = checkCompatibilityBetweenPowerAndGpu(map2);
+								}
+							}
 						}
 					}
 
@@ -95,6 +131,34 @@ public class CompauterPartCompatibilityCheck {
 
 							map2.put("categoryPower", part2);
 							map2 = checkCompatibilityBetweenDesktopCaseAndPower(map2);
+						}
+						if (categoryIdx2 == categoryGpuIdx) {
+
+							map2.put("categoryGpu", part2);
+							map2 = checkCompatibilityBetweenDesktopCaseAndGpu(map2);
+						}
+					}
+				}
+				if (categoryIdx1 == categoryPowerIdx) {
+					map2.put("categoryPower", part1);
+					for (HashMap<String, Object> part2 : computerPart) {
+						int categoryIdx2 = Integer.parseInt(String.valueOf(part2.get("CATEGORY_IDX")));
+						if (categoryIdx2 == categoryCaseIdx) {
+
+							map2.put("categoryCase", part2);
+							map2 = checkCompatibilityBetweenDesktopCaseAndPower(map2);
+						}
+						if (categoryIdx2 == categoryCpuIdx) {
+
+							map2.put("categoryCpu", part2);
+							for (HashMap<String, Object> part3 : computerPart) {
+								int categoryIdx3 = Integer.parseInt(String.valueOf(part3.get("CATEGORY_IDX")));
+								if (categoryIdx3 == categoryGpuIdx) {
+
+									map2.put("categoryGpu", part3);
+									map2 = checkCompatibilityBetweenPowerAndGpu(map2);
+								}
+							}
 						}
 					}
 				}
@@ -422,10 +486,12 @@ public class CompauterPartCompatibilityCheck {
 		String RamMapProductDescription = String.valueOf(RamMap.get("PRODUCT_DESCRIPTION"));
 		// String cpuRamYype = String.valueOf(map.get("CPU_RAM_TYPE"));
 		// String ramType = String.valueOf(map.get("RAM_TYPE"));
-		String cpuRamYype = memoryType(cpuMapProductDescription);
+		String cpuRamType = memoryType(cpuMapProductDescription);
 		String ramType = memoryType(RamMapProductDescription);
+		System.out.println("427번줄:" + cpuRamType);
+		System.out.println("428번줄:" + ramType);
 		double compatibilityBetweenCpuAndRamScore = 0;
-		if (cpuRamYype.equals(ramType)) {
+		if (cpuRamType.equals(ramType)) {
 			check = true;
 			compatibilityBetweenCpuAndRamScore = 3;
 

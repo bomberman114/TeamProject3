@@ -200,5 +200,56 @@
      ,#{notice_content}
     )
   </insert>
-
+  
+  <!-- 커뮤니티_조립앨범_게시글 목록-->
+  <select id="getalbumList">
+   SELECT  
+    C.COMMUNITY_IDX,
+    C.COMMUNITY_TITLE,
+    C.COMMUNITY_CONTENT,
+    C.COMMUNITY_REGDATE,
+    U.USER_NICKNAME AS USER_NICKNAME,
+    COUNT(CA.COMMUNITY_ANSWER_IDX) AS TOTAL_ANSWERS,
+    C.COMMUNITY_VIEWS
+   FROM  
+    COMMUNITY C
+   LEFT JOIN  
+    COMMUNITY_ANSWER CA ON C.COMMUNITY_IDX = CA.COMMUNITY_IDX
+   LEFT JOIN  
+    USERS U ON C.USER_IDX = U.USER_IDX
+   GROUP BY  
+    C.COMMUNITY_IDX, 
+    C.COMMUNITY_TITLE, 
+    C.COMMUNITY_CONTENT,
+    C.COMMUNITY_REGDATE, 
+    U.USER_NICKNAME,
+    C.COMMUNITY_VIEWS
+   <choose>
+       <when test="type == 'views'">
+           ORDER BY C.COMMUNITY_VIEWS DESC
+       </when>
+       <otherwise>
+           ORDER BY C.COMMUNITY_REGDATE DESC
+       </otherwise>
+   </choose>
+   OFFSET #{start} ROWS FETCH NEXT #{size} ROWS ONLY
+  </select>
+  
+  <!-- 관리자_커뮤니티_총목록 -->
+  <select id="getcountalbumList">
+   SELECT COUNT(*)
+   FROM COMMUNITY
+  </select> 
+  
+  <!-- 관리자_커뮤니티_삭제 -->
+  <delete id="deletecommunity">
+    BEGIN
+        DELETE FROM COMMUNITY_ANSWER WHERE COMMUNITY_IDX = #{community_idx};
+        DELETE FROM COMMUNITY_IMAGE WHERE COMMUNITY_IDX = #{community_idx};
+        DELETE FROM COMMUNITY WHERE COMMUNITY_IDX = #{community_idx};
+    END;
+  </delete>
+  
+  
+  
 </mapper>

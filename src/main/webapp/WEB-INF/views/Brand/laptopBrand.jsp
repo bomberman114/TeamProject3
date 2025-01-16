@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/searchHistory.js" defer></script>
-
       <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5045804b97f82ee1c885808bf1ee578e&libraries=services"></script>
     <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
@@ -331,12 +330,12 @@
 
     // 키워드 검색을 요청하는 함수입니다
     function searchPlaces(value) {
-      
+		
         var keyword = document.getElementById('keyword').value;
-      if(value){
-         document.getElementById('keyword').value = value;
-         keyword = value;
-      };
+		if(value){
+			document.getElementById('keyword').value = value;
+			keyword = value;
+		};
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
             alert('키워드를 입력해주세요!');
             return false;

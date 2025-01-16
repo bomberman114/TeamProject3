@@ -67,5 +67,20 @@ public interface ManagerMapper {
 	List<String> getType();
 
 	List<String> getnoticeType();
+	
+	int getTotalAlbumCount(
+			@Param("searchBy") String searchBy, 
+			@Param("searchtext") String searchtext);
+
+	List<ManagerVo> getalbumList(
+			@Param("start") int start, 
+			@Param("size") int size,
+			@Param("type") String type
+			);
+
+	int getcountalbumList();
+
+	void deletecommunity(int idx);
+		
 
 }

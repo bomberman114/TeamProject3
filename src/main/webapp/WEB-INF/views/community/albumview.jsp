@@ -9,7 +9,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/images/favicon/favicon.svg"/>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
 
@@ -20,33 +19,33 @@
     margin-left: 20px;
     
     .border {
-    	width: 100%;
-    	border: 1px solid #ddd;
-    	border-radius: 5px;
-    	margin-bottom: 20px;
+       width: 100%;
+       border: 1px solid #ddd;
+       border-radius: 5px;
+       margin-bottom: 20px;
     }    
     .border-in {
-		margin: 0 auto;
-    	width: 95%;
-    	padding: 10px;
+      margin: 0 auto;
+       width: 95%;
+       padding: 10px;
     }
     
     a {
-    	text-decoration: none;
-    	color: #333;
+       text-decoration: none;
+       color: #333;
     }
     
     .login {
-    	border-radius: 5px;
-    	background: #1A3D91;
-    	text-align: center;
-    	padding: 10px;
-    	margin-top: 10px;
-    	margin-bottom: 10px;
-    	
-    	a {
-    		color: white;
-    	}
+       border-radius: 5px;
+       background: #1A3D91;
+       text-align: center;
+       padding: 10px;
+       margin-top: 10px;
+       margin-bottom: 10px;
+       
+       a {
+          color: white;
+       }
     }
 }
 .div1 {
@@ -60,7 +59,7 @@
     }
 }
 .title {
-	font-size: 20px;
+   font-size: 20px;
     font-weight: bold;
 }
 .div2 {
@@ -68,12 +67,12 @@
     justify-content: space-between;
 }
 .content {
-	min-height: 200px; /* 최소 높이 설정 */
+   min-height: 200px; /* 최소 높이 설정 */
     padding: 10px; /* 내부 여백 추가 (선택 사항) */
     box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기 계산 */
 }
 .img {
-	position: relative;
+   position: relative;
     width: 100%;
     max-width: 790px;
     height: auto;
@@ -81,68 +80,68 @@
     margin-bottom: 30px;
     
     img {
-    	width: 100%;
-    	height: auto;
-	    max-height: 300px;
-	    object-fit: contain;    	
+       width: 100%;
+       height: auto;
+       max-height: 300px;
+       object-fit: contain;       
     }
 }
 .box {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 20px;
 }
 .table {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 400px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 400px;
     border: 1px solid #ccc;
-	
-	.title {
-		font-size: 20px;
-		font-weight: bold;
-	}
-	table {
-		width: 90%;
-		margin-top: 20px;
-		margin-bottom: 20px;
-	}
-	
-	th {
-		width: 20%;
-		text-align: left;
-		padding: 2px;
-	}
-	
-	td {
-		width: 80%;
-		text-align: left;
-	}
-	
-	tr td:last-child {
-		
-		a {
-		display: inline-block;
-		text-align: center;		
-		border: 1px solid;
-    	padding: 5px 10px;
-    	font-weight: bold;
-		}
-	}
+   
+   .title {
+      font-size: 20px;
+      font-weight: bold;
+   }
+   table {
+      width: 90%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+   }
+   
+   th {
+      width: 20%;
+      text-align: left;
+      padding: 2px;
+   }
+   
+   td {
+      width: 80%;
+      text-align: left;
+   }
+   
+   tr td:last-child {
+      
+      a {
+      display: inline-block;
+      text-align: center;      
+      border: 1px solid;
+       padding: 5px 10px;
+       font-weight: bold;
+      }
+   }
 }
 textarea {
-	width: 100%;
-	min-height: 100px;
+   width: 100%;
+   min-height: 100px;
 }
 .answerbtn {
-	border: 1px solid; 
-	padding: 5px 10px; 
-	background-color: white;
+   border: 1px solid; 
+   padding: 5px 10px; 
+   background-color: white;
 }
 .bold {
-	margin-top: 10px;
+   margin-top: 10px;
     font-size: 20px;
     font-weight: bold;
 }
@@ -230,7 +229,7 @@ textarea {
           </tr>
           <tr><td colspan="2"><hr style="border: 1px solid white;"></td></tr>
           <tr>
-            <td colspan="2" style="text-align: center;"><a href="#">견적보기</a></td>
+            <td colspan="2" style="text-align: center;"><a href="/DeskTopEstimate/DeskTopEstimateForm?community_idx=${community_idx}">견적보기</a></td>
           </tr>
         </table>
       </div>  
@@ -248,7 +247,7 @@ textarea {
               <div>  
                 <span style="font-weight: bold;">${answer.user_nickname}</span>
                 <span style="font-size: x-small;">${answer.community_answer_regdate}</span><br>
-            	<span>${answer.community_answer_content}</span>
+               <span>${answer.community_answer_content}</span>
               </div>
             </div>
           </c:forEach>
@@ -257,14 +256,14 @@ textarea {
       
       <div>
       <form action="/Community/Answerwrite?user_idx=${sessionScope.user.user_idx}&community_idx=${vo.community_idx}">
-      	<div>
-      	  <input type="hidden" name="user_idx" value="${sessionScope.user.user_idx}">
-      	  <input type="hidden" name="community_idx" value="${vo.community_idx}">
-      	  <textarea name="community_answer_content" id="community_answer_content"></textarea>
-      	</div>
-      	<div style="text-align: right;">
-      	  <input type="submit" class="answerbtn" value="댓글작성" >
-      	</div>
+         <div>
+           <input type="hidden" name="user_idx" value="${sessionScope.user.user_idx}">
+           <input type="hidden" name="community_idx" value="${vo.community_idx}">
+           <textarea name="community_answer_content" id="community_answer_content"></textarea>
+         </div>
+         <div style="text-align: right;">
+           <input type="submit" class="answerbtn" value="댓글작성" >
+         </div>
       </form>
       </div>
 
@@ -286,11 +285,11 @@ textarea {
           <!-- 구분선 추가 -->
           <div><hr style="border: 1px solid;"></div>
             <c:forEach var="albumbest" items="${albumbestList}" varStatus="status">
-          	  <div style="margin-bottom: 7px;">
-          	    <a href="/Community/Albumview?user_idx=${sessionScope.user.user_idx}&community_idx=${albumbest.community_idx}">
-          	      ${status.index + 1}. ${albumbest.community_title} (🗨️${albumbest.total_answers})
-          	    </a>
-          	  </div>
+               <div style="margin-bottom: 7px;">
+                 <a href="/Community/Albumview?user_idx=${sessionScope.user.user_idx}&community_idx=${albumbest.community_idx}">
+                   ${status.index + 1}. ${albumbest.community_title} (🗨️${albumbest.total_answers})
+                 </a>
+               </div>
             </c:forEach>
         </div>    
       </div>  
@@ -304,15 +303,15 @@ textarea {
 //유효성 검사
 const formEl = document.querySelector('form');
 formEl.onsubmit = function(event) {
-	const community_answer_contentEl   = document.querySelector('#community_answer_content');
-	
-	if(community_answer_contentEl.value.trim() == '') {
-		alert('댓글을 입력하세요.')
-		community_answer_contentEl.focus();
-		event.preventDefault();
-		return false;
-	}
-	return true;
+   const community_answer_contentEl   = document.querySelector('#community_answer_content');
+   
+   if(community_answer_contentEl.value.trim() == '') {
+      alert('댓글을 입력하세요.')
+      community_answer_contentEl.focus();
+      event.preventDefault();
+      return false;
+   }
+   return true;
 };
 </script>
 

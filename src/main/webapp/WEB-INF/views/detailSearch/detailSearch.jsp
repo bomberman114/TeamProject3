@@ -9,7 +9,6 @@
 <link rel="icon" href="/images/favicon/favicon.svg"/>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/style.css" />
-<script src="/js/searchHistory.js" defer></script>
 <style type="text/css">
 </style>
 </head>
@@ -91,7 +90,7 @@
     	  }
     	  if(clicked.matches(".list-search-btn")){
     		  listSearch = document.querySelector(".list-search").value.toUpperCase();
-    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1)
+    		  getProductPagingFilterList(categoryIdx,selectedFilters,lowestPrice,highestPrice,listSearch,sortType,1,userSearched)
     	  }
     	  if(clicked.matches(".paging-next-btn")){
     		  nowpage = clicked.dataset.nowpage;

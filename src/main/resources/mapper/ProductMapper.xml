@@ -18,6 +18,25 @@ WHERE
 
 </select>
 
+<select id="getProductListPart">
+ SELECT
+    PRODUCT_IDX,
+    PRODUCT_NAME,
+    PRODUCT_DESCRIPTION,
+    PRICE,
+    CATEGORY_IDX,
+    CREATED_AT,
+    UPDATED_AT
+FROM
+    PRODUCT
+WHERE CATEGORY_IDX IN 
+ <foreach item="categoryList" index="index" collection="categoryList"
+         open="(" separator="," close=")">
+           #{ categoryList }
+         </foreach>   
+ORDER BY CATEGORY_IDX ASC
+</select>
+
 <select id="productCategoryResultList">
 SELECT
     CA.CATEGORY_ATTRIBUTE_IDX,
@@ -82,7 +101,7 @@ JOIN
     PRODUCT_IMAGE  PI
 ON
     P.PRODUCT_IDX = PI.PRODUCT_IDX
-LEFT 	JOIN
+LEFT    JOIN
     PRODUCT_ATTRIBUTE  PA
 ON 
     P.PRODUCT_IDX = PA.PRODUCT_IDX
@@ -223,7 +242,7 @@ ON
     PA.CATEGORY_ATTRIBUTE_VALUE_IDX = CAV.CATEGORY_ATTRIBUTE_VALUE_IDX
 WHERE 
 
-	   P.PRODUCT_IDX IN
+      P.PRODUCT_IDX IN
 
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">
@@ -240,7 +259,27 @@ GROUP BY
 ORDER BY 
      P.PRODUCT_IDX ASC
 </select>
+<select id="getDeskTopPartProductCommunityList">
+SELECT
+    P.PRODUCT_IDX,
+    P.PRODUCT_NAME,
+    TO_CHAR(P.PRODUCT_DESCRIPTION)  PRODUCT_DESCRIPTION,
+    P.CATEGORY_IDX,
+    P.PRICE
 
+FROM
+    PRODUCT  P
+
+WHERE 
+      P.PRODUCT_IDX IN
+
+<foreach item="productIdxList" index="index" collection="productIdxList"
+         open="(" separator="," close=")">
+           #{ productIdxList }
+         </foreach>
+ORDER BY 
+     P.PRODUCT_IDX ASC
+</select>
 
 <select id="getDeskTopPartProductList">
  SELECT
@@ -264,7 +303,7 @@ JOIN
 ON
     P.CATEGORY_IDX = C.CATEGORY_IDX
 WHERE 
-	   P.PRODUCT_IDX IN
+      P.PRODUCT_IDX IN
 
 <foreach item="productIdxList" index="index" collection="productIdxList"
          open="(" separator="," close=")">

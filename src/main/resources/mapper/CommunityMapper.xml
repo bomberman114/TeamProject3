@@ -36,6 +36,33 @@
     OFFSET #{startIndex} ROWS FETCH NEXT #{itemsPerPage} ROWS ONLY
   </select>   
   
+  <select id="getCommunityDeskTop">
+  SELECT
+    COMMUNITY_IDX,
+    COMMUNITY_TITLE,
+    COMMUNITY_MENU,
+    COMMUNITY_REGDATE,
+    COMMUNITY_CONTENT,
+    COMMUNITY_SPEC_CPU,
+    COMMUNITY_SPEC_MAINBOARD,
+    COMMUNITY_SPEC_MEMORY,
+    COMMUNITY_SPEC_GPU,
+    COMMUNITY_SPEC_SSD,
+    COMMUNITY_SPEC_HDD,
+    COMMUNITY_SPEC_COOLER,
+    COMMUNITY_SPEC_CASE,
+    COMMUNITY_SPEC_POWER,
+    COMMUNITY_VIEWS,
+    USER_IDX,
+    COMMUNITY_IMAGE_NAME,
+    COMMUNITY_SFILE_NAME
+FROM
+    COMMUNITY
+WHERE     
+    COMMUNITY_IDX = #{community_idx}
+  
+  </select>
+  
   <!-- 커뮤니티_조립앨범_게시글 목록(총 개수)-->
   <select id="getTotalAlbumCount" resultType="int">
    SELECT  
@@ -126,18 +153,18 @@
   <!-- 커뮤니티_조립앨범_이미지 등록 --> 
   <insert id="insertcommunityImage">
    INSERT INTO COMMUNITY_IMAGE (
-	COMMUNITY_IMAGE_IDX,
-	COMMUNITY_IDX,
-	COMMUNITY_IMAGE_NAME,
-	COMMUNITY_IMAGE_EXT,
-	COMMUNITY_SFILE_NAME
-	) VALUES (
-	(SELECT NVL(MAX(community_image_idx),0)+1 FROM COMMUNITY_IMAGE),
-	(SELECT MAX(community_idx) FROM COMMUNITY),
-	#{fileList[0].community_image_name},
-	#{fileList[0].community_image_ext},
-	#{fileList[0].community_sfile_name}
-	)
+   COMMUNITY_IMAGE_IDX,
+   COMMUNITY_IDX,
+   COMMUNITY_IMAGE_NAME,
+   COMMUNITY_IMAGE_EXT,
+   COMMUNITY_SFILE_NAME
+   ) VALUES (
+   (SELECT NVL(MAX(community_image_idx),0)+1 FROM COMMUNITY_IMAGE),
+   (SELECT MAX(community_idx) FROM COMMUNITY),
+   #{fileList[0].community_image_name},
+   #{fileList[0].community_image_ext},
+   #{fileList[0].community_sfile_name}
+   )
   </insert>
   
   <!-- 커뮤니티_조립앨범_게시글 정보 --> 

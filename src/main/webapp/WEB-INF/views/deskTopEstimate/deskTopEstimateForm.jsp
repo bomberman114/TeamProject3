@@ -364,7 +364,7 @@
             const headerElement = document.querySelector('.desk-filters h3');
             if (headerElement) { // headerElement가 존재하는지 확인
                 headerElement.innerHTML = "<span>" + categoryMap.CATEGORY_NAME + " 상품 개수 :<span style='font-weight:bold; font-size:16px;''> " + count + "개</span></span>" +
-                    "<button class='show-all-btn' onclick='toggleAll(this)' style='border: none; background-color: #ffffff; font-weight:bold; color: #1A3D91; margin-left: auto; margin-right:10px;'>옵션 전체보기</button>";
+                    "<button class='show-all-btn' onclick='toggleAll(this)' style='border: none; background-color: #f6f3f2; font-weight:bold; color: #1A3D91; margin-left: auto; margin-right:10px;'>옵션 전체보기</button>";
             }
         }
         
@@ -408,12 +408,12 @@
             desktopPartFillter.innerHTML = filterHTML;
         }
        function countProduct(){
-    	   // 모든 hidden input 요소 선택
+          // 모든 hidden input 요소 선택
            const hiddenInputs = document.querySelectorAll('.desktop-specs input[type="hidden"][name="PRODUCT_IDX"]');
 
            // 각 hidden input의 value를 배열에 저장
            const productIds = Array.from(hiddenInputs).map(input => input.value);
-			//alert('하이');
+         //alert('하이');
            // 결과 출력
            //console.log("추출된 길이 값:" +  productIds.length);
         // 올바른 메서드 이름으로 수정
@@ -450,7 +450,7 @@
                 productListContainer.innerHTML += productHTML;
             });
             
-			          
+                   
             
             // add-btn 클릭 이벤트 리스너 추가
             document.querySelectorAll('.add-btn').forEach(button => {
@@ -658,10 +658,84 @@
         paginationContainer.appendChild(nextLink);
     }
 }
+        function productListAdd(productList){
+           // 데이터 반복 처리
+           //alert('하이');
+           console.log('총부품' + productList);
+           productList.forEach(product => {
+           console.log('가격' + product.PRICE);
+               //console.log("상품 이름: " + product.PRODUCT_NAME);
+               //console.log("상품 설명: " + product.PRODUCT_DESCRIPTION);
+               //console.log("상품 ID: " + product.PRODUCT_IDX);
+               //console.log("카테고리 ID: " + product.CATEGORY_IDX);
+               //console.log("---------------------------");
+               
+               // 자동으로 담기 로직
+                const hiddenContent = document.querySelector('a[href*="category=' + product.CATEGORY_IDX + '"] .hidden-content');
+                const desktopMini = document.querySelector('a[href*="category=' + product.CATEGORY_IDX + '"] .desktop-mini');
 
+                if (hiddenContent) {
+                    hiddenContent.querySelector('p').textContent = product.PRODUCT_NAME;
+                    hiddenContent.querySelector('span.price').textContent = (product.PRICE || 0).toLocaleString() + "원";
+
+                    let hiddenInput = hiddenContent.querySelector('input[name="PRODUCT_IDX"]');
+                    if (!hiddenInput) {
+                        hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'PRODUCT_IDX';
+                        hiddenContent.appendChild(hiddenInput);
+                    }
+                    hiddenInput.value = product.PRODUCT_IDX;
+
+                    let cancelButton = desktopMini.querySelector('.cancel-btn');
+                    if (!cancelButton) {
+                        cancelButton = document.createElement('button');
+                        cancelButton.className = 'cancel-btn';
+                        cancelButton.textContent = '취소';
+                        cancelButton.style = 'height: 25px; width: 78px; font-size:16px; color: #ffffff; border: #cccccc; margin-left: auto; font-weight: bold; background-color: #1A3D91;';
+                        desktopMini.appendChild(cancelButton);
+                    }
+
+                    cancelButton.onclick = function () {
+                        hiddenContent.querySelector('p').textContent = ''; // 제품 이름 지우기
+                        hiddenContent.querySelector('span.price').textContent = ''; // 가격 지우기
+                        hiddenContent.removeChild(hiddenInput); // hiddenInput 요소 삭제
+                        hiddenInput = null; // hiddenInput 변수 초기화
+                        cancelButton.remove(); // 취소 버튼 제거
+
+                        desktopMini.style.backgroundColor = '#ffffff';
+                        cancelButton.style.backgroundColor = '#ffffff';
+                        cancelButton.style.color = '#333333';
+
+                        updateTotalPrice();
+                    };
+                }
+            });
+
+            // 가격 및 카운트 업데이트
+            updateTotalPrice();
+            countProduct();
+        }
+        
+        
         window.onload = function() {
             ajax(nowpage=1, category=5); // 페이지 로드 시 AJAX 호출
+            // JSON 문자열을 파싱하여 객체로 변환
+          
+          let productListStr = '${productList}'; // 서버에서 전달된 문자열
+            //console.log('결과:' + productListStr);
+          // JSON 형식으로 변환
+         
+            // JSON 문자열을 객체로 변환
+            let productList = JSON.parse(productListStr);
             
+            // 데이터 출력
+            console.log(productList); // 배열 형태로 출력
+          
+            // productList가 정의되어 있고 배열인지 확인
+            if (productList && Array.isArray(productList)) {
+                productListAdd(productList); // productList를 인자로 전달
+            }
             // 옵션 전체보기 버튼 이벤트 바인딩
             const toggleAllButton = document.querySelector('.desk-filters h3 button');
             if (toggleAllButton) {
@@ -676,7 +750,7 @@
             
      // 전체 삭제 이벤트 
       function deleteAll() {
-    	  // 모든 hidden input 요소 선택
+         // 모든 hidden input 요소 선택
           const hiddenInputs = document.querySelectorAll('.desktop-specs input[type="hidden"][name="PRODUCT_IDX"]');
 
           // 각 hidden input의 value를 배열에 저장
@@ -686,8 +760,8 @@
               alert("상품을 선택해주세요");
           }
           if(productIds.length > 0){
-        	  if (confirm("모든 항목을 삭제하시겠습니까?")) {
-        		// 모든 hidden-content 요소 찾기
+             if (confirm("모든 항목을 삭제하시겠습니까?")) {
+              // 모든 hidden-content 요소 찾기
                   document.querySelectorAll('.hidden-content').forEach(hiddenContent => {
                       // 제품 이름 및 가격 지우기
                       hiddenContent.querySelector('p').textContent = ''; // 제품 이름 지우기
@@ -715,7 +789,7 @@
                           
                           // 이부분의 마무리
                   });
-             	
+                
 
                   // 제품 카운트 및 총 가격 업데이트
                   countProduct();  
@@ -723,8 +797,8 @@
                   //ajax(nowpage=1, category=5);
                // 페이지 새로 고침
                   location.reload();
-        	 	 }
-        	  }
+                }
+             }
         };
 
             
@@ -785,7 +859,7 @@
         });
      
      function cpuStyle(){
-    	 // 페이지 로드 시 CPU 카테고리의 배경색 및 글자색 변경
+        // 페이지 로드 시 CPU 카테고리의 배경색 및 글자색 변경
          const cpuCategory = document.querySelector('.DeskTopEstimateCategory[href*="category=5"] .desktop-mini'); // CPU 카테고리 선택
          if (cpuCategory) {
              cpuCategory.style.backgroundColor = '#1A3D91'; // 배경색 설정
@@ -799,8 +873,8 @@
                  cancelButton.style.color = '#FFFFFF'; // 취소 버튼 글자색 변경
              }
          }
-    	 
-    	 
+        
+        
      };
      
      
@@ -901,7 +975,7 @@
 
 
          <div class="desk-filters">
-            <h3 style="padding-left: 15px; color: #333; line-height: 60px; background-color: #FFFFFF; height: 60px; width: 788px; display: flex; justify-content: space-between; border: 1px solid #1A3D91; align-items: center;"></h3>
+            <h3 style="padding-left: 15px; color: #333; line-height: 60px; background-color: #f6f3f2; height: 60px; width: 788px; display: flex; justify-content: space-between; border: 1px solid #ccc; align-items: center;"></h3>
             <div id="desktopPartFillter"></div>
             <!-- 필터 리스트가 동적으로 추가될 부분 -->
          </div>

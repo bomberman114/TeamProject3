@@ -657,10 +657,84 @@
         paginationContainer.appendChild(nextLink);
     }
 }
+        function productListAdd(productList){
+        	// 데이터 반복 처리
+        	//alert('하이');
+        	console.log('총부품' + productList);
+        	productList.forEach(product => {
+        	console.log('가격' + product.PRICE);
+        	    //console.log("상품 이름: " + product.PRODUCT_NAME);
+        	    //console.log("상품 설명: " + product.PRODUCT_DESCRIPTION);
+        	    //console.log("상품 ID: " + product.PRODUCT_IDX);
+        	    //console.log("카테고리 ID: " + product.CATEGORY_IDX);
+        	    //console.log("---------------------------");
+        	    
+        	    // 자동으로 담기 로직
+                const hiddenContent = document.querySelector('a[href*="category=' + product.CATEGORY_IDX + '"] .hidden-content');
+                const desktopMini = document.querySelector('a[href*="category=' + product.CATEGORY_IDX + '"] .desktop-mini');
 
+                if (hiddenContent) {
+                    hiddenContent.querySelector('p').textContent = product.PRODUCT_NAME;
+                    hiddenContent.querySelector('span.price').textContent = (product.PRICE || 0).toLocaleString() + "원";
+
+                    let hiddenInput = hiddenContent.querySelector('input[name="PRODUCT_IDX"]');
+                    if (!hiddenInput) {
+                        hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'PRODUCT_IDX';
+                        hiddenContent.appendChild(hiddenInput);
+                    }
+                    hiddenInput.value = product.PRODUCT_IDX;
+
+                    let cancelButton = desktopMini.querySelector('.cancel-btn');
+                    if (!cancelButton) {
+                        cancelButton = document.createElement('button');
+                        cancelButton.className = 'cancel-btn';
+                        cancelButton.textContent = '취소';
+                        cancelButton.style = 'height: 25px; width: 78px; font-size:16px; color: #ffffff; border: #cccccc; margin-left: auto; font-weight: bold; background-color: #1A3D91;';
+                        desktopMini.appendChild(cancelButton);
+                    }
+
+                    cancelButton.onclick = function () {
+                        hiddenContent.querySelector('p').textContent = ''; // 제품 이름 지우기
+                        hiddenContent.querySelector('span.price').textContent = ''; // 가격 지우기
+                        hiddenContent.removeChild(hiddenInput); // hiddenInput 요소 삭제
+                        hiddenInput = null; // hiddenInput 변수 초기화
+                        cancelButton.remove(); // 취소 버튼 제거
+
+                        desktopMini.style.backgroundColor = '#ffffff';
+                        cancelButton.style.backgroundColor = '#ffffff';
+                        cancelButton.style.color = '#333333';
+
+                        updateTotalPrice();
+                    };
+                }
+            });
+
+            // 가격 및 카운트 업데이트
+            updateTotalPrice();
+            countProduct();
+        }
+        
+        
         window.onload = function() {
             ajax(nowpage=1, category=5); // 페이지 로드 시 AJAX 호출
-            
+            // JSON 문자열을 파싱하여 객체로 변환
+          
+		    let productListStr = '${productList}'; // 서버에서 전달된 문자열
+            //console.log('결과:' + productListStr);
+		    // JSON 형식으로 변환
+		   
+				// JSON 문자열을 객체로 변환
+				let productList = JSON.parse(productListStr);
+				
+				// 데이터 출력
+				console.log(productList); // 배열 형태로 출력
+		    
+        	 // productList가 정의되어 있고 배열인지 확인
+            if (productList && Array.isArray(productList)) {
+                productListAdd(productList); // productList를 인자로 전달
+            }
             // 옵션 전체보기 버튼 이벤트 바인딩
             const toggleAllButton = document.querySelector('.desk-filters h3 button');
             if (toggleAllButton) {

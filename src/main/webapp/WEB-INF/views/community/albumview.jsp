@@ -229,7 +229,7 @@ textarea {
           </tr>
           <tr><td colspan="2"><hr style="border: 1px solid white;"></td></tr>
           <tr>
-            <td colspan="2" style="text-align: center;"><a href="#">견적보기</a></td>
+            <td colspan="2" style="text-align: center;"><a href="/DeskTopEstimate/DeskTopEstimateForm?community_idx=${community_idx}">견적보기</a></td>
           </tr>
         </table>
       </div>  

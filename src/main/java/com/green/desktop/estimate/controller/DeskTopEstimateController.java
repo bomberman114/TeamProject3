@@ -75,51 +75,33 @@ public class DeskTopEstimateController {
 	@GetMapping("/DeskTopEstimateForm")
 	public ModelAndView deskTopEstimateForm(@RequestParam HashMap<String, Object> map) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println("도착");
-		System.out.println(map);
-		int category = 13;
-		map.put("category", category);
-		List<HashMap<String, Object>> productResultList = productMapper.getProductResultMapList(map);
-		List<HashMap<String, Object>> productCategoryResultList = productMapper.productCategoryResultList(map);
-		/*
-		for (int z = 0; z < productResultList.size(); z++) {
-			for (int i = 129; i <= 139; i++) {
-
-				productResultList.get(z).put("CATEGORY_ATTRIBUTE_IDX", i);
-				String productDescription = String.valueOf(productResultList.get(z).get("PRODUCT_DESCRIPTION"));
-				String productName = String.valueOf(productResultList.get(z).get("PRODUCT_NAME"));
-				
-				for (int y = 0; y < productCategoryResultList.size(); y++) {
-					int categoryAttributeIdx = Integer
-							.parseInt(String.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_IDX")));
-					String categoryAttributeame = String
-							.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_NAME"));
-					int categoryAttributeValueIdx = Integer.parseInt(
-							String.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_VALUE_IDX")));
-					String categoryAttributeValueName = String
-							.valueOf(productCategoryResultList.get(y).get("CATEGORY_ATTRIBUTE_VALUE_NAME"));
-
-					if (productResultList.get(z).get("CATEGORY_ATTRIBUTE_IDX").equals(categoryAttributeIdx)) {
-						if (productName != null && productName.contains(categoryAttributeValueName)) {
-							productResultList.get(z).put("CATEGORY_ATTRIBUTE_VALUE_IDX", categoryAttributeValueIdx);
-							productMapper.setProductCpu(productResultList.get(z));
-						}
-						if (productDescription != null && productDescription.contains(categoryAttributeValueName)) {
-							productResultList.get(z).put("CATEGORY_ATTRIBUTE_VALUE_IDX", categoryAttributeValueIdx);
-							productMapper.setProductCpu(productResultList.get(z));
-						}
-
-					}
-
-				}
-
-			}
+		//System.out.println("도착");
+		//System.out.println(map);
+		
+		//int category = 13;
+		//map.put("category", category);
+		//List<HashMap<String, Object>> productResultList = productMapper.getProductResultMapList(map);
+		//List<HashMap<String, Object>> productCategoryResultList = productMapper.productCategoryResultList(map);
+		List<HashMap<String, Object>> productList = new ArrayList<>();
+		if(map.get("community_idx")!= null){
+			productList = deskTopEstimateService.getCommunityDeskTop(map);
 		}
-		*/
+		String json = null;
+        // JSON 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+			 json = objectMapper.writeValueAsString(productList);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println("컨트롤러 결과 96번줄:" + json);
+		mv.addObject("productList",json);
 		// System.out.println("작동함");
 		mv.setViewName("deskTopEstimate/deskTopEstimateForm");
 		return mv;
 	};
+	
 
 	@RequestMapping("/DeskTopEstimateFiler")
 	@ResponseBody

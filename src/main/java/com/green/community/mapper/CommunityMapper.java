@@ -59,4 +59,6 @@ public interface CommunityMapper {
 
 	void plusviews(CommunityVo communityVo);
 
+	HashMap<String, Object> getCommunityDeskTop(HashMap<String, Object> map);
+
 }

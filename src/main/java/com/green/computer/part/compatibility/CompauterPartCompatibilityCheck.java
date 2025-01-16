@@ -714,7 +714,7 @@ public class CompauterPartCompatibilityCheck {
 		// 10% 기준 계산
 		double threshold = 0.1 * powerDepth;
 
-		if (desktopCasePowerLength >= powerDepth || desktopCasePowerStandard.contains(powerCategoryName)) {
+		if (desktopCasePowerLength >= powerDepth || powerCategoryName.contains(desktopCasePowerStandard)) {
 			check = true;
 			compatibilityBetweenDesktopCaseAndPowerScore = 1;
 			if (desktopCasePowerLength == 0) {

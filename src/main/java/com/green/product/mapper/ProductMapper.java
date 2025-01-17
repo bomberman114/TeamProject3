@@ -36,9 +36,6 @@ public interface ProductMapper {
 
    List<HashMap<String, Object>> getDeskTopPartProductCommunityList(HashMap<String, Object> map);
 
-	List<HashMap<String, Object>> getProductListPart(HashMap<String, Object> map);
-
-	List<HashMap<String, Object>> getDeskTopPartProductCommunityList(HashMap<String, Object> map);
 
 
 }

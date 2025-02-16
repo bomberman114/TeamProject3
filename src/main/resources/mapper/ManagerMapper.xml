@@ -250,6 +250,63 @@
     END;
   </delete>
   
+  <!-- 카테고리 리스트 가져오기 -->
+  <select id="getCategoryList">
+  SELECT
+    	CATEGORY_IDX,
+    	CATEGORY_NAME,
+    	PARENT_CATEGORY_IDX,
+    	DEPTH
+	FROM
+    	CATEGORY
+  </select>
+  
+  <insert id="saveProduct">
+  
+    INSERT INTO PRODUCT (
+	    PRODUCT_IDX,
+	    PRODUCT_NAME,
+	    PRODUCT_DESCRIPTION,
+	    PRICE,
+	    CATEGORY_IDX
+		) VALUES (
+		   (SELECT NVL(MAX(PRODUCT_IDX), 0) + 1 FROM PRODUCT),
+		   #{productName},
+		   #{productDescription},
+		   #{price},
+		   #{categoryIdx}
+		)
+  
+  </insert>
+  
+  <select id="getProductIdx">
+    SELECT
+    	PRODUCT_IDX
+	FROM
+	    PRODUCT
+	WHERE
+	    PRODUCT_NAME = #{productName}
+	AND 
+		PRICE = #{price}
+	ORDER BY
+	    CREATED_AT DESC
+	FETCH FIRST 1 ROW ONLY
+  </select>
+  
+  <insert id="saveProductImage">
+  INSERT INTO PRODUCT_IMAGE (
+    PRODUCT_IDX,
+    PRODUCT_IMAGE_NAME,
+    PRODUCT_IMAGE_EXT,
+    PRODUCT_SFILE_NAME
+	) VALUES (
+	    #{productIdx},
+	    #{fileList[0].product_image_name},
+	    #{fileList[0].product_image_ext},
+	    #{fileList[0].product_sfile_name}
+	)
+  
+  </insert>
   
   
 </mapper>

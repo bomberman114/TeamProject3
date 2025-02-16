@@ -1,5 +1,6 @@
 package com.green.manager.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -81,6 +82,15 @@ public interface ManagerMapper {
 	int getcountalbumList();
 
 	void deletecommunity(int idx);
+
+	List<HashMap<String, Object>> getCategoryList();
+
+
+	void saveProductImage(HashMap<String, Object> map);
+
+	void saveProduct(HashMap<String, Object> map);
+	
+	int getProductIdx(HashMap<String, Object> map);
 		
 
 }

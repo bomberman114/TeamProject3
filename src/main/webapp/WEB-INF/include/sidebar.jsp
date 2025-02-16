@@ -63,6 +63,7 @@
                 <a href="" data-path="">노트북</a>
                 <a href="" data-path="">주요부품</a>
                 <a href="" data-path="">주변기기</a>
+                <a href="/Manager/ProductRegistrationForm" data-path="">상품등록</a>
                 <a href="" data-path="">카테고리 필터</a>
             </div>
         </li>

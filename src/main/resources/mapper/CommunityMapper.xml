@@ -132,6 +132,7 @@ WHERE
   
   <!-- 커뮤니티_조립앨범_게시글 등록 --> 
   <insert id="insertcommunity">
+  /* 커뮤니티_조립앨범_게시글 등록 */
    INSERT INTO COMMUNITY 
     ( COMMUNITY_IDX, COMMUNITY_TITLE, COMMUNITY_MENU
      ,COMMUNITY_CONTENT, COMMUNITY_SPEC_CPU

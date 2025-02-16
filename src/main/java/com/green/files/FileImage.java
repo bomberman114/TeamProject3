@@ -7,12 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.green.crawling.vo.CrawlingImgVo;
+import com.green.file.vo.FileVo;
 
 public class FileImage {
 
@@ -25,6 +28,7 @@ public class FileImage {
 			  // 파일 목록 리스트 선언
 		    //List<CompanyImageVo> companyImageList = new ArrayList<>();
 		    //List<UserImageVo> userImageList = new ArrayList<>();
+			List<FileVo> fileList = new ArrayList<>();
 		   
 		    System.out.println("save까지옴");
 			System.out.println("profileImge:" + profileImge.toString().length());
@@ -76,32 +80,13 @@ public class FileImage {
 				
 				// 저장된 파일들의 정보를 map 에  List 방식으로 저장 -> pdsServiceImpl 에 전달 
 
-				if(map.get("companyProfile") != null ) {
-
-					//CompanyImageVo  companyImageVo = new CompanyImageVo(0, 0, fileName, fileExt, saveName2);
-					//companyImageList.add( companyImageVo );
-				};
-				
-
-				if(map.get("userProfile") != null ) {
-
-					//UserImageVo userImageVo = new UserImageVo(0, 0, fileName, fileExt, saveName2);
-					//userImageList.add(userImageVo);
-				};
+				FileVo  vo = new FileVo(0, 0, fileName, fileExt, saveName2);
+				fileList.add( vo );
 				
 			}  // for end
-			
 			// 돌려줄 정보 map 저장
-			  // 조건에 따라 해당 리스트를 map에 추가
-			/*
-		    if (!companyImageList.isEmpty()) {
-		        map.put("fileList", companyImageList);
-		    }  
-		    if (!userImageList.isEmpty()) {
-		        map.put("fileList", userImageList);
-		    }
-		*/
-		
+			map.put("fileList", fileList);
+			
 		}
 		
 		
